@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.tsa.dao.WebAdInfoMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.tsa.entity.WebAdInfo" id="WebAdInfoParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="WebAdInfoResult" type="com.hd.tsa.entity.WebAdInfo">
+        <result property="id" column="id"/>
+        <result property="adPosition" column="adPosition"/>
+        <result property="adPicture" column="adPicture"/>
+        <result property="adName" column="adName"/>
+        <result property="adWidth" column="adWidth"/>
+        <result property="adHeight" column="adHeight"/>
+        <result property="adDesc" column="adDesc"/>
+        <result property="adUrl" column="adUrl"/>
+        <result property="bdate" column="bdate"/>
+        <result property="edate" column="edate"/>
+        <result property="deliveryFlag" column="deliveryFlag"/>
+        <result property="deleteFlag" column="deleteFlag"/>
+        <result property="createUser" column="createUser"/>
+        <result property="createDate" column="createDate"/>
+        <result property="modifyUser" column="modifyUser"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="extend1" column="extend1"/>
+        <result property="extend2" column="extend2"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		t1.id,t1.adPosition,t1.adPicture,t1.adName,t1.adWidth,t1.adHeight,t1.adDesc,t1.adUrl,t1.bdate,t1.edate,t1.deliveryFlag,t1.deleteFlag,t1.createUser,t1.createDate,t1.modifyUser,t1.modifyDate,t1.extend1,t1.extend2
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND t1.id = #{model.id}
+			</if>
+	       <if test="model.adPosition!=null and model.adPosition!=''">
+				AND t1.adPosition = #{model.adPosition}
+			</if>
+	       <if test="model.adPicture!=null and model.adPicture!=''">
+				AND t1.adPicture = #{model.adPicture}
+			</if>
+	       <if test="model.adName!=null and model.adName!=''">
+				AND t1.adName like CONCAT('%', #{model.adName}, '%')
+			</if>
+			<if test="model.adWidth!=null">
+				AND t1.adWidth = #{model.adWidth}
+			</if>
+			<if test="model.adHeight!=null">
+				AND t1.adHeight = #{model.adHeight}
+			</if>
+	       <if test="model.adDesc!=null and model.adDesc!=''">
+				AND t1.adDesc = #{model.adDesc}
+			</if>
+	       <if test="model.adUrl!=null and model.adUrl!=''">
+				AND t1.adUrl = #{model.adUrl}
+			</if>
+	       <if test="model.bdateBegin!=null">
+				AND t1.bdate >= #{model.bdateBegin}
+		   </if>
+		   <if test="model.bdateEnd!=null">
+				AND t1.bdate >= #{model.bdateEnd}
+		   </if>
+	       <if test="model.edateBegin!=null">
+				AND t1.edate >= #{model.edateBegin}
+		   </if>
+		   <if test="model.edateEnd!=null">
+				AND t1.edate >= #{model.edateEnd}
+		   </if>
+			<if test="model.deliveryFlag!=null">
+				AND t1.deliveryFlag = #{model.deliveryFlag}
+			</if>
+			<if test="model.deleteFlag!=null">
+				AND t1.deleteFlag = #{model.deleteFlag}
+			</if>
+	       <if test="model.createUser!=null and model.createUser!=''">
+				AND t1.createUser = #{model.createUser}
+			</if>
+	       <if test="model.createDateBegin!=null">
+				AND t1.createDate >= #{model.createDateBegin}
+		   </if>
+		   <if test="model.createDateEnd!=null">
+				AND t1.createDate >= #{model.createDateEnd}
+		   </if>
+	       <if test="model.modifyUser!=null and model.modifyUser!=''">
+				AND t1.modifyUser = #{model.modifyUser}
+			</if>
+	       <if test="model.modifyDateBegin!=null">
+				AND t1.modifyDate >= #{model.modifyDateBegin}
+		   </if>
+		   <if test="model.modifyDateEnd!=null">
+				AND t1.modifyDate >= #{model.modifyDateEnd}
+		   </if>
+	       <if test="model.extend1!=null and model.extend1!=''">
+				AND t1.extend1 = #{model.extend1}
+			</if>
+	       <if test="model.extend2!=null and model.extend2!=''">
+				AND t1.extend2 = #{model.extend2}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="WebAdInfoParam">
+    <![CDATA[
+        INSERT INTO web_ad_info (
+        	id ,
+        	adPosition ,
+        	adPicture ,
+        	adName ,
+        	adWidth ,
+        	adHeight ,
+        	adDesc ,
+        	adUrl ,
+        	bdate ,
+        	edate ,
+        	deliveryFlag ,
+        	deleteFlag ,
+        	createUser ,
+        	createDate ,
+        	modifyUser ,
+        	modifyDate ,
+        	extend1 ,
+        	extend2 
+        ) VALUES (
+        	#{id} ,
+        	#{adPosition} ,
+        	#{adPicture} ,
+        	#{adName} ,
+        	#{adWidth} ,
+        	#{adHeight} ,
+        	#{adDesc} ,
+        	#{adUrl} ,
+        	#{bdate} ,
+        	#{edate} ,
+        	#{deliveryFlag} ,
+        	#{deleteFlag} ,
+        	#{createUser} ,
+        	#{createDate} ,
+        	#{modifyUser} ,
+        	#{modifyDate} ,
+        	#{extend1} ,
+        	#{extend2} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM web_ad_info WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="WebAdInfoParam">
+        UPDATE web_ad_info
+			<set>
+		        <if test="adPosition!=null">
+					adPosition = #{adPosition} ,
+		        </if>
+		        <if test="adPicture!=null">
+					adPicture = #{adPicture} ,
+		        </if>
+		        <if test="adName!=null">
+					adName = #{adName} ,
+		        </if>
+		        <if test="adWidth!=null">
+					adWidth = #{adWidth} ,
+		        </if>
+		        <if test="adHeight!=null">
+					adHeight = #{adHeight} ,
+		        </if>
+		        <if test="adDesc!=null">
+					adDesc = #{adDesc} ,
+		        </if>
+		        <if test="adUrl!=null">
+					adUrl = #{adUrl} ,
+		        </if>
+		        <if test="bdate!=null">
+					bdate = #{bdate} ,
+		        </if>
+		        <if test="edate!=null">
+					edate = #{edate} ,
+		        </if>
+		        <if test="deliveryFlag!=null">
+					deliveryFlag = #{deliveryFlag} ,
+		        </if>
+		        <if test="deleteFlag!=null">
+					deleteFlag = #{deleteFlag} ,
+		        </if>
+		        <if test="createUser!=null">
+					createUser = #{createUser} ,
+		        </if>
+		        <if test="createDate!=null">
+					createDate = #{createDate} ,
+		        </if>
+		        <if test="modifyUser!=null">
+					modifyUser = #{modifyUser} ,
+		        </if>
+		        <if test="modifyDate!=null">
+					modifyDate = #{modifyDate} ,
+		        </if>
+		        <if test="extend1!=null">
+					extend1 = #{extend1} ,
+		        </if>
+		        <if test="extend2!=null">
+					extend2 = #{extend2} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="WebAdInfoResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM web_ad_info t1
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="WebAdInfoResult">
+		SELECT <include refid="columns" />
+		FROM web_ad_info t1
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="WebAdInfoResult">
+		SELECT <include refid="columns" />, t2.type_dict_name adPositionName
+		FROM web_ad_info t1
+		left join sys_dict t2 on t1.adPosition = t2.type_dict_code
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM web_ad_info t1
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

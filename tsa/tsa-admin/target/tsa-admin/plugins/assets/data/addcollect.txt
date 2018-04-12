@@ -1,0 +1,88 @@
+[
+    {
+	    "id": "1",
+		"num":"1",
+        "classify": "CPU逻辑",
+        "name": "CPU用户使用率",
+        "value1": "50%",
+		"value2": "",
+		"value3": "",
+		"value4": "",
+		"state": "1"
+		 
+    },
+	{
+	    "id": "1",
+		"num":"1",
+        "classify": "CPU逻辑",
+        "name": "CPU系统使用率",
+        "value1": "50%",
+		"value2": "",
+		"value3": "",
+		"value4": "",
+		"state": "0"
+		 
+    },
+	{
+	    "id": "1",
+		"num":"1",
+        "classify": "CPU逻辑",
+        "name": "CPU当前空闲率",
+        "value1": "50%",
+		"value2": "",
+		"value3": "",
+		"value4": "",
+		"state": "1"
+		 
+    },
+	{
+	    "id": "1",
+		"num":"1",
+        "classify": "CPU逻辑",
+        "name": "CPU总的使用率",
+        "value1": "50%",
+		"value2": "",
+		"value3": "",
+		"value4": "",
+		"state": "0"
+		 
+    },
+	{
+	    "id": "1",
+		"num":"2",
+        "classify": "网络质量",
+        "name": "丢包",
+        "value1": "30%",
+		"value2": "http://www.baidu.com",
+		"value3": "10",
+		"value4": "1000",
+		"state": "1"
+		 
+    }
+	,
+	{
+	    "id": "1",
+		"num":"2",
+        "classify": "网络质量",
+        "name": "时延",
+        "value1": "30%",
+		"value2": "http://www.baidu.com",
+		"value3": "10",
+		"value4": "1000",
+		"state": "0"
+		 
+    }
+	,
+	{
+	    "id": "1",
+		"num":"2",
+        "classify": "网络质量",
+        "name": "抖动",
+        "value1": "30%",
+		"value2": "http://www.baidu.com",
+		"value3": "10",
+		"value4": "1000",
+		"state": "1"
+		 
+    }
+]

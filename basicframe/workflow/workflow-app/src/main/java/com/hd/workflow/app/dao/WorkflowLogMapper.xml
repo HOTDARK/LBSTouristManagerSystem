@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.workflow.app.dao.WorkflowLogMapper">
+
+	<resultMap id="RM_WorkflowLog" type="com.hd.workflow.app.model.WorkflowLog">
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="processName" column="process_name"/>
+        <result property="processId" column="process_id"/>
+        <result property="version" column="version"/>
+        <result property="params" column="params"/>
+        <result property="trace" column="trace"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="totalTime" column="total_time"/>
+        <result property="conclusionCode" column="conclusion_code"/>
+        <result property="conclusionState" column="conclusion_state"/>
+        <result property="conclusionResult" column="conclusion_result"/>
+        <result property="conclusionTips" column="conclusion_tips"/>
+        <result property="exception" column="exception"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,uid,process_name,process_id,version,params,trace,start_time,end_time,total_time,conclusion_code,conclusion_state,conclusion_result,conclusion_tips,exception
+	    ]]>
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO workflow_log (
+        	id ,
+        	uid ,
+        	process_name ,
+        	process_id ,
+        	version ,
+        	params ,
+        	trace,
+        	start_time ,
+        	end_time ,
+        	total_time ,
+        	conclusion_code ,
+        	conclusion_state ,
+        	conclusion_result ,
+        	conclusion_tips,
+        	exception
+        ) VALUES (
+        	#{id} ,
+        	#{uid} ,
+        	#{processName} ,
+        	#{processId} ,
+        	#{version} ,
+        	#{params} ,
+        	#{trace} ,
+        	#{startTime} ,
+        	#{endTime} ,
+        	#{totalTime} ,
+        	#{conclusionCode} ,
+        	#{conclusionState} ,
+        	#{conclusionResult} ,
+        	#{conclusionTips},
+        	#{exception}
+        )
+    ]]>
+	</insert>
+    
+	<update id="updateByPK" >
+        UPDATE workflow_log
+			<set>
+		        <if test="processName!=null">
+					process_name = #{processName} ,
+		        </if>
+		        <if test="processId!=null">
+					process_id = #{processId} ,
+		        </if>
+		        <if test="version!=null">
+					version = #{version} ,
+		        </if>
+		        <if test="params!=null">
+					params = #{params} ,
+		        </if>
+		        <if test="trace!=null">
+					trace = #{trace} ,
+		        </if>
+		        <if test="startTime!=null">
+					start_time = #{startTime} ,
+		        </if>
+		        <if test="endTime!=null">
+					end_time = #{endTime} ,
+		        </if>
+		        <if test="totalTime!=null">
+					total_time = #{totalTime} ,
+		        </if>
+		        <if test="conclusionCode!=null">
+					conclusion_code = #{conclusionCode} ,
+		        </if>
+		        <if test="conclusionState!=null">
+					conclusion_state = #{conclusionState} ,
+		        </if>
+		        <if test="conclusionResult!=null">
+					conclusion_result = #{conclusionResult} ,
+		        </if>
+		        <if test="conclusionTips!=null">
+					conclusion_tips = #{conclusionTips} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM workflow_log WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="findByPK" resultMap="RM_WorkflowLog">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM workflow_log 
+	        WHERE 
+		        id = #{pkId} 
+	    ]]>
+	</select>
+	
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=0">
+				AND id = #{model.id}
+			</if>
+			<if test="model.uid!=null and model.uid!=''">
+				AND uid = #{model.uid}
+			</if>
+	       <if test="model.processName!=null and model.processName!=''">
+				AND process_name = #{model.processName}
+			</if>
+			<if test="model.processId!=null and model.processId!=''">
+				AND process_id = #{model.processId}
+			</if>
+			<if test="model.version!=0">
+				AND version = #{model.version}
+			</if>
+	       <if test="model.params!=null and model.params!=''">
+				AND params = #{model.params}
+			</if>
+	       <if test="model.startTimeBegin!=null">
+				AND start_time >= #{model.startTimeBegin}
+		   </if>
+		   <if test="model.startTimeEnd!=null">
+				AND start_time &lt;= #{model.startTimeEnd}
+		   </if>
+	       <if test="model.endTimeBegin!=null">
+				AND end_time >= #{model.endTimeBegin}
+		   </if>
+		   <if test="model.endTimeEnd!=null">
+				AND end_time &lt;= #{model.endTimeEnd}
+		   </if>
+			<if test="model.totalTime!=0">
+				AND total_time = #{model.totalTime}
+			</if>
+	       <if test="model.conclusionCode!=null and model.conclusionCode!=''">
+				AND conclusion_code = #{model.conclusionCode}
+			</if>
+	       <if test="model.conclusionState!=null and model.conclusionState!=''">
+				AND conclusion_state = #{model.conclusionState}
+			</if>
+	       <if test="model.conclusionResult!=null and model.conclusionResult!=''">
+				AND conclusion_result like '%${model.conclusionResult}%'
+			</if>
+	       <if test="model.conclusionTips!=null and model.conclusionTips!=''">
+				AND conclusion_tips = #{model.conclusionTips}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findByCondition" resultMap="RM_WorkflowLog">
+		SELECT <include refid="columns" />
+		FROM workflow_log
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<select id="findByPage" resultMap="RM_WorkflowLog">
+		SELECT <include refid="columns" />
+		FROM workflow_log
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+		
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM workflow_log
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

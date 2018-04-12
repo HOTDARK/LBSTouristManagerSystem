@@ -1,0 +1,34 @@
+<process id="processId" name="678诊断流程" >
+	<!-- 开始事件 -->
+	<startEvent id="sid-2BB933AE-E0AE-48D2-9ACC-B5EC35AD3687" name="开始"/>
+	
+	<!-- 结束事件 -->
+	<endEvent id="sid-65043A85-6BAD-4616-AD1E-FF3FA8D64D4B" name="结束"/>
+	
+	<task id="sid-xxx-123" name="查询用户状态" class="com.hd.workflow.engine.TestTaskDelegate">
+		<properties>
+			<property name="abc" value="abc"/>
+		</properties>
+		
+	</task>
+	
+	<!-- 子流程调用 -->
+	<callActivity id="sid-xxx123xxx" called="processId2" name="调用子流程"/>
+	
+	<!-- 并发网关 -->
+	<parallelGateway id="sid-xxxxx"/>
+	
+	<!-- 边界事件，可附加于某个Activity执行节点 -->
+	<boundaryEvent id="sid-607EABF7-9A2D-4F53-9048-B996A7F3923B" attachedToRef="sid-xxx123xxx">
+		<errorEventDefinition/>
+	</boundaryEvent>
+	
+	<!-- 连线 -->
+	<sequenceFlow id="sid-xxx" sourceRef="sid-2BB933AE-E0AE-48D2-9ACC-B5EC35AD3687" targetRef="sid-xxx-123">
+		<conditions>
+			<condition code="code10010101" result="测试失败:${username}" expression="${number>1}"/>
+		</conditions>
+	</sequenceFlow>
+	
+</process>
+

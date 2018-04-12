@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hd.workflow.app.dao.WorkflowStencilMapper">
+	<resultMap id="RM_Stencil" type="com.hd.workflow.app.model.WorkflowStencil">
+        <result property="id" column="id"/>
+        <result property="stencilId" column="stencil_id"/>
+        <result property="type" column="type"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="view" column="view"/>
+        <result property="icon" column="icon"/>
+        <result property="groups" column="groups"/>
+        <result property="propertyPackages" column="property_packages"/>
+        <result property="roles" column="roles"/>
+        <result property="clazz" column="clazz"/>
+        <result property="state" column="state"/>
+	</resultMap>
+	
+	<select id="getStencilset" resultMap="RM_Stencil" parameterType="com.hd.workflow.app.model.WorkflowStencil">
+		select * from workflow_stencil  where 1=1
+		<if test="stencilId!=null and stencilId!=''">
+		and stencil_id=#{stencilId}
+		</if>
+		<if test="title!=null and title!=''">
+		and title=#{title}
+		</if>
+		<if test="groups!=null and groups!=''">
+		and groups=#{groups}
+		</if>
+		 order by id desc
+	</select>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO workflow_stencil (
+        	id ,
+        	stencil_id ,
+        	type ,
+        	title ,
+        	description ,
+        	view ,
+        	icon ,
+        	groups ,
+        	property_packages ,
+        	roles ,
+        	clazz ,
+        	state 
+        ) VALUES (
+        	#{id} ,
+        	#{stencilId} ,
+        	#{type} ,
+        	#{title} ,
+        	#{description} ,
+        	#{view} ,
+        	#{icon} ,
+        	#{groups} ,
+        	#{propertyPackages} ,
+        	#{roles} ,
+        	#{clazz} ,
+        	#{state} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="update" >
+        UPDATE workflow_stencil
+			<set>
+		        <if test="stencilId!=null">
+					stencil_id = #{stencilId} ,
+		        </if>
+		        <if test="type!=null">
+					type = #{type} ,
+		        </if>
+		        <if test="title!=null">
+					title = #{title} ,
+		        </if>
+		        <if test="description!=null">
+					description = #{description} ,
+		        </if>
+		        <if test="view!=null">
+					view = #{view} ,
+		        </if>
+		        <if test="icon!=null">
+					icon = #{icon} ,
+		        </if>
+		        <if test="groups!=null">
+					groups = #{groups} ,
+		        </if>
+		        <if test="propertyPackages!=null">
+					property_packages = #{propertyPackages} ,
+		        </if>
+		        <if test="roles!=null">
+					roles = #{roles} ,
+		        </if>
+		        <if test="clazz!=null">
+					clazz = #{clazz} ,
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	
+	<sql id="conditionSql">
+	<if test="model.stencilId!=null and model.stencilId!=''">
+		and stencil_id=#{model.stencilId}
+		</if>
+		<if test="model.title!=null and model.title!=''">
+		and title=#{model.title}
+		</if>
+		<if test="model.groups!=null and model.groups!=''">
+		and groups=#{model.groups}
+		</if>
+	</sql>
+	
+	<select id="findByPage" resultMap="RM_Stencil">
+	select * from workflow_stencil
+	 <trim prefix="WHERE" prefixOverrides="AND">
+         <include refid="conditionSql"/>
+     </trim>
+     order by id desc 
+     limit #{start},#{limit}
+	</select>
+	
+	<select id="countByCondition" resultType="int">
+	select count(1) from workflow_stencil
+	 <trim prefix="WHERE" prefixOverrides="AND">
+         <include refid="conditionSql"/>
+     </trim>
+	</select>
+	
+	<select id="getSentcilClazz" resultType="string">
+		select clazz from workflow_stencil where stencil_id=#{value}
+	</select>
+	
+	<delete id="delete">
+		delete from workflow_stencil where id=#{value}
+	</delete>
+	
+	<select id="findByStencilId" resultMap="RM_Stencil">
+		select * from workflow_stencil where stencil_id = #{value}
+	</select>	
+	
+	<select id="findSteGroupList" resultMap="RM_Stencil">
+	SELECT a.groups,MAX(a.id) id FROM workflow_stencil a GROUP BY a.groups ORDER BY id desc
+	</select>
+	
+</mapper>

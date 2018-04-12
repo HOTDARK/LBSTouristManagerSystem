@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="api-sample (1):war">
+    <output-path>$PROJECT_DIR$/basicframe/api/api-sample/target</output-path>
+    <root id="archive" name="api-sample.war">
+      <element id="artifact" artifact-name="api-sample (1):war exploded" />
+    </root>
+  </artifact>
+</component>

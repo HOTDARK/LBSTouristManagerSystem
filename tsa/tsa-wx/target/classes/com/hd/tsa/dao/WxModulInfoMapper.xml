@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.tsa.dao.WxModulInfoMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.tsa.entity.WxModulInfo" id="WxModulInfoParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="WxModulInfoResult" type="com.hd.tsa.entity.WxModulInfo">
+        <result property="id" column="id"/>
+        <result property="modulName" column="modulName"/>
+        <result property="modulPicture" column="modulPicture"/>
+        <result property="modulCss" column="modulCss"/>
+        <result property="modulUrl" column="modulUrl"/>
+        <result property="releaseFlag" column="releaseFlag"/>
+        <result property="deleteFlag" column="deleteFlag"/>
+        <result property="createUser" column="createUser"/>
+        <result property="createDate" column="createDate"/>
+        <result property="modifyUser" column="modifyUser"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="extend1" column="extend1"/>
+        <result property="extend2" column="extend2"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,modulName,modulPicture,modulCss,modulUrl,releaseFlag,deleteFlag,createUser,createDate,modifyUser,modifyDate,extend1,extend2
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.modulName!=null and model.modulName!=''">
+				AND modulName = #{model.modulName}
+			</if>
+	       <if test="model.modulPicture!=null and model.modulPicture!=''">
+				AND modulPicture = #{model.modulPicture}
+			</if>
+	       <if test="model.modulCss!=null and model.modulCss!=''">
+				AND modulCss = #{model.modulCss}
+			</if>
+	       <if test="model.modulUrl!=null and model.modulUrl!=''">
+				AND modulUrl = #{model.modulUrl}
+			</if>
+			<if test="model.releaseFlag!=null">
+				AND releaseFlag = #{model.releaseFlag}
+			</if>
+			<if test="model.deleteFlag!=null">
+				AND deleteFlag = #{model.deleteFlag}
+			</if>
+	       <if test="model.createUser!=null and model.createUser!=''">
+				AND createUser = #{model.createUser}
+			</if>
+	       <if test="model.createDateBegin!=null">
+				AND createDate >= #{model.createDateBegin}
+		   </if>
+		   <if test="model.createDateEnd!=null">
+				AND createDate >= #{model.createDateEnd}
+		   </if>
+	       <if test="model.modifyUser!=null and model.modifyUser!=''">
+				AND modifyUser = #{model.modifyUser}
+			</if>
+	       <if test="model.modifyDateBegin!=null">
+				AND modifyDate >= #{model.modifyDateBegin}
+		   </if>
+		   <if test="model.modifyDateEnd!=null">
+				AND modifyDate >= #{model.modifyDateEnd}
+		   </if>
+	       <if test="model.extend1!=null and model.extend1!=''">
+				AND extend1 = #{model.extend1}
+			</if>
+	       <if test="model.extend2!=null and model.extend2!=''">
+				AND extend2 = #{model.extend2}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="WxModulInfoParam">
+    <![CDATA[
+        INSERT INTO wx_modul_info (
+        	id ,
+        	modulName ,
+        	modulPicture ,
+        	modulCss ,
+        	modulUrl ,
+        	releaseFlag ,
+        	deleteFlag ,
+        	createUser ,
+        	createDate ,
+        	modifyUser ,
+        	modifyDate ,
+        	extend1 ,
+        	extend2 
+        ) VALUES (
+        	#{id} ,
+        	#{modulName} ,
+        	#{modulPicture} ,
+        	#{modulCss} ,
+        	#{modulUrl} ,
+        	#{releaseFlag} ,
+        	#{deleteFlag} ,
+        	#{createUser} ,
+        	#{createDate} ,
+        	#{modifyUser} ,
+        	#{modifyDate} ,
+        	#{extend1} ,
+        	#{extend2} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM wx_modul_info WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="WxModulInfoParam">
+        UPDATE wx_modul_info
+			<set>
+		        <if test="modulName!=null">
+					modulName = #{modulName} ,
+		        </if>
+		        <if test="modulPicture!=null">
+					modulPicture = #{modulPicture} ,
+		        </if>
+		        <if test="modulCss!=null">
+					modulCss = #{modulCss} ,
+		        </if>
+		        <if test="modulUrl!=null">
+					modulUrl = #{modulUrl} ,
+		        </if>
+		        <if test="releaseFlag!=null">
+					releaseFlag = #{releaseFlag} ,
+		        </if>
+		        <if test="deleteFlag!=null">
+					deleteFlag = #{deleteFlag} ,
+		        </if>
+		        <if test="createUser!=null">
+					createUser = #{createUser} ,
+		        </if>
+		        <if test="createDate!=null">
+					createDate = #{createDate} ,
+		        </if>
+		        <if test="modifyUser!=null">
+					modifyUser = #{modifyUser} ,
+		        </if>
+		        <if test="modifyDate!=null">
+					modifyDate = #{modifyDate} ,
+		        </if>
+		        <if test="extend1!=null">
+					extend1 = #{extend1} ,
+		        </if>
+		        <if test="extend2!=null">
+					extend2 = #{extend2} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="WxModulInfoResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM wx_modul_info 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="WxModulInfoResult">
+		SELECT <include refid="columns" />
+		FROM wx_modul_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="WxModulInfoResult">
+		SELECT <include refid="columns" />
+		FROM wx_modul_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM wx_modul_info
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

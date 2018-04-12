@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hd.sys.dao.SysPermitMapper">
+	<parameterMap type="com.hd.sys.entity.SysPermit" id="SysPermissionParam" />
+	<resultMap type="com.hd.sys.entity.SysPermit" id="SysPermissionResult">
+	    <result column="flow_id" property="flowId" javaType="Long" />
+	    <result column="role_id" property="roleId" javaType="Long" />
+	    <result column="org_id" property="orgId" javaType="Long" />
+	    <result column="function_id" property="functionId" javaType="Long" />
+	    <result column="state" property="state" javaType="Long" />
+	    <result column="create_time" property="createTime" javaType="Date" />
+	</resultMap>
+	
+	<!-- 根据用户ID查询机构权限  -->
+	<select id="findOrgPermissionByUserId" resultMap="SysPermissionResult" parameterType="Long">
+		<![CDATA[
+		select * from sys_role_org p, sys_user_role ur where ur.role_id = p.role_id and ur.user_id = #{userId}
+		]]>
+	</select>
+	
+	<!-- 根据用户ID查询功能权限  -->
+	<select id="findFuncPermissionByUserId" resultMap="SysPermissionResult" parameterType="Long">
+		<![CDATA[
+		select * from sys_role_func p, sys_user_role ur where ur.role_id = p.role_id and ur.user_id = #{userId}
+		]]>
+	</select>
+	
+	<!-- 根据角色ID查询机构权限  -->
+	<select id="findOrgPermissionByRoleId" resultMap="SysPermissionResult" parameterType="Long">
+		<![CDATA[
+		select * from sys_role_org p where p.role_id = #{roleId}
+		]]>
+	</select>
+	
+	<!-- 根据角色ID查询功能权限  -->
+	<select id="findFuncPermissionByRoleId" resultMap="SysPermissionResult" parameterType="Long">
+		<![CDATA[
+		select * from sys_role_func p where p.role_id = #{roleId}
+		]]>
+	</select>
+	
+	<!-- 根据角色id查询功能ID -->
+	<select id="getFuncsByRoleId" parameterType="Long" resultMap="SysPermissionResult">
+		select p.function_id functionid from sys_role_func p left join sys_func f on
+		p.function_id=f.function_id
+		where p.role_id=#{roleId}
+	</select>
+		
+	<!-- 根据角色id查询组织机构ID -->
+	<select id="getOrgsByRoleId" parameterType="Long" resultMap="SysPermissionResult">
+		select p.org_id orgid from sys_role_org p left join sys_org o on
+		p.org_id=o.org_id
+		where p.role_id=#{roleId}
+	</select>
+	
+	<!-- 保存机构权限 -->
+	<insert id="saveOrgPermission" parameterMap="SysPermissionParam">
+		<![CDATA[
+			insert into sys_role_org(flow_id, role_id, org_id, state, create_time) values
+				( #{flowId}, #{roleId}, #{orgId}, #{state}, #{createTime} )
+		]]>
+	</insert>
+	
+	<!-- 保存功能权限 -->
+	<insert id="saveFuncPermission" parameterMap="SysPermissionParam">
+		<![CDATA[
+			insert into sys_role_func(flow_id, role_id, function_id, state, create_time) values
+				( #{flowId}, #{roleId}, #{functionId}, #{state}, #{createTime} )
+		]]>
+	</insert>
+	
+	<!-- 批量保存机构权限 -->
+	<insert id="saveOrgPermissions" parameterType="List">
+		<![CDATA[
+			insert into sys_role_org(flow_id, role_id, org_id, state, create_time) values
+		]]>
+		<foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.flowId}, #{item.roleId}, #{item.orgId}, #{item.state}, #{item.createTime})  
+	    </foreach> 
+	</insert>
+	
+	<!-- 批量保存功能权限 -->
+	<insert id="saveFuncPermissions" parameterType="List">
+		<![CDATA[
+			insert into sys_role_func(flow_id, role_id, function_id, state, create_time) values
+		]]>
+		<foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.flowId}, #{item.roleId}, #{item.functionId}, #{item.state}, #{item.createTime})  
+	    </foreach> 
+	</insert>
+	
+	<!-- 根据角色ID删除机构权限 -->
+	<delete id="deleteOrgByIdAndRoleId" parameterMap="SysPermissionParam">
+		<![CDATA[
+			delete from sys_role_org where role_id = #{roleId}
+		]]>
+	</delete>
+	
+	<!-- 根据角色ID删除功能权限 -->
+	<delete id="deleteFuncByIdAndRoleId" parameterMap="SysPermissionParam">
+		<![CDATA[
+			delete from sys_role_func where role_id = #{roleId}
+		]]>
+	</delete>
+	
+	<!-- 查询功能树-配置权限 -->
+	<select id="getFunctionTreeAll" parameterMap="SysPermissionParam" resultMap="SysPermissionResult" >
+		select
+			MAX(case when p.flow_id is null then 0 else 1 end) checked,
+			f.function_id functionid,
+			f.function_name functionname,
+			f.parent_function_id parentid
+		from sys_func f 
+			<choose>
+				<when test="permiss">
+					inner 
+				</when>
+				<otherwise>
+					left 
+				</otherwise>
+			</choose>
+			join sys_role_func p on p.function_id = f.function_id
+		  	<if test="roleId != null">
+		  		and p.role_id = #{roleId}
+		  	</if>
+		  	<if test="roleIds != null and roleIds!=''">
+		  		and p.role_id in (${roleIds})
+		  	</if>
+		  	where f.state = 1 
+		GROUP BY functionid, functionname, parentid
+	</select>
+	
+	<!-- 查询机构树-配置权限 -->
+	<select id="getOrgTreeAll" parameterMap="SysPermissionParam" resultMap="SysPermissionResult" >
+		select
+		case when p.flow_id is null then 0 else 1 end checked,
+			o.org_id orgid,
+			o.org_code orgcode,
+			o.org_name orgname,
+			o.parent_org_id parentid
+		from sys_org o 
+			left join sys_role_org p on p.org_id = o.org_id
+		  	<if test="roleId != null">
+		  		and p.role_id = #{roleId}
+		  	</if>
+		  	where o.state = 1
+	</select>
+</mapper>

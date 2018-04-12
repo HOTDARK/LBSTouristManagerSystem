@@ -1,0 +1,146 @@
+package com.hd.sys.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.hd.sfw.dao.mybatis.BaseMapper;
+import com.hd.sys.entity.SysUser;
+import com.hd.sys.entity.SysUserRole;
+
+/**
+ * <p>类名：ISysUserDAO </p>
+ * <p>描述：系统角色数据访问层接口类 </p>
+ * <p>作者：somnuscy </p>
+ * <p>时间：2014年12月8日 星期一 </p>
+ */
+public interface SysUserMapper extends BaseMapper<SysUser, Long> {
+	
+	/**
+	 * 根据帐号查找用户信息
+	 * @param userAccount
+	 * @return
+	 */
+	public SysUser getSysUser(String userAccount);
+	
+	/**
+	 * <p>描述:根据用户id查询该用户的角色和角色所属的机构 </p>
+	 * <p>日期：2014-12-8 下午5:26:49 </p>
+	 * @param userId 用户ID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<SysUser> getRolesByUserId(Long userId) throws Exception;
+	
+	/**
+	 * <p>描述:根据机构id查询该用户的角色 </p>
+	 * <p>日期：2014-12-8 下午5:26:49 </p>
+	 * @param orgId 机构ID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<SysUser> getRolesByOrgId(Long orgId) throws Exception;
+	
+	/**
+	 * <p>描述:批量插入角色 </p>
+	 * <p>日期：2014-12-8 下午5:26:49 </p>
+	 * @param 角色list
+	 * @return
+	 * @throws Exception
+	 */
+	public void batchInsertRoles(List<SysUserRole> list) throws Exception;
+	
+	/**
+	 * 
+	 * <p>描述：修改用户状态 </p>
+	 * <p>日期：2014-12-11 上午10:24:14 </p>
+	 * @param user 用户实体类
+	 * @return 返回受影响行数
+	 * @throws Exception
+	 */
+	public int updateStateById(SysUser user) throws Exception;
+	
+	
+	/**
+	 * <p>描述:根据用户id删除所有角色 </p>
+	 * <p>日期：2014-12-12 上午9:35:02 </p>
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	public void deleteRolesByUserId(Long userId) throws Exception;
+	
+	
+	/**
+	 * <p>描述:删除该用户在某个机构下的所有角色 </p>
+	 * <p>日期：2014-12-12 上午9:53:21 </p>
+	 * @param map
+	 * @throws Exception
+	 */
+	public void deleteRolesByUserIdAndOrgId(SysUser user) throws Exception;
+
+	/**
+	 * <p>描述：根据机构ID更新用户状态 </p>
+	 * <p>日期：2014-12-12 下午5:06:13 </p>
+	 * @param user 用户对象
+	 */
+	public void updateByOrgId(SysUser user) throws Exception;
+
+	/**
+	 * <p>描述：根据角色ID更新用户状态 </p>
+	 * <p>日期：2014-12-13 上午10:05:24 </p>
+	 * @param user 用户对象
+	 */
+	public void updateByRoleIds(SysUser user) throws Exception;
+	
+	/**
+	 * 
+	 * <p>描述：删除用户部分角色信息 </p>
+	 * <p>日期：2014-12-15 上午09:32:38 </p>
+	 * @param user 用户实体类
+	 * @throws Exception
+	 */
+	public void deleteRolesByUserIdAndRoles(SysUser user) throws Exception;
+
+	/**
+	 * <p>描述：根据机构ID或角色ID查询用户集合 </p>
+	 * <p>日期：2014-12-15 下午1:49:30 </p>
+	 * @param user 用户对象
+	 * @return 根据机构ID或角色ID查询用户集合
+	 */
+	public List<SysUser> findUserListByOrgIdOrRoleId(SysUser user) throws Exception;
+
+	/**
+	 * <p>描述：用户登录验证 </p>
+	 * <p>日期：2014-12-15 下午2:59:56 </p>
+	 * @param user 用户
+	 * @return 用户登录验证
+	 */
+	public SysUser findUserByNameAndPwd(SysUser user) throws Exception;
+
+//	public Pagination<InterfaceAccount> getUserAccountByParm(
+//			InterfaceAccount account, Integer getiDisplayStart,
+//			Integer getiDisplayLength);
+
+//	public SysUser getUserByName(String userName);
+
+//	public AppVersion getNewAppInfo();
+
+//	public List<OverTimeSetting> getAllTimeSetting();
+	
+	/**
+	 * 根据帐号查找多个用户信息
+	 * @param userAccounts
+	 * @return
+	 */
+	public List<SysUser> findByUserAccounts(@Param("userAccounts")String userAccounts);
+	
+	public List<SysUser> queryOutByCondition(@Param("userAccounts")String userAccounts,@Param("orgId")Integer orgId);
+	
+	/**
+	 * 根据用户登录名查询用户姓名
+	 * @param userAccount 用户登录名
+	 * @return 用户姓名
+	 */
+	public String findSysUserName(String userAccount);
+}

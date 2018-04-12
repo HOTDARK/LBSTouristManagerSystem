@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.tsa.dao.WxActivityInfoMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.tsa.entity.WxActivityInfo" id="WxActivityInfoParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="WxActivityInfoResult" type="com.hd.tsa.entity.WxActivityInfo">
+        <result property="id" column="id"/>
+        <result property="activityPosition" column="activityPosition"/>
+        <result property="activityName" column="activityName"/>
+        <result property="activityLayout" column="activityLayout"/>
+        <result property="activityDesc" column="activityDesc"/>
+        <result property="useFlag" column="useFlag"/>
+        <result property="deleteFlag" column="deleteFlag"/>
+        <result property="createUser" column="createUser"/>
+        <result property="createDate" column="createDate"/>
+        <result property="modifyUser" column="modifyUser"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="extend1" column="extend1"/>
+        <result property="extend2" column="extend2"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,activityPosition,activityName,activityLayout,activityDesc,useFlag,deleteFlag,createUser,createDate,modifyUser,modifyDate,extend1,extend2
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.activityPosition!=null and model.activityPosition!=''">
+				AND activityPosition = #{model.activityPosition}
+			</if>
+	       <if test="model.activityName!=null and model.activityName!=''">
+				AND activityName = #{model.activityName}
+			</if>
+	       <if test="model.activityLayout!=null and model.activityLayout!=''">
+				AND activityLayout = #{model.activityLayout}
+			</if>
+	       <if test="model.activityDesc!=null and model.activityDesc!=''">
+				AND activityDesc = #{model.activityDesc}
+			</if>
+			<if test="model.useFlag!=null">
+				AND useFlag = #{model.useFlag}
+			</if>
+			<if test="model.deleteFlag!=null">
+				AND deleteFlag = #{model.deleteFlag}
+			</if>
+	       <if test="model.createUser!=null and model.createUser!=''">
+				AND createUser = #{model.createUser}
+			</if>
+	       <if test="model.createDateBegin!=null">
+				AND createDate >= #{model.createDateBegin}
+		   </if>
+		   <if test="model.createDateEnd!=null">
+				AND createDate >= #{model.createDateEnd}
+		   </if>
+	       <if test="model.modifyUser!=null and model.modifyUser!=''">
+				AND modifyUser = #{model.modifyUser}
+			</if>
+	       <if test="model.modifyDateBegin!=null">
+				AND modifyDate >= #{model.modifyDateBegin}
+		   </if>
+		   <if test="model.modifyDateEnd!=null">
+				AND modifyDate >= #{model.modifyDateEnd}
+		   </if>
+	       <if test="model.extend1!=null and model.extend1!=''">
+				AND extend1 = #{model.extend1}
+			</if>
+	       <if test="model.extend2!=null and model.extend2!=''">
+				AND extend2 = #{model.extend2}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="WxActivityInfoParam">
+    <![CDATA[
+        INSERT INTO wx_activity_info (
+        	id ,
+        	activityPosition ,
+        	activityName ,
+        	activityLayout ,
+        	activityDesc ,
+        	useFlag ,
+        	deleteFlag ,
+        	createUser ,
+        	createDate ,
+        	modifyUser ,
+        	modifyDate ,
+        	extend1 ,
+        	extend2 
+        ) VALUES (
+        	#{id} ,
+        	#{activityPosition} ,
+        	#{activityName} ,
+        	#{activityLayout} ,
+        	#{activityDesc} ,
+        	#{useFlag} ,
+        	#{deleteFlag} ,
+        	#{createUser} ,
+        	#{createDate} ,
+        	#{modifyUser} ,
+        	#{modifyDate} ,
+        	#{extend1} ,
+        	#{extend2} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM wx_activity_info WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="WxActivityInfoParam">
+        UPDATE wx_activity_info
+			<set>
+		        <if test="activityPosition!=null">
+					activityPosition = #{activityPosition} ,
+		        </if>
+		        <if test="activityName!=null">
+					activityName = #{activityName} ,
+		        </if>
+		        <if test="activityLayout!=null">
+					activityLayout = #{activityLayout} ,
+		        </if>
+		        <if test="activityDesc!=null">
+					activityDesc = #{activityDesc} ,
+		        </if>
+		        <if test="useFlag!=null">
+					useFlag = #{useFlag} ,
+		        </if>
+		        <if test="deleteFlag!=null">
+					deleteFlag = #{deleteFlag} ,
+		        </if>
+		        <if test="createUser!=null">
+					createUser = #{createUser} ,
+		        </if>
+		        <if test="createDate!=null">
+					createDate = #{createDate} ,
+		        </if>
+		        <if test="modifyUser!=null">
+					modifyUser = #{modifyUser} ,
+		        </if>
+		        <if test="modifyDate!=null">
+					modifyDate = #{modifyDate} ,
+		        </if>
+		        <if test="extend1!=null">
+					extend1 = #{extend1} ,
+		        </if>
+		        <if test="extend2!=null">
+					extend2 = #{extend2} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="WxActivityInfoResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM wx_activity_info 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="WxActivityInfoResult">
+		SELECT <include refid="columns" />
+		FROM wx_activity_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="WxActivityInfoResult">
+		SELECT <include refid="columns" />
+		FROM wx_activity_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM wx_activity_info
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hd.sys.dao.SysRoleMapper">
+	<parameterMap type="com.hd.sys.entity.SysRole" id="SysRoleParam" />
+	<resultMap type="com.hd.sys.entity.SysRole" id="SysRoleResult">
+	    <result column="role_id" property="roleId" javaType="Long" />
+	    <result column="role_name" property="roleName" javaType="String" />
+	    <result column="org_id" property="orgId" javaType="Long" />
+	    <result column="state" property="state" javaType="Long" />
+	    <result column="role_type" property="roleType" javaType="String" />
+	    <result column="create_time" property="createTime" javaType="Date" />
+	    <result column="user_num" property="userNum" javaType="long" />
+	</resultMap>
+	
+	<!-- 根据主键ID查询  -->
+	<select id="findByPK" resultMap="SysRoleResult" parameterType="Long">
+		<![CDATA[
+		select r.* from sys_role r where r.role_id = #{id}
+		]]>
+	</select>
+	
+	<!-- 根据机构ID查询角色列表  -->
+	<select id="findRoleListByOrgId" resultMap="SysRoleResult" parameterMap="SysRoleParam">
+		<![CDATA[
+		select
+			r.*,
+			(select count(u.user_id) from sys_user_role ur,sys_user u 
+				where r.role_id = ur.role_id and ur.user_id = u.user_id and u.state = 1) user_num
+		from sys_role r where r.org_id = #{orgId}
+		]]>
+		<if test="roleSource != null and roleSource != ''">
+			and r.roleSource = #{roleSource}
+		</if>
+	</select>
+	
+	<!-- 根据用户ID查询角色列表  -->
+	<select id="findRoleListByUserId" resultMap="SysRoleResult" parameterType="Long">
+		<![CDATA[
+		select r.* from sys_role r, sys_user_role ur where r.role_id = ur.role_id and ur.user_id = #{userId}
+		]]>
+	</select>
+	
+	<!-- 判断在同级机构下的角色名称是否存在  -->
+	<select id="findExistsRoleNameByOrgId" resultMap="SysRoleResult" parameterMap="SysRoleParam">
+		<![CDATA[
+		select
+			r.*
+		from sys_role r where r.role_name = #{roleName} and r.org_id = #{orgId}
+		]]>
+		<if test="roleId != null">
+			and role_id != #{roleId}
+		</if>
+	</select>
+	
+	<!-- 单条插入 -->
+	<insert id="insert" parameterMap="SysRoleParam">
+		<![CDATA[
+			insert into sys_role(
+				role_id,
+				role_name,
+				org_id,
+				state,
+				role_type,
+				create_time,
+				roleSource
+			)values(
+				#{roleId},
+				#{roleName},
+				#{orgId},
+				#{state},
+				#{roleType},
+				#{createTime},
+				#{roleSource}
+			)
+		]]>
+	</insert>
+	
+	<!-- 主键更新 -->
+	<update id="updateByPK" parameterMap="SysRoleParam">
+			update sys_role set
+				role_name=#{roleName},
+				role_type=#{roleType}
+			where role_id=#{roleId}
+	</update>
+	
+	<!-- 根据机构ID更新角色状态 -->
+	<update id="updateByOrgId" parameterMap="SysRoleParam">
+		update sys_role set state = #{state} where org_id = #{orgId}
+	</update>
+	
+	<!-- 根据角色ID更新角色状态 -->
+	<update id="updateByRoleId" parameterMap="SysRoleParam">
+		update sys_role set state = #{state} where role_id in (${roleIds}) and org_id = #{orgId}
+	</update>
+	
+	<!-- 根据角色ID删除角色与用户关联 -->
+	<delete id="deleteUserByRoleId" parameterType="Long">
+		delete from sys_user_role where role_id = #{roleId}
+	</delete>
+	
+	<!-- 保存角色与用户关联 -->
+	<insert id="saveUserByRoleId" parameterType="List">
+		insert into sys_user_role (user_id,role_id,state,create_time) values 
+	 	<foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.userId},#{item.roleId},#{item.state},#{item.createTime})  
+	    </foreach> 
+	</insert>
+	
+</mapper>

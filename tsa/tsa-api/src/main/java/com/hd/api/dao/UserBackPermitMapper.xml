@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.api.dao.UserBackPermitMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.api.entity.UserBackPermit" id="UserBackPermitParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="UserBackPermitResult" type="com.hd.api.entity.UserBackPermit">
+        <result property="id" column="id"/>
+        <result property="backId" column="backId"/>
+        <result property="backFuncCode" column="backFuncCode"/>
+        <result property="bindDate" column="bindDate"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,backId,backFuncCode,bindDate
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+			<if test="model.backId!=null">
+				AND backId = #{model.backId}
+			</if>
+	       <if test="model.backFuncCode!=null and model.backFuncCode!=''">
+				AND backFuncCode = #{model.backFuncCode}
+			</if>
+	       <if test="model.bindDateBegin!=null">
+				AND bindDate >= #{model.bindDateBegin}
+		   </if>
+		   <if test="model.bindDateEnd!=null">
+				AND bindDate >= #{model.bindDateEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="UserBackPermitParam">
+    <![CDATA[
+        INSERT INTO user_back_permit (
+        	id ,
+        	backId ,
+        	backFuncCode ,
+        	bindDate 
+        ) VALUES (
+        	#{id} ,
+        	#{backId} ,
+        	#{backFuncCode} ,
+        	#{bindDate} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM user_back_permit WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="UserBackPermitParam">
+        UPDATE user_back_permit
+			<set>
+		        <if test="backId!=null">
+					backId = #{backId} ,
+		        </if>
+		        <if test="backFuncCode!=null">
+					backFuncCode = #{backFuncCode} ,
+		        </if>
+		        <if test="bindDate!=null">
+					bindDate = #{bindDate} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="UserBackPermitResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM user_back_permit 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="UserBackPermitResult">
+		SELECT <include refid="columns" />
+		FROM user_back_permit
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="UserBackPermitResult">
+		SELECT <include refid="columns" />
+		FROM user_back_permit
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM user_back_permit
+		<include refid="where"/>
+    </select>
+    
+    <!-- 批量插入 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+	 <![CDATA[
+        INSERT INTO user_back_permit (
+        	id ,
+        	backId ,
+        	backFuncCode ,
+        	bindDate 
+         ) VALUES 
+        ]]> 
+   	    <foreach collection="list" item="item" index="index" separator="," >  
+	        ( 
+	        #{item.id} ,
+        	#{item.backId} ,
+        	#{item.backFuncCode} ,
+        	#{item.bindDate} 
+        	)  
+	    </foreach> 
+	</insert>
+	
+	<!-- 根据后台绑定ID删除权限列表 -->
+	<delete id="deleteByBackId">
+    <![CDATA[
+        DELETE FROM user_back_permit WHERE
+        backId = #{backId} 
+    ]]>
+    </delete>
+	
+</mapper>
+

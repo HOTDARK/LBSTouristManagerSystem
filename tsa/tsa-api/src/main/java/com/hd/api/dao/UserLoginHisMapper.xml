@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.api.dao.UserLoginHisMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.api.entity.UserLoginHis" id="UserLoginHisParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="UserLoginHisResult" type="com.hd.api.entity.UserLoginHis">
+        <result property="id" column="id"/>
+        <result property="xgh" column="xgh"/>
+        <result property="dlfs" column="dlfs"/>
+        <result property="dlip" column="dlip"/>
+        <result property="dlsj" column="dlsj"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,xgh,dlfs,dlip,dlsj
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.xgh!=null and model.xgh!=''">
+				AND xgh = #{model.xgh}
+			</if>
+			<if test="model.dlfs!=null">
+				AND dlfs = #{model.dlfs}
+			</if>
+	       <if test="model.dlip!=null and model.dlip!=''">
+				AND dlip = #{model.dlip}
+			</if>
+	       <if test="model.dlsjBegin!=null">
+				AND dlsj >= #{model.dlsjBegin}
+		   </if>
+		   <if test="model.dlsjEnd!=null">
+				AND dlsj >= #{model.dlsjEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="UserLoginHisParam">
+    <![CDATA[
+        INSERT INTO user_login_his (
+        	id ,
+        	xgh ,
+        	dlfs ,
+        	dlip ,
+        	dlsj 
+        ) VALUES (
+        	#{id} ,
+        	#{xgh} ,
+        	#{dlfs} ,
+        	#{dlip} ,
+        	#{dlsj} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM user_login_his WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="UserLoginHisParam">
+        UPDATE user_login_his
+			<set>
+		        <if test="xgh!=null">
+					xgh = #{xgh} ,
+		        </if>
+		        <if test="dlfs!=null">
+					dlfs = #{dlfs} ,
+		        </if>
+		        <if test="dlip!=null">
+					dlip = #{dlip} ,
+		        </if>
+		        <if test="dlsj!=null">
+					dlsj = #{dlsj} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="UserLoginHisResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM user_login_his 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="UserLoginHisResult">
+		SELECT <include refid="columns" />
+		FROM user_login_his
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="UserLoginHisResult">
+		SELECT <include refid="columns" />
+		FROM user_login_his
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM user_login_his
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

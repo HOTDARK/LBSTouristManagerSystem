@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hd.api.client.dao.WebServiceConfigureMapper">
+	<resultMap id="RM_WebServiceConfigure" type="com.hd.sfw.webservice.model.WebServiceConfigure">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="url" column="url"/>
+        <result property="timeout" column="timeout"/>
+        <result property="targetNamespace" column="target_namespace"/>
+        <result property="methodName" column="method_name"/>
+        <result property="soapAction" column="soap_action"/>
+        <result property="auth" column="auth"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="webServiceType" column="web_service_type"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,name,url,timeout,target_namespace,method_name,soap_action,auth,username,password,web_service_type
+	    ]]>
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO web_service_conf (
+        	id ,
+        	name ,
+        	url ,
+        	timeout ,
+        	target_namespace ,
+        	method_name ,
+        	soap_action ,
+        	auth ,
+        	username ,
+        	password ,
+        	web_service_type 
+        ) VALUES (
+        	#{id} ,
+        	#{name} ,
+        	#{url} ,
+        	#{timeout} ,
+        	#{targetNamespace} ,
+        	#{methodName} ,
+        	#{soapAction} ,
+        	#{auth} ,
+        	#{username} ,
+        	#{password} ,
+        	#{webServiceType} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="update" >
+        UPDATE web_service_conf
+			<set>
+		        <if test="name!=null">
+					name = #{name} ,
+		        </if>
+		        <if test="url!=null">
+					url = #{url} ,
+		        </if>
+		        <if test="timeout!=null">
+					timeout = #{timeout} ,
+		        </if>
+		        <if test="targetNamespace!=null">
+					target_namespace = #{targetNamespace} ,
+		        </if>
+		        <if test="methodName!=null">
+					method_name = #{methodName} ,
+		        </if>
+		        <if test="soapAction!=null">
+					soap_action = #{soapAction} ,
+		        </if>
+		        <if test="auth!=null">
+					auth = #{auth} ,
+		        </if>
+		        <if test="username!=null">
+					username = #{username} ,
+		        </if>
+		        <if test="password!=null">
+					password = #{password} ,
+		        </if>
+		        <if test="webServiceType!=null">
+					web_service_type = #{webServiceType} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM web_service_conf WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="findByPK" resultMap="RM_WebServiceConfigure">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM web_service_conf 
+	        WHERE 
+		        id = #{pkId} 
+	    ]]>
+	</select>
+	
+	<sql id="where">
+		<where>	      				
+	       <if test="model.id!=null and model.id!=''">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.name!=null and model.name!=''">
+				AND name like '%${model.name}%'
+			</if>
+	       <if test="model.url!=null and model.url!=''">
+				AND url = #{model.url}
+			</if>
+			<if test="model.timeout!=null">
+				AND timeout = #{model.timeout}
+			</if>
+	       <if test="model.targetNamespace!=null and model.targetNamespace!=''">
+				AND target_namespace = #{model.targetNamespace}
+			</if>
+	       <if test="model.methodName!=null and model.methodName!=''">
+				AND method_name = #{model.methodName}
+			</if>
+	       <if test="model.soapAction!=null and model.soapAction!=''">
+				AND soap_action = #{model.soapAction}
+			</if>
+	       <if test="model.auth!=null and model.auth!=''">
+				AND auth = #{model.auth}
+			</if>
+	       <if test="model.username!=null and model.username!=''">
+				AND username = #{model.username}
+			</if>
+	       <if test="model.password!=null and model.password!=''">
+				AND password = #{model.password}
+			</if>
+	       <if test="model.webServiceType!=null and model.webServiceType!=''">
+				AND web_service_type = #{model.webServiceType}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findByCondition" resultMap="RM_WebServiceConfigure">
+		SELECT <include refid="columns" />
+		FROM web_service_conf
+		<include refid="where"/>
+	</select>
+	
+	<select id="findByPage" resultMap="RM_WebServiceConfigure">
+		SELECT <include refid="columns" />
+		FROM web_service_conf
+		<include refid="where"/>
+		limit #{start},#{limit}
+	</select>
+		
+    <select id="getTotalCount" resultType="int">
+        SELECT count(*) FROM web_service_conf
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

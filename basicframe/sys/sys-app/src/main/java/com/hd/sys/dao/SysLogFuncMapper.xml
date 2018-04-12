@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hd.sys.dao.SysLogFuncMapper">
+	<parameterMap type="com.hd.sys.entity.SysLogFunc" id="SysLogParam" />
+	<resultMap type="com.hd.sys.entity.SysLogFunc" id="SysLogResult">
+	    <result column="log_id" property="logId" javaType="Long" />
+	    <result column="user_id" property="userId" javaType="Long" />
+	    <result column="class_function" property="classFunction" javaType="String" />
+	    <result column="description" property="description" javaType="String" />
+	    <result column="ip" property="ip" javaType="String" />
+	    <result column="create_time" property="createTime" javaType="Date" />
+	    <result column="type" property="type" />
+	    <result column="log_level" property="logLevel" />
+	    <result column="parent_desc" property="parentDesc" />
+	    <result column="org_id" property="orgId" />
+	    <result column="user_name" property="userName" />
+	</resultMap>
+	<resultMap id="RM_syslogVo" type="com.hd.sys.entity.vo.SysLogFuncCountVo">
+       <result property="orgName" column="orgName"/>
+       <result property="functionName" column="functionName"/>
+       <result property="count" column="count"/>
+	</resultMap>
+	
+		
+	<select id="countSysLogByArea" resultMap="RM_syslogVo" parameterMap="SysLogParam">
+		SELECT so.org_name as orgName , sl.description as functionName , count(1) as count FROM sys_log_func as sl , sys_user as su , sys_org as so
+		where sl.user_id = su.user_id and su.org_id = so.org_id 
+		<if test="null!=stime and ''!=stime and null!=etime and ''!=etime">
+		and sl.create_time BETWEEN '${stime} 00:00:00' and '${etime} 23:59:59' 
+		</if>
+		<if test="orgId!=null and orgId!=''">
+		and so.org_name=#{orgId} 
+		</if>
+		<if test="functionName!=null and functionName!=''">
+		and sl.description like '%${functionName}%' 
+		</if>
+		GROUP BY so.org_name , sl.description
+		ORDER BY count DESC
+	</select>
+		
+	<select id="countDescSysLogByArea" resultMap="RM_syslogVo" parameterMap="SysLogParam">
+	SELECT so.org_name as orgName , count(1) as count FROM sys_log_func as sl , sys_user as su , sys_org as so
+		where sl.user_id = su.user_id and su.org_id = so.org_id 
+		<if test="null!=stime and ''!=stime and null!=etime and ''!=etime">
+		and sl.create_time BETWEEN '${stime} 00:00:00' and '${etime} 23:59:59' 
+		</if>
+		<if test="orgId!=null and orgId!=''">
+		and so.org_name=#{orgId} 
+		</if>
+		<if test="functionName!=null and functionName!=''">
+		and sl.description like '%${functionName}%' 
+		</if>
+	  GROUP BY so.org_name 
+      ORDER BY count DESC
+	</select>
+	
+	
+	<sql id="findPageByEntityCondition">
+		<if test="logId!=null">
+			and l.log_id = #{logId}
+		</if>
+		<if test="userId!=null">
+			and l.user_id = #{userId}
+		</if>
+		<if test="classFunction!=null and classFunction!=''">
+			and l.class_function like concat('%',#{classFunction},'%')
+		</if>
+		<if test="ip!=null and ip!=''">
+			and l.ip like = #{IP}
+		</if>
+		<if test="createTime!=null">
+			and l.create_time = #{createTime}
+		</if>
+		<if test="type!=null">
+			and l.type = #{type}
+		</if>
+		<if test="userName!=null and userName!=''">
+			and su.user_name like concat('%',#{userName},'%')
+		</if>
+	</sql>
+	
+<!-- 	<select id="getAllProcessWithoutDetail" resultMap="RM_WorkflowProcess">
+		select id,version,process_id,name,description,last_update_time from workflow_process where state=1 and resource_id=0
+	</select> -->
+	
+	<!-- 主键查询  -->
+	<select id="findById" resultMap="SysLogResult" parameterType="Long">
+		<![CDATA[
+		select
+		*
+		from sys_log_func where flow_id=#{flowId}
+		]]>
+	</select>
+	
+	<!-- 可以通过传入的条件查询分页数据 -->
+	<select id="findPageByEntity" parameterMap="SysLogParam" resultMap="SysLogResult">
+		select
+				l.log_id logid,
+				l.user_id userid,
+				l.class_function classfunction,
+				l.description description,
+				l.ip ip,
+				date_format(l.create_time,'%Y-%m-%d %H:%i:%s') createtimestring,
+				l.type type,
+				(case when l.type=1 then '异常' else '方法操作' end) typename,
+				su.user_name username
+		from sys_log_func l left join sys_user su on l.user_id=su.user_id
+   			where 1=1
+   			<include refid="findPageByEntityCondition"/>
+   			order by l.create_time
+	</select>
+	
+	<select id="findPageByEntityCount" parameterMap="SysLogParam" resultType="Integer">
+		select count(1) itotalrecords
+		from sys_log_func l left join sys_user su on l.user_id=su.user_id where 1=1
+   			<include refid="findPageByEntityCondition"/>
+	</select>
+	
+	<!-- 统计分页查询 -->
+	<select id="findCountPageByEntity" parameterMap="SysLogParam" resultMap="SysLogResult">
+		select distinct l.user_id userid,su.user_name username,
+			( select count(*) from sys_log_func where class_function = 'com.hd.mip.system.action.loginaction.userlogin'  and user_id=l.user_id) logincount,
+			( select count(*) from sys_log_func where class_function = 'com.hd.mip.system.action.sysroleaction.findrolelistbyorgid'  and user_id=l.user_id) usesysorgcount,
+			( select count(*) from sys_log_func where class_function = 'com.hd.mip.system.action.sysuseraction.getuserlistbyorgid'  and user_id=l.user_id) usesysusercount,
+			( select count(*) from sys_log_func where class_function = 'com.hd.mip.system.action.sysfunctionaction.querysysfunctionlist'  and user_id=l.user_id) usesysfunctioncount,
+			( select count(*) from sys_log_func where class_function = 'com.hd.mip.system.action.systypedictaction.gettypedicttabletree'  and user_id=l.user_id) usetypecount
+		    from sys_log_func l left join sys_user su on l.user_id = su.user_id
+		where 1 = 1
+		<include refid="findPageByEntityCondition"/> 
+		order by
+		<choose>
+			<when test="orderByString=='loginCount'">loginCount</when>
+			<when test="orderByString=='useSysOrgCount'">useSysOrgCount</when>
+			<when test="orderByString=='useSysUserCount'">useSysUserCount</when>
+			<when test="orderByString=='useSysFunctionCount'">useSysFunctionCount</when>
+			<when test="orderByString=='useTypeCount'">useTypeCount</when>
+			<otherwise>userid</otherwise>
+		</choose>
+		<if test="orderMode=='asc'">
+			asc
+		</if>
+		<if test="orderMode=='desc'">
+			desc
+		</if>
+	</select>
+	
+	<!-- 统计分页查询总条数 -->
+	<select id="findCountPageByEntityCount" parameterMap="SysLogParam" resultType="Integer">
+		select count(distinct l.user_id) itotalrecords
+		from sys_log_func l
+		left join sys_user su on l.user_id = su.user_id
+		where 1 = 1
+		<include refid="findPageByEntityCondition"/> 
+	</select>
+	
+	<!-- 单条插入 -->
+	<insert id="insert" parameterMap="SysLogParam">
+		<![CDATA[
+			insert into sys_log_func(
+				user_id,
+				org_id,
+				user_name,
+				class_function,
+				log_level,
+				description,
+				parent_desc,
+				ip,
+				type,
+				create_time
+			)values(
+				#{userId},
+				#{orgId},
+				#{userName},
+				#{classFunction},
+				#{logLevel},
+				#{description},
+				#{parentDesc},
+				#{ip},
+				#{type},
+				#{createTime}
+			)
+		]]>
+	</insert>
+	
+	<!-- 主键更新 -->
+	<update id="updateById" parameterMap="SysLogParam">
+			update sys_log_func set
+				log_id=#{logId},
+				user_id=#{userId},
+				class_function=#{classFunction},
+				description=#{description},
+				ip=#{ip},
+				create_time=#{createTime},
+				type=#{type}
+			where flow_id=${flowId}
+	</update>
+	
+	<!-- 主键删除 -->
+	<delete id="deleteByKey" parameterType="Long">
+		<![CDATA[
+			delete from sys_log_func where flow_id=#{flowId}
+		]]>
+	</delete>
+	
+	<!-- 接口日志 
+	<insert id="saveInterfaceLog" parameterType="com.hd.sys.entity.InterfaceLog">
+		<![CDATA[
+			insert into interface_log(
+				log_id,
+				wid,
+				wname,
+				input,
+				output,
+				start_time,
+				end_time,
+				state,
+				account,
+				areaId
+			)values(
+				#{log_id},
+				#{wid},
+				#{wname},
+				#{input},
+				#{output},
+				#{start_time},
+				#{end_time},
+				#{state},
+				#{account},
+				#{areaId}
+			)
+		]]>
+	</insert>
+	-->
+	
+	<!-- 流程日志 -->
+<!-- 	<insert id="saveWorkflowLog" parameterType="com.hd.workflow.app.model.WorkflowLog" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			insert into workflow_log(
+				uid,
+				process_name,
+				start_time,
+				end_time,
+				total_time
+			)values(
+				#{uid},
+				#{processName},
+				#{startTime},
+				#{endTime},
+				#{totalTime}
+			)
+		]]>
+	</insert> -->
+	
+	<!-- 
+	<select id="getWorkFlowLogById" resultType="com.hd.sys.entity.WorkFlowLog">
+	select * from workflow_log where id=#{logId}
+	</select>
+	
+	<update id="updateWorkFlowLog" parameterType="com.hd.sys.entity.WorkFlowLog">
+	update workflow_log set end_time=#{end_time},total_time=#{total_time} where id=#{id}
+	</update>
+	 -->
+	
+	
+	
+</mapper>

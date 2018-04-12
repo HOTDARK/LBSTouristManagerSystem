@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.api.dao.UserBackRelationMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.api.entity.UserBackRelation" id="UserBackRelationParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="UserBackRelationResult" type="com.hd.api.entity.UserBackRelation">
+        <result property="id" column="id"/>
+        <result property="xgh" column="xgh"/>
+        <result property="backAccount" column="backAccount"/>
+        <result property="backType" column="backType"/>
+        <result property="backOrgCode" column="backOrgCode"/>
+        <result property="bindDate" column="bindDate"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,xgh,backAccount,backType,backOrgCode,bindDate
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.xgh!=null and model.xgh!=''">
+				AND xgh = #{model.xgh}
+			</if>
+	       <if test="model.backAccount!=null and model.backAccount!=''">
+				AND backAccount = #{model.backAccount}
+			</if>
+	       <if test="model.backType!=null and model.backType!=''">
+				AND backType = #{model.backType}
+			</if>
+	       <if test="model.backOrgCode!=null and model.backOrgCode!=''">
+				AND backOrgCode = #{model.backOrgCode}
+			</if>
+	       <if test="model.bindDateBegin!=null">
+				AND bindDate >= #{model.bindDateBegin}
+		   </if>
+		   <if test="model.bindDateEnd!=null">
+				AND bindDate >= #{model.bindDateEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="UserBackRelationParam">
+    <![CDATA[
+        INSERT INTO user_back_relation (
+        	id ,
+        	xgh ,
+        	backAccount ,
+        	backType ,
+        	backOrgCode ,
+        	bindDate 
+        ) VALUES (
+        	#{id} ,
+        	#{xgh} ,
+        	#{backAccount} ,
+        	#{backType} ,
+        	#{backOrgCode} ,
+        	#{bindDate} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM user_back_relation WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="UserBackRelationParam">
+        UPDATE user_back_relation
+			<set>
+		        <if test="xgh!=null">
+					xgh = #{xgh} ,
+		        </if>
+		        <if test="backAccount!=null">
+					backAccount = #{backAccount} ,
+		        </if>
+		        <if test="backType!=null">
+					backType = #{backType} ,
+		        </if>
+		        <if test="backOrgCode!=null">
+					backOrgCode = #{backOrgCode} ,
+		        </if>
+		        <if test="bindDate!=null">
+					bindDate = #{bindDate} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="UserBackRelationResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM user_back_relation 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="UserBackRelationResult">
+		SELECT <include refid="columns" />
+		FROM user_back_relation
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="UserBackRelationResult">
+		SELECT <include refid="columns" />
+		FROM user_back_relation
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM user_back_relation
+		<include refid="where"/>
+    </select>
+    
+    <!-- 按学工号、后台类型查询绑定用户关系 -->
+    <select id="findByXgh" resultMap="UserBackRelationResult">
+	    SELECT
+			<include refid="columns" />
+		FROM
+			user_back_relation
+		WHERE
+			xgh = #{xgh}
+		AND backType = #{backType}
+		LIMIT 1
+	</select>
+	
+	<!-- 按后台工号、后台类型查询绑定用户关系 -->
+    <select id="findByBackAccount" resultMap="UserBackRelationResult">
+	    SELECT
+			<include refid="columns" />
+		FROM
+			user_back_relation
+		WHERE
+			backAccount = #{backAccount}
+		AND backType = #{backType}
+		LIMIT 1
+	</select>
+	
+</mapper>
+

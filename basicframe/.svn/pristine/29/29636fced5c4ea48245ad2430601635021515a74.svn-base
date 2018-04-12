@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.hd.api</groupId>
+	    <artifactId>api</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+	 </parent>
+	 <artifactId>api-sample</artifactId>
+	 <packaging>war</packaging>
+	 
+	<dependencies>
+		<dependency>
+			<groupId>com.hd.api</groupId>
+			<artifactId>api-app</artifactId>
+			<version>${api.version}</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+  		<finalName>api-sample</finalName>
+  	</build>
+	 
+</project>

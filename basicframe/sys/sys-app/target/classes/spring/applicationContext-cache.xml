@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd   
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd   
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd"
+	default-lazy-init="true">
+
+	<!--配置缓存管理器 -->
+	<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation">
+			<value>classpath:ehcache.xml</value>
+		</property>
+	</bean>
+	
+	<!-- 创建缓存的工厂的应用 -->
+	<bean id="globalCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager">
+			<ref local="ehcacheManager" />
+		</property>
+		<property name="cacheName">
+			<value>globalCache</value>
+		</property>
+	</bean>
+	
+	<!-- 缓存管理 -->
+	<bean id="cacheManager" class="com.hd.sfw.core.cache.SimpleCacheManager">
+		<!-- 要不要开启缓存管理, false将不会使用缓存 -->
+		<property name="open" value="false"/>
+	</bean>
+	
+	<!-- 扫描注解的方法 -->
+	<bean class="com.hd.sfw.core.cache.CacheableDefineScanner">
+		<property name="cacheManager" ref="cacheManager"/>
+	</bean>
+	
+	<!-- 拦截注解（加入缓存）的方法 -->
+	<bean class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice">
+			<bean class="com.hd.sfw.core.cache.CacheableMethodInterceptor">
+				<property name="cache" ref="globalCache"/>
+				<property name="cacheManager" ref="cacheManager"/>
+			</bean>
+		</property>
+		<property name="pointcut">
+			<bean class="org.springframework.aop.support.annotation.AnnotationMatchingPointcut">
+				<constructor-arg index="0" >
+					<null/>
+				</constructor-arg>
+				<constructor-arg index="1" value="com.hd.sfw.core.cache.Cacheable" />
+			</bean>
+		</property>
+	</bean>
+	<!-- 拦截注解（清除缓存）的方法 -->
+	<bean class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice">
+			<bean class="com.hd.sfw.core.cache.CacheEvictMethodInterceptor">
+				<property name="cache" ref="globalCache"/>
+				<property name="cacheManager" ref="cacheManager"/>
+			</bean>
+		</property>
+		<property name="pointcut">
+			<bean class="org.springframework.aop.support.annotation.AnnotationMatchingPointcut">
+				<constructor-arg index="0" >
+					<null/>
+				</constructor-arg>
+				<constructor-arg index="1" value="com.hd.sfw.core.cache.CacheEvict" />
+			</bean>
+		</property>
+	</bean>
+	
+</beans>  

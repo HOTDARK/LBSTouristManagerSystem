@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hd.sys.dao.SysDictMapper">
+	<parameterMap type="com.hd.sys.entity.SysDict" id="SysTypeDictParam" />
+	<resultMap type="com.hd.sys.entity.SysDict" id="SysTypeDictResult">
+		<result column="type_dict_code" property="typeDictCode" javaType="String" />
+		<result column="type_dict_name" property="typeDictName" javaType="String" />
+		<result column="parent_type_dict_code" property="parentTypeDictCode" javaType="String" />
+		<result column="type_leaf_node" property="typeLeafNode" javaType="Long" />
+		<result column="state" property="state" javaType="Long" />
+		<result column="seq_num" property="seqNum" javaType="Long" />
+		<result column="application_flag" property="applicationFlag" javaType="String" />
+	</resultMap>
+	
+	<!-- 主键查询 -->
+	<select id="findByPK" resultMap="SysTypeDictResult" parameterType="String">
+		<![CDATA[
+			select * from sys_dict where type_dict_code = #{id}
+		]]>
+	</select>
+	<!-- 根据父级编码查找系统字典信息 -->
+	<select id="findSysDictByParent" resultMap="SysTypeDictResult">
+		select * from sys_dict where state = 1 and parent_type_dict_code = #{parentCode} order by seq_num asc
+	</select>
+	<!-- 根据父级编码、应用标识查找系统字典信息 -->
+	<select id="findByAppFlag" resultMap="SysTypeDictResult">
+		select * from sys_dict where state = 1 and parent_type_dict_code = #{parentCode} and application_flag = #{appFlag} order by seq_num asc
+	</select>
+
+	<!-- 公共查询方法 -->
+	<sql id="sysTypeConditionSql">
+		<if test="model.typeDictName != null and model.typeDictName!=''">
+			and t.type_dict_name like
+			concat('%',#{model.typeDictName},'%')
+		</if>
+		<if test="model.typeDictCode != null and model.typeDictCode!=''">
+			and t.type_dict_code like
+			concat('%',#{model.typeDictCode},'%')
+		</if>
+		<if test="model.parentTypeDictCode != null and model.parentTypeDictCode!=''">
+			and t.parent_type_dict_code = #{model.parentTypeDictCode}
+		</if>
+		<if test="model.state != null">
+			and t.state = #{model.state}
+		</if>
+	</sql>
+
+	<!-- 查询总数 -->
+	<select id="findNumByCondition" resultType="int"
+		parameterMap="SysTypeDictParam">
+		select
+		count(*)
+		from sys_dict t
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<include refid="sysTypeConditionSql" />
+		</trim>
+	</select>
+
+	<!-- 分页根据对象查询 -->
+	<select id="findByPage" parameterMap="SysTypeDictParam"
+		resultMap="SysTypeDictResult">
+		select t.type_dict_code,t.type_dict_name,t.parent_type_dict_code,t.type_leaf_node,t.state,t.application_flag,
+	    IFNULL(t.mappingName,"") mappingName,IFNULL(t.mappingCode,"") mappingCode,IFNULL(t.seq_num,1) seq_num,t.remark
+		from
+		sys_dict t
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<include refid="sysTypeConditionSql" />
+		</trim>
+		order by t.seq_num
+		<if test="limit!=0">
+		limit #{start},#{limit}
+		</if>
+	</select>
+
+	<!-- 根据对象查询 -->
+	<select id="findByCondition" parameterMap="SysTypeDictParam" resultMap="SysTypeDictResult">
+		select
+		*
+		from
+		sys_dict t
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<include refid="sysTypeConditionSql" />
+		</trim>
+		order by t.seq_num
+	</select>
+
+	<!-- 单条插入 -->
+	<insert id="insert" parameterMap="SysTypeDictParam">
+		<![CDATA[
+			insert into sys_dict(
+				type_dict_code,
+				type_dict_name,
+				parent_type_dict_code,
+				type_leaf_node,
+				state,
+				seq_num,
+				mappingName,
+				mappingCode,
+				remark,
+				application_flag
+			)values(
+				#{typeDictCode},
+				#{typeDictName},
+				#{parentTypeDictCode},
+				#{typeLeafNode},
+				#{state},
+				#{seqNum},
+				#{mappingName},
+				#{mappingCode},
+				#{remark},
+				#{applicationFlag}
+			)
+		]]>
+	</insert>
+
+	<!-- 主键更新 -->
+	<update id="updateByPK" parameterMap="SysTypeDictParam">
+		update sys_dict set
+		type_dict_code=#{typeDictCode}
+		<if test="typeDictName != null">
+			,type_dict_name=#{typeDictName}
+		</if>
+		<if test="parentTypeDictCode != null">
+			,parent_type_dict_code=#{parentTypeDictCode}
+		</if>
+		<if test="typeLeafNode != null">
+			,type_leaf_node=#{typeLeafNode}
+		</if>
+		<if test="state != null">
+			,state=#{state}
+		</if>
+		<if test="seqNum != null">
+			,seq_num=#{seqNum}
+		</if>
+		<if test="applicationFlag != null">
+			,application_flag=#{applicationFlag}
+		</if>
+		<if test="mappingName!=null">
+		,mappingName=#{mappingName}
+		</if>
+		<if test="mappingCode!=null">
+		,mappingCode=#{mappingCode}
+		</if>
+		<if test="remark!=null">
+		,remark=#{remark}
+		</if>
+		where type_dict_code=#{typeDictCode}
+	</update>
+
+	<!-- 主键删除 -->
+	<delete id="deleteByPK" parameterType="String">
+		<![CDATA[
+			delete from sys_dict where type_dict_code = #{id}
+		]]>
+	</delete>
+</mapper>

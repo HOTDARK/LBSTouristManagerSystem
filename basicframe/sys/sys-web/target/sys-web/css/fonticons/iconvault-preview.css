@@ -1,0 +1,84 @@
+/*
+ * Created with iconvau.lt
+ */
+
+@font-face {
+  font-family: "iconvault";
+  src: url("iconvault_b063b90d511bbeba557e2f6448dc015c.eot");
+  src: url("iconvault_b063b90d511bbeba557e2f6448dc015c.eot?#iefix") format("embedded-opentype"),
+       url("iconvault_b063b90d511bbeba557e2f6448dc015c.woff") format("woff"),
+       url("iconvault_b063b90d511bbeba557e2f6448dc015c.ttf") format("truetype"),
+       url("iconvault_b063b90d511bbeba557e2f6448dc015c.svg#iconvault") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+.fonticon{
+  font-family: "iconvault";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 16px;
+  display: inline-block;
+  text-decoration: inherit;
+   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size:14px;
+}
+/* makes the font 33% larger relative to the icon container */
+.fonticon-lg {
+  font-size: 1.33333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+ .size-12 { font-size: 12px; }
+
+ .size-14 { font-size: 14px; }
+
+.size-16 { font-size: 16px; }
+
+.size-18 { font-size: 18px; }
+
+.size-21 { font-size: 21px; }
+
+.size-24 { font-size: 24px; }
+
+.size-36 { font-size: 36px; }
+
+.size-48 { font-size: 48px; }
+
+.size-60 { font-size: 60px; }
+
+.size-72 { font-size: 72px; }
+
+.fonticon-fw {
+  width: 1.28571429em;
+  text-align: center;
+}
+.icon-similar:before { content: "\f100"; }
+.icon-home:before { content: "\f101"; }
+.icon-my:before { content: "\f102"; }
+.icon-favor:before { content: "\f103"; }
+.icon-friendadd:before { content: "\f104"; }
+.icon-comment:before { content: "\f105"; }
+.icon-sort:before { content: "\f106"; }
+.icon-search:before { content: "\f107"; }
+.icon-list:before { content: "\f108"; }
+.icon-vipcard:before { content: "\f109"; }
+.icon-roundadd:before { content: "\f10a"; }
+.icon-right:before { content: "\f10b"; }
+.icon-bianji:before { content: "\f10c"; }
+.icon-roundright:before { content: "\f10d"; }
+.icon-delete:before { content: "\f10e"; }
+.icon-notification:before { content: "\f10f"; }
+.icon-qrcode:before { content: "\f110"; }
+.icon-question:before { content: "\f111"; }
+.icon-form:before { content: "\f112"; }
+.icon-close:before { content: "\f113"; }
+.icon-cameraadd:before { content: "\f114"; }
+.icon-phone:before { content: "\f115"; }
+.icon-add:before { content: "\f116"; }
+.icon-creative:before { content: "\f117"; }
+.icon-check:before { content: "\f118"; }
+.icon-card:before { content: "\f119"; }
+.icon-edit:before { content: "\f11a"; }

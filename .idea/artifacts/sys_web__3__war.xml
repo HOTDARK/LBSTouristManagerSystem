@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sys-web (3):war">
+    <output-path>$PROJECT_DIR$/basicframe/sys/sys-web/target/m2e-wtp/web-resources/META-INF/maven/com.hd.sys/sys-web/target</output-path>
+    <root id="archive" name="sys-web.war">
+      <element id="artifact" artifact-name="sys-web (3):war exploded" />
+    </root>
+  </artifact>
+</component>

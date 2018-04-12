@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hd.sys.dao.SysFuncMapper">
+	<parameterMap type="com.hd.sys.entity.SysFunc" id="SysFunctionParam" />
+	<resultMap type="com.hd.sys.entity.SysFunc" id="SysFunctionResult">
+		<result column="function_id" property="functionId" />
+		<result column="function_code" property="functionCode" />
+		<result column="function_name" property="functionName" />
+		<result column="parent_function_id" property="parentFunctionId" />
+		<result column="function_flag" property="functionFlag" />
+		<result column="function_leaf_node" property="functionLeafNode" />
+		<result column="state" property="state" />
+		<result column="function_type" property="functionType" />
+		<result column="function_url" property="functionUrl" />
+		<result column="seq_num" property="seqNum" />
+		<result column="function_desc" property="functionDesc" />
+		<result column="ico_name" property="icoName" />
+	</resultMap>
+	
+	<sql id="conditionSql">
+		<if test="model.parentFunctionId != null">
+			and f.parent_function_id = #{model.parentFunctionId}
+		</if>
+		<if test="model.functionType != null">
+			and f.function_type = #{model.functionType}
+		</if>
+		<if test="model.state != null">
+			and f.state = #{model.state}
+		</if>
+		<if test="model.functionName != null">
+			and f.function_name like concat('%',#{model.functionName},'%')
+		</if>
+	</sql>
+
+	<!-- 列表查询数据 -->
+	<select id="findByCondition" parameterMap="SysFunctionParam" resultMap="SysFunctionResult">
+		select
+		*
+		from sys_func f
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<include refid="conditionSql" />
+		</trim>
+		order by f.seq_num asc
+	</select>
+
+	<!-- 查询系统所有图标 -->
+	<select id="getAllIcon" resultType="map">
+		select * from sys_icon
+	</select>
+
+	<!-- 根据权限获取功能树 -->
+	<select id="getPermFunctionTree" resultMap="SysFunctionResult" parameterMap="SysFunctionParam">
+		select
+		f.function_id functionid,
+		f.function_code
+		functioncode,
+		f.function_name functionname,
+		f.parent_function_id
+		parentfunctionid,
+		f.function_flag functionflag,
+		f.state state,
+		f.ico_name iconame,
+		f.function_leaf_node functionleafnode,
+		f.function_type functiontype,
+		f.function_url functionurl,
+		f.seq_num
+		seqnum,
+		f.function_desc functiondesc
+		from sys_func f
+		where
+		f.function_type = 2
+		and f.state = 1
+		and f.function_id in
+		(${functionIds})
+		order by f.seq_num asc
+	</select>
+	<!-- <select id="getAllPermFunctionTree" resultMap="SysFunctionResult" parameterMap="SysFunctionParam">
+		select
+		f.function_id functionid,
+		f.function_code
+		functioncode,
+		f.function_name functionname,
+		f.parent_function_id
+		parentfunctionid,
+		f.function_flag functionflag,
+		f.state state,
+		f.ico_name iconame,
+		f.function_leaf_node functionleafnode,
+		f.function_type functiontype,
+		f.function_url functionurl,
+		f.seq_num
+		seqnum,
+		f.function_desc functiondesc
+		from sys_func f
+		where  f.state = 1
+		and f.function_id in
+		(${functionIds})
+		order by f.seq_num asc
+	</select> -->
+
+	<!-- 通过传入的functionId查询数据 -->
+	<select id="findByPK" parameterType="Long" resultMap="SysFunctionResult">
+		select
+		f.function_id functionid,
+		f.function_code
+		functioncode,
+		f.function_name functionname,
+		f.parent_function_id
+		parentfunctionid,
+		(select function_name from sys_func where
+		function_id=f.parent_function_id) parentfunctionname,
+		f.function_flag
+		functionflag,
+		f.state state,
+		f.ico_name iconame,
+		f.function_leaf_node
+		functionleafnode,
+		f.function_type functiontype,
+		f.function_url
+		functionurl,
+		f.seq_num seqnum,
+		f.function_desc functiondesc
+		from
+		sys_func f where
+		function_id = #{id}
+	</select>
+
+	<!-- 通过传入的functionId查询数据 -->
+	<select id="findSysFunctionIds" parameterType="String"
+		resultType="String">
+		select
+		cast(group_concat(f.function_id) as char)
+		from
+		sys_func f where
+		f.function_id in (${_parameter})
+	</select>
+
+
+	<!-- 可以通过传入的PARENTFUNCTIONID查询数据 
+	<select id="queryFunctionIds"  resultType="String">
+		<if test="type == 'Parent'">
+			select getParentList(#{functionIds})
+		</if>
+		<if test="type == 'Child'">
+			select getChildList(#{functionIds})
+		</if>
+	</select>
+	-->
+
+	<!-- 单条插入 -->
+	<insert id="insert" parameterMap="SysFunctionParam" useGeneratedKeys="true" keyProperty="functionId">
+		<![CDATA[
+			insert into sys_func(
+				function_id,
+				function_code,
+				function_name,
+				parent_function_id,
+				function_flag,
+				state,
+				ico_name,
+				function_leaf_node,
+				function_type,
+				function_url,
+				seq_num,
+				function_desc
+			)values(
+				#{functionId},
+				#{functionCode},
+				#{functionName},
+				#{parentFunctionId},
+				#{functionFlag},
+				#{state},
+				#{icoName},
+				#{functionLeafNode},
+				#{functionType},
+				#{functionUrl},
+				#{seqNum},
+				#{functionDesc}
+			)
+		]]>
+		<selectKey keyProperty="functionId" resultType="Long">
+			select
+			last_insert_id() as functionId;
+		</selectKey>
+	</insert>
+
+	<!-- 主键更新 -->
+	<update id="updateByPK" parameterMap="SysFunctionParam">
+		update sys_func set
+		function_id=#{functionId}
+		<if test="functionCode != null">
+			,function_code=#{functionCode}
+		</if>
+		<if test="functionName != null">
+			,function_name=#{functionName}
+		</if>
+		<if test="parentFunctionId != null">
+			,parent_function_id=#{parentFunctionId}
+		</if>
+		<if test="functionFlag != null">
+			,function_flag=#{functionFlag}
+		</if>
+		<if test="state != null">
+			,state=#{state}
+		</if>
+		<if test="icoName != null">
+			,ico_name=#{icoName}
+		</if>
+		<if test="functionLeafNode != null">
+			,function_leaf_node=#{functionLeafNode}
+		</if>
+		<if test="functionType != null">
+			,function_type=#{functionType}
+		</if>
+		<if test="functionUrl != null">
+			,function_url=#{functionUrl}
+		</if>
+		<if test="seqNum != null">
+			,seq_num=#{seqNum}
+		</if>
+		<if test="functionDesc != null">
+			,function_desc=#{functionDesc}
+		</if>
+		where function_id=#{functionId}
+	</update>
+
+	<!-- 主键更新
+	<update id="editSysFunctionState" parameterType="Map">
+		update
+		sys_func set state=${state} where function_id in(${functionIds})
+	</update>
+	 -->
+
+	<!-- 主键删除 -->
+	<delete id="deleteByPK" parameterType="Long">
+		<![CDATA[
+			delete from sys_func where function_id=#{id}
+		]]>
+	</delete>
+
+	<!-- 根据功能code查询功能ID -->
+	<select id="getFuncIdByCode" parameterMap="SysFunctionParam"
+		resultType="Long">
+		select function_id from sys_func where
+		function_code=#{functionCode}
+		<if test="functionId != null">
+			and function_id!=#{functionId}
+		</if>
+	</select>
+	
+	<!-- 根据功能编码模糊匹配功能数据 -->
+	<select id="queryByFuncCode" resultMap="SysFunctionResult">
+		SELECT * FROM sys_func WHERE state = 1 AND function_code LIKE CONCAT(#{funcCode},'%');
+	</select>
+	
+</mapper>

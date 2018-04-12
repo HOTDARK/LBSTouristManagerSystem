@@ -1,0 +1,39 @@
+.bg-grey-999{
+  background-color: #999;
+}
+.btn-code{
+	border: none; border-radius: 5px; padding: 8px 15px; color: #fff; 
+}
+.customer-tabbar{
+	display:block;
+	height:100%;
+	overflow: auto;
+}
+.swipper-item-on{
+	color:#1b9dce;
+	background-color: transparent;
+	border-bottom: #1b9dce 3px solid;
+	padding:12px 0;
+}
+.swiper-slide{
+	text-align: center;
+}
+
+.weui-photo-browser-modal{
+	z-index:999 !important;
+}
+.weui-loadmore__tips{
+	background-color:transparent !important;
+}
+.zindex20{
+	z-index:20;
+}
+.weui-media-box__thumb{
+	width:60px !important;
+	height:60px !important;
+}
+
+.reset-tab.swiper-container{
+	position: absolute;
+	z-index:500;
+}

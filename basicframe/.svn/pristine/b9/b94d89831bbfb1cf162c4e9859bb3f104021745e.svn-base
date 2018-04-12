@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.workflow.app.dao.WorkflowProcessMapper">
+
+	<resultMap id="RM_WorkflowProcess" type="com.hd.workflow.app.model.WorkflowProcess">
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="version" column="version"/>
+        <result property="resourceId" column="resource_id"/>
+        <result property="processId" column="process_id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="processXml" column="process_xml"/>
+        <result property="designerJson" column="designer_json"/>
+        <result property="designerXml" column="designer_xml"/>
+        <result property="lastUpdateTime" column="last_update_time"/>
+        <result property="state" column="state"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,uid,version,resource_id,process_id,name,description,process_xml,designer_json,designer_xml,last_update_time,state
+	    ]]>
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO workflow_process (
+        	id ,
+        	uid,
+        	version ,
+        	resource_id,
+        	process_id ,
+        	name ,
+        	description,
+        	process_xml ,
+        	designer_json ,
+        	designer_xml ,
+        	last_update_time,
+        	state 
+        ) VALUES (
+        	#{id} ,
+        	#{uid},
+        	#{version} ,
+        	#{resourceId} ,
+        	#{processId} ,
+        	#{name} ,
+        	#{description},
+        	#{processXml} ,
+        	#{designerJson} ,
+        	#{designerXml} ,
+        	#{lastUpdateTime},
+        	#{state} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="update" >
+        UPDATE workflow_process
+			<set>
+		        <if test="processId!=null">
+					process_id = #{processId} ,
+		        </if>
+		        <if test="version!=null">
+					version = #{version} ,
+		        </if>
+		        <if test="name!=null">
+					name = #{name} ,
+		        </if>
+		        <if test="processXml!=null">
+					process_xml = #{processXml} ,
+		        </if>
+		        <if test="designerJson!=null">
+					designer_json = #{designerJson} ,
+		        </if>
+		        <if test="designerXml!=null">
+					designer_xml = #{designerXml} ,
+		        </if>
+		        <if test="description!=null">
+					description = #{description} ,
+		        </if>
+		        <if test="lastUpdateTime!=null">
+					last_update_time = #{lastUpdateTime} ,
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM workflow_process WHERE id = #{id} 
+    ]]>
+    </delete>
+    
+   	<sql id="where">
+		<where>	      				
+			<if test="model.id!=0">
+				AND id = #{model.id}
+			</if>
+			<if test="model.uid!=null and model.uid!=''">
+				AND uid = #{model.uid}
+			</if>
+			<if test="model.version!=0">
+				AND version = #{model.version}
+			</if>
+			<if test="model.resourceId!=-1">
+				AND resource_id = #{model.resourceId}
+			</if>
+	       <if test="model.processId!=null and model.processId!=''">
+				AND process_id = #{model.processId}
+			</if>
+	       <if test="model.name!=null and model.name!=''">
+				AND name = #{model.name}
+			</if>
+			<if test="model.state!=0">
+				AND state = #{model.state}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findByPage" resultMap="RM_WorkflowProcess">
+		SELECT id,uid,version,process_id,name,description,last_update_time 
+		FROM workflow_process
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+		
+    <select id="getTotalCount" resultType="int">
+        SELECT count(*) FROM workflow_process
+		<include refid="where"/>
+    </select>
+    
+    <select id="findByProcessId" resultMap="RM_WorkflowProcess">
+    	select * from workflow_process where process_id=#{value} and state=1 and resource_id=0 order by version desc limit 1
+    </select>
+    
+    <select id="findById" resultMap="RM_WorkflowProcess">
+    	select * from workflow_process where id=#{value}
+    </select>
+	
+	<select id="getAllProcessWithoutDetail" resultMap="RM_WorkflowProcess">
+		select id,uid,version,process_id,name,description,last_update_time from workflow_process where state=1 and resource_id=0
+	</select>
+	
+	<select id="getAllProcess" resultMap="RM_WorkflowProcess">
+		select * from workflow_process where state=1 and resource_id=0
+	</select>
+	
+	<select id="getAllProcessByType" resultMap="RM_WorkflowProcess">
+		SELECT
+			*
+		FROM
+			workflow_process
+		WHERE
+			state = 1
+		AND resource_id = 0
+		<if test="processType != null">
+			AND process_type IN (${processType})
+		</if>
+	</select>
+	
+	<select id="findByVersion" resultMap="RM_WorkflowProcess">
+		select * from workflow_process where process_id=#{processId} and version=#{version} limit 1
+	</select>
+	
+	<update id="deleteOfSoft">
+		<!-- 软删除当前和其可能存在的子版本 -->
+		update workflow_process set state=-1 where id=#{value} or resource_id=#{value}
+	</update>
+	
+	<select id="getAllVersion" resultMap="RM_WorkflowProcess">
+		select id,uid,version,last_update_time from workflow_process where state=1 and resource_id=#{value} order by id desc
+	</select>
+	
+	
+</mapper>
+

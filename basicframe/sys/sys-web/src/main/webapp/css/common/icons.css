@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+
+.icons
+{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	margin-right:3px;
+	vertical-align:middle;
+}
+.close
+{
+	background:url(../../images/icons/griddel.png) no-repeat;
+}
+.icon-add
+{
+	background:url(../../images/icons/gridedit.png) no-repeat;
+}
+.icon-edit
+{
+	background:url(../../images/icons/gridedit.png) no-repeat;
+}
+.icon-del
+{
+	background:url(../../images/icons/delete_gray2.png) no-repeat;
+}
+.icon-search
+{
+	/*background: no-repeat;*/
+}
+.icon-close
+{
+	background:url(../../images/icons/griddel.png) no-repeat;
+}

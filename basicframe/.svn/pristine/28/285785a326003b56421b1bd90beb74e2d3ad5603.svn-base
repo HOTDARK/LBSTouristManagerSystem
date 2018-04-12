@@ -1,0 +1,2 @@
+<span ng-if="property.value" ng-controller="WorkflowSubprocessDisplayCtrl">{{subprocessName}}</span>
+<span ng-if="!property.value">未设置</span>

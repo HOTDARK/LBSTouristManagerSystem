@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service id="message-service" 
+    class="flex.messaging.services.MessageService">
+
+    <adapters>
+        <adapter-definition id="actionscript" class="flex.messaging.services.messaging.adapters.ActionScriptAdapter" default="true" />
+    </adapters>
+	
+    <default-channels>
+        <channel ref="my-streaming-amf"/>
+    </default-channels>
+    
+	<destination id="comet" channels="my-streaming-amf">
+		<properties>
+			<network>
+	            <subscription-timeout-minutes>30</subscription-timeout-minutes>
+	        </network>
+			<server>
+			    <message-time-to-live>0</message-time-to-live>
+			    <allow-subtopics>true</allow-subtopics>
+			    <subtopic-separator>.</subtopic-separator>
+		    </server>
+        </properties>
+	</destination>
+</service>

@@ -1,0 +1,127 @@
+/*
+ * Copyright © 2015, Wangding (Chengdu) Tech Co.,Ltd. 
+ * All right reserved.
+ */
+package com.hd.workflow.app.convert.element;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.soecode.wxtools.util.StringUtils;
+import org.apache.commons.lang.WordUtils;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+
+import com.hd.sfw.core.utils.CollectionUtils;
+import com.hd.workflow.app.convert.JsonConvertXml;
+import com.hd.workflow.app.convert.Shape;
+
+/**
+ * @version	0.0.1
+ * @author	<a href="mailto:sunjian@iwangding.com">孙剑</a>
+ * @date	2015-3-3 下午12:01:44
+ */
+public class DefaultElementBuilder implements ElementBuilder {
+
+	@Override
+	public Element create(Shape shape, JsonConvertXml jsonConvertXml) {
+		Element element = DocumentHelper.createElement(WordUtils.uncapitalize(shape.getStencil()));
+		element.addAttribute("id", shape.getResourceId());
+		
+		String name = shape.getProperty("name");
+		if(StringUtils.isNotEmpty(name)){
+			element.addAttribute("name", name);
+		}
+		
+		//处理属性
+		fillProperties(shape, element);
+		
+		return element;
+	}
+	
+	@Override
+	public Element render(Element element, JsonConvertXml jsonConvertXml) {
+		return element;
+	}
+	
+	/**
+	 * 填充属性
+	 * @param shape
+	 * @param element
+	 */
+	protected void fillProperties(Shape shape,Element element){
+		Map<String, Object> properties = getProperties(shape);	
+		if(CollectionUtils.isNotEmpty(properties)){
+			Element propertiesElement = element.addElement("properties");
+			for(Map.Entry<String, Object> entry : properties.entrySet()){
+				if(entry.getValue() instanceof String){
+					Element el = propertiesElement.addElement("property");
+					el.addAttribute("name", entry.getKey());
+					el.addAttribute("value", (String)entry.getValue());
+				}
+			}
+		}
+	}
+	
+	protected Map<String, Object> getProperties(Shape shape){
+		Map<String, Object> properties = new HashMap<String, Object>();
+		for(Map.Entry<String, Object> entry : shape.getProperties().entrySet()){
+			if(!isExclude(entry.getKey())&& ( entry.getValue() instanceof String && StringUtils.isNotEmpty((String)entry.getValue())) ){
+				properties.put(entry.getKey(), entry.getValue());
+			}
+			
+		}
+		
+		return properties;
+		
+	}
+	
+	protected boolean isExclude(String prop){
+		for(String str : JsonConvertXml.EXCLUDES_PROPERTY_NAME){
+			if(str.equals(prop)){
+				return true;
+			}
+		}
+		
+		String[] custom = customExclude();
+		if(custom!=null&&custom.length>0){
+			for(String str : custom){
+				if(str.equals(prop)){
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 自定义需要排除的属性 
+	 * @return
+	 */
+	protected String[] customExclude(){
+		return new String[]{};
+	}
+	
+	/**
+	 * list转换成element 
+	 * @param elementName
+	 * @param subName
+	 * @param list
+	 * @return
+	 */
+	protected Element listToElement(String elementName,String subName,List<Map<String,String>> list){
+		Element el = DocumentHelper.createElement(elementName);
+		
+		for(Map<String, String> param : list){
+			Element item = el.addElement(subName);
+			for(Map.Entry<String, String> entry : param.entrySet()){
+				item.addAttribute(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		return el;
+	}
+
+}

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.api.dao.UserStatisMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.api.entity.UserStatis" id="UserStatisParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="UserStatisResult" type="com.hd.api.entity.UserStatis">
+        <result property="id" column="id"/>
+        <result property="statisDate" column="statisDate"/>
+        <result property="syfs" column="syfs"/>
+        <result property="drsjzcs" column="drsjzcs"/>
+        <result property="drhys" column="drhys"/>
+        <result property="dryhys" column="dryhys"/>
+        <result property="drljzcs" column="drljzcs"/>
+        <result property="createTime" column="createTime"/>
+        <result property="weekRegFirst" column="weekRegFirst"/>
+        <result property="weekKeep" column="weekKeep"/>
+        <result property="monthRegFirst" column="monthRegFirst"/>
+        <result property="monthKeep" column="monthKeep"/>
+        <result property="month3Reg" column="month3Reg"/>
+        <result property="month3Silent" column="month3Silent"/>
+        <result property="month6Reg" column="month6Reg"/>
+        <result property="month6Silent" column="month6Silent"/>
+        <result property="month3SilentYester" column="month3SilentYester"/>
+        <result property="month3YesterBack" column="month3YesterBack"/>
+        <result property="month6SilentYester" column="month6SilentYester"/>
+        <result property="month6YesterBack" column="month6YesterBack"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,statisDate,syfs,drsjzcs,drhys,dryhys,drljzcs,createTime,weekRegFirst,weekKeep,monthRegFirst,monthKeep,month3Reg,month3Silent,month6Reg,month6Silent,month3SilentYester,month3YesterBack,month6SilentYester,month6YesterBack
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.statisDateBegin!=null">
+				AND statisDate >= #{model.statisDateBegin}
+		   </if>
+		   <if test="model.statisDateEnd!=null">
+				AND statisDate >= #{model.statisDateEnd}
+		   </if>
+			<if test="model.syfs!=null">
+				AND syfs = #{model.syfs}
+			</if>
+			<if test="model.drsjzcs!=null">
+				AND drsjzcs = #{model.drsjzcs}
+			</if>
+			<if test="model.drhys!=null">
+				AND drhys = #{model.drhys}
+			</if>
+			<if test="model.dryhys!=null">
+				AND dryhys = #{model.dryhys}
+			</if>
+			<if test="model.drljzcs!=null">
+				AND drljzcs = #{model.drljzcs}
+			</if>
+	       <if test="model.createTimeBegin!=null">
+				AND createTime >= #{model.createTimeBegin}
+		   </if>
+		   <if test="model.createTimeEnd!=null">
+				AND createTime >= #{model.createTimeEnd}
+		   </if>
+			<if test="model.weekRegFirst!=null">
+				AND weekRegFirst = #{model.weekRegFirst}
+			</if>
+			<if test="model.weekKeep!=null">
+				AND weekKeep = #{model.weekKeep}
+			</if>
+			<if test="model.monthRegFirst!=null">
+				AND monthRegFirst = #{model.monthRegFirst}
+			</if>
+			<if test="model.monthKeep!=null">
+				AND monthKeep = #{model.monthKeep}
+			</if>
+			<if test="model.month3Reg!=null">
+				AND month3Reg = #{model.month3Reg}
+			</if>
+			<if test="model.month3Silent!=null">
+				AND month3Silent = #{model.month3Silent}
+			</if>
+			<if test="model.month6Reg!=null">
+				AND month6Reg = #{model.month6Reg}
+			</if>
+			<if test="model.month6Silent!=null">
+				AND month6Silent = #{model.month6Silent}
+			</if>
+			<if test="model.month3SilentYester!=null">
+				AND month3SilentYester = #{model.month3SilentYester}
+			</if>
+			<if test="model.month3YesterBack!=null">
+				AND month3YesterBack = #{model.month3YesterBack}
+			</if>
+			<if test="model.month6SilentYester!=null">
+				AND month6SilentYester = #{model.month6SilentYester}
+			</if>
+			<if test="model.month6YesterBack!=null">
+				AND month6YesterBack = #{model.month6YesterBack}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="UserStatisParam">
+    <![CDATA[
+        INSERT INTO user_statis (
+        	id ,
+        	statisDate ,
+        	syfs ,
+        	drsjzcs ,
+        	drhys ,
+        	dryhys ,
+        	drljzcs ,
+        	createTime ,
+        	weekRegFirst ,
+        	weekKeep ,
+        	monthRegFirst ,
+        	monthKeep ,
+        	month3Reg ,
+        	month3Silent ,
+        	month6Reg ,
+        	month6Silent ,
+        	month3SilentYester ,
+        	month3YesterBack ,
+        	month6SilentYester ,
+        	month6YesterBack 
+        ) VALUES (
+        	#{id} ,
+        	#{statisDate} ,
+        	#{syfs} ,
+        	#{drsjzcs} ,
+        	#{drhys} ,
+        	#{dryhys} ,
+        	#{drljzcs} ,
+        	#{createTime} ,
+        	#{weekRegFirst} ,
+        	#{weekKeep} ,
+        	#{monthRegFirst} ,
+        	#{monthKeep} ,
+        	#{month3Reg} ,
+        	#{month3Silent} ,
+        	#{month6Reg} ,
+        	#{month6Silent} ,
+        	#{month3SilentYester} ,
+        	#{month3YesterBack} ,
+        	#{month6SilentYester} ,
+        	#{month6YesterBack} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM user_statis WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="UserStatisParam">
+        UPDATE user_statis
+			<set>
+		        <if test="statisDate!=null">
+					statisDate = #{statisDate} ,
+		        </if>
+		        <if test="syfs!=null">
+					syfs = #{syfs} ,
+		        </if>
+		        <if test="drsjzcs!=null">
+					drsjzcs = #{drsjzcs} ,
+		        </if>
+		        <if test="drhys!=null">
+					drhys = #{drhys} ,
+		        </if>
+		        <if test="dryhys!=null">
+					dryhys = #{dryhys} ,
+		        </if>
+		        <if test="drljzcs!=null">
+					drljzcs = #{drljzcs} ,
+		        </if>
+		        <if test="createTime!=null">
+					createTime = #{createTime} ,
+		        </if>
+		        <if test="weekRegFirst!=null">
+					weekRegFirst = #{weekRegFirst} ,
+		        </if>
+		        <if test="weekKeep!=null">
+					weekKeep = #{weekKeep} ,
+		        </if>
+		        <if test="monthRegFirst!=null">
+					monthRegFirst = #{monthRegFirst} ,
+		        </if>
+		        <if test="monthKeep!=null">
+					monthKeep = #{monthKeep} ,
+		        </if>
+		        <if test="month3Reg!=null">
+					month3Reg = #{month3Reg} ,
+		        </if>
+		        <if test="month3Silent!=null">
+					month3Silent = #{month3Silent} ,
+		        </if>
+		        <if test="month6Reg!=null">
+					month6Reg = #{month6Reg} ,
+		        </if>
+		        <if test="month6Silent!=null">
+					month6Silent = #{month6Silent} ,
+		        </if>
+		        <if test="month3SilentYester!=null">
+					month3SilentYester = #{month3SilentYester} ,
+		        </if>
+		        <if test="month3YesterBack!=null">
+					month3YesterBack = #{month3YesterBack} ,
+		        </if>
+		        <if test="month6SilentYester!=null">
+					month6SilentYester = #{month6SilentYester} ,
+		        </if>
+		        <if test="month6YesterBack!=null">
+					month6YesterBack = #{month6YesterBack} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="UserStatisResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM user_statis 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="UserStatisResult">
+		SELECT <include refid="columns" />
+		FROM user_statis
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="UserStatisResult">
+		SELECT <include refid="columns" />
+		FROM user_statis
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM user_statis
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

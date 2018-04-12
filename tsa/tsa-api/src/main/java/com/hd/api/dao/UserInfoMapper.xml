@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.api.dao.UserInfoMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.api.entity.UserInfo" id="UserInfoParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="UserInfoResult" type="com.hd.api.entity.UserInfo">
+        <result property="xgh" column="xgh"/>
+        <result property="yhzt" column="yhzt"/>
+        <result property="dlmm" column="dlmm"/>
+        <result property="mmzt" column="mmzt"/>
+        <result property="yhts" column="yhts"/>
+        <result property="dwdm" column="dwdm"/>
+        <result property="xm" column="xm"/>
+        <result property="xmpy" column="xmpy"/>
+        <result property="xbm" column="xbm"/>
+        <result property="csrq" column="csrq"/>
+        <result property="csdm" column="csdm"/>
+        <result property="jg" column="jg"/>
+        <result property="mzm" column="mzm"/>
+        <result property="sfzjh" column="sfzjh"/>
+        <result property="zzmmm" column="zzmmm"/>
+        <result property="dqztm" column="dqztm"/>
+        <result property="xzjb" column="xzjb"/>
+        <result property="hyzk" column="hyzk"/>
+        <result property="rzsj" column="rzsj"/>
+        <result property="sjhm" column="sjhm"/>
+        <result property="jtdz" column="jtdz"/>
+        <result property="xzdz" column="xzdz"/>
+        <result property="zcfs" column="zcfs"/>
+        <result property="zcsj" column="zcsj"/>
+        <result property="lastDlip" column="lastDlip"/>
+        <result property="lastDlsj" column="lastDlsj"/>
+        <result property="openId" column="openId"/>
+        <result property="cardId" column="cardId"/>
+        <result property="field1" column="field1"/>
+        <result property="field2" column="field2"/>
+        <result property="field3" column="field3"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		xgh,yhzt,dlmm,mmzt,yhts,dwdm,xm,xmpy,xbm,csrq,csdm,jg,mzm,sfzjh,zzmmm,dqztm,xzjb,hyzk,rzsj,sjhm,jtdz,xzdz,zcfs,zcsj,lastDlip,lastDlsj,openId,cardId,field1,field2,field3
+	    ]]>
+	</sql>
+	<!-- 用于查询公用抽取的列(过滤字段) -->
+	<sql id="columnsFilter">
+	    <![CDATA[
+		xgh,yhzt,mmzt,yhts,dwdm,xm,xmpy,xbm,csrq,csdm,jg,mzm,sfzjh,zzmmm,dqztm,xzjb,hyzk,rzsj,sjhm,jtdz,xzdz,zcfs,zcsj,lastDlip,lastDlsj,openId,cardId,field1,field2,field3
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+	       <if test="model.xgh!=null and model.xgh!=''">
+				AND xgh = #{model.xgh}
+			</if>
+			<if test="model.yhzt!=null">
+				AND yhzt = #{model.yhzt}
+			</if>
+	       <if test="model.dlmm!=null and model.dlmm!=''">
+				AND dlmm = #{model.dlmm}
+			</if>
+			<if test="model.mmzt!=null">
+				AND mmzt = #{model.mmzt}
+			</if>
+	       <if test="model.yhts!=null and model.yhts!=''">
+				AND yhts = #{model.yhts}
+			</if>
+	       <if test="model.dwdm!=null and model.dwdm!=''">
+				AND dwdm = #{model.dwdm}
+			</if>
+	       <if test="model.xm!=null and model.xm!=''">
+				AND xm = #{model.xm}
+			</if>
+	       <if test="model.xmpy!=null and model.xmpy!=''">
+				AND xmpy = #{model.xmpy}
+			</if>
+	       <if test="model.xbm!=null and model.xbm!=''">
+				AND xbm = #{model.xbm}
+			</if>
+	       <if test="model.csrq!=null and model.csrq!=''">
+				AND csrq = #{model.csrq}
+			</if>
+	       <if test="model.csdm!=null and model.csdm!=''">
+				AND csdm = #{model.csdm}
+			</if>
+	       <if test="model.jg!=null and model.jg!=''">
+				AND jg = #{model.jg}
+			</if>
+	       <if test="model.mzm!=null and model.mzm!=''">
+				AND mzm = #{model.mzm}
+			</if>
+	       <if test="model.sfzjh!=null and model.sfzjh!=''">
+				AND sfzjh = #{model.sfzjh}
+			</if>
+	       <if test="model.zzmmm!=null and model.zzmmm!=''">
+				AND zzmmm = #{model.zzmmm}
+			</if>
+	       <if test="model.dqztm!=null and model.dqztm!=''">
+				AND dqztm = #{model.dqztm}
+			</if>
+	       <if test="model.xzjb!=null and model.xzjb!=''">
+				AND xzjb = #{model.xzjb}
+			</if>
+	       <if test="model.hyzk!=null and model.hyzk!=''">
+				AND hyzk = #{model.hyzk}
+			</if>
+	       <if test="model.rzsj!=null and model.rzsj!=''">
+				AND rzsj = #{model.rzsj}
+			</if>
+	       <if test="model.sjhm!=null and model.sjhm!=''">
+				AND sjhm = #{model.sjhm}
+			</if>
+	       <if test="model.jtdz!=null and model.jtdz!=''">
+				AND jtdz = #{model.jtdz}
+			</if>
+	       <if test="model.xzdz!=null and model.xzdz!=''">
+				AND xzdz = #{model.xzdz}
+			</if>
+			<if test="model.zcfs!=null">
+				AND zcfs = #{model.zcfs}
+			</if>
+	       <if test="model.zcsjBegin!=null">
+				AND zcsj >= #{model.zcsjBegin}
+		   </if>
+		   <if test="model.zcsjEnd!=null">
+				AND zcsj >= #{model.zcsjEnd}
+		   </if>
+	       <if test="model.lastDlip!=null and model.lastDlip!=''">
+				AND lastDlip = #{model.lastDlip}
+			</if>
+	       <if test="model.lastDlsjBegin!=null">
+				AND lastDlsj >= #{model.lastDlsjBegin}
+		   </if>
+		   <if test="model.lastDlsjEnd!=null">
+				AND lastDlsj >= #{model.lastDlsjEnd}
+		   </if>
+	       <if test="model.openId!=null and model.openId!=''">
+				AND openId = #{model.openId}
+			</if>
+	       <if test="model.cardId!=null and model.cardId!=''">
+				AND cardId = #{model.cardId}
+			</if>
+	       <if test="model.field1!=null and model.field1!=''">
+				AND field1 = #{model.field1}
+			</if>
+	       <if test="model.field2!=null and model.field2!=''">
+				AND field2 = #{model.field2}
+			</if>
+	       <if test="model.field3!=null and model.field3!=''">
+				AND field3 = #{model.field3}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="xgh" parameterMap="UserInfoParam">
+    <![CDATA[
+        INSERT INTO user_info (
+        	xgh ,
+        	yhzt ,
+        	dlmm ,
+        	mmzt ,
+        	yhts ,
+        	dwdm ,
+        	xm ,
+        	xmpy ,
+        	xbm ,
+        	csrq ,
+        	csdm ,
+        	jg ,
+        	mzm ,
+        	sfzjh ,
+        	zzmmm ,
+        	dqztm ,
+        	xzjb ,
+        	hyzk ,
+        	rzsj ,
+        	sjhm ,
+        	jtdz ,
+        	xzdz ,
+        	zcfs ,
+        	zcsj ,
+        	lastDlip ,
+        	lastDlsj ,
+        	openId ,
+        	cardId ,
+        	field1 ,
+        	field2 ,
+        	field3 
+        ) VALUES (
+        	#{xgh} ,
+        	#{yhzt} ,
+        	#{dlmm} ,
+        	#{mmzt} ,
+        	#{yhts} ,
+        	#{dwdm} ,
+        	#{xm} ,
+        	#{xmpy} ,
+        	#{xbm} ,
+        	#{csrq} ,
+        	#{csdm} ,
+        	#{jg} ,
+        	#{mzm} ,
+        	#{sfzjh} ,
+        	#{zzmmm} ,
+        	#{dqztm} ,
+        	#{xzjb} ,
+        	#{hyzk} ,
+        	#{rzsj} ,
+        	#{sjhm} ,
+        	#{jtdz} ,
+        	#{xzdz} ,
+        	#{zcfs} ,
+        	#{zcsj} ,
+        	#{lastDlip} ,
+        	#{lastDlsj} ,
+        	#{openId} ,
+        	#{cardId} ,
+        	#{field1} ,
+        	#{field2} ,
+        	#{field3} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM user_info WHERE
+        xgh = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="UserInfoParam">
+        UPDATE user_info
+			<set>
+		        <if test="yhzt!=null">
+					yhzt = #{yhzt} ,
+		        </if>
+		        <if test="dlmm!=null">
+					dlmm = #{dlmm} ,
+		        </if>
+		        <if test="mmzt!=null">
+					mmzt = #{mmzt} ,
+		        </if>
+		        <if test="yhts!=null">
+					yhts = #{yhts} ,
+		        </if>
+		        <if test="dwdm!=null">
+					dwdm = #{dwdm} ,
+		        </if>
+		        <if test="xm!=null">
+					xm = #{xm} ,
+		        </if>
+		        <if test="xmpy!=null">
+					xmpy = #{xmpy} ,
+		        </if>
+		        <if test="xbm!=null">
+					xbm = #{xbm} ,
+		        </if>
+		        <if test="csrq!=null">
+					csrq = #{csrq} ,
+		        </if>
+		        <if test="csdm!=null">
+					csdm = #{csdm} ,
+		        </if>
+		        <if test="jg!=null">
+					jg = #{jg} ,
+		        </if>
+		        <if test="mzm!=null">
+					mzm = #{mzm} ,
+		        </if>
+		        <if test="sfzjh!=null">
+					sfzjh = #{sfzjh} ,
+		        </if>
+		        <if test="zzmmm!=null">
+					zzmmm = #{zzmmm} ,
+		        </if>
+		        <if test="dqztm!=null">
+					dqztm = #{dqztm} ,
+		        </if>
+		        <if test="xzjb!=null">
+					xzjb = #{xzjb} ,
+		        </if>
+		        <if test="hyzk!=null">
+					hyzk = #{hyzk} ,
+		        </if>
+		        <if test="rzsj!=null">
+					rzsj = #{rzsj} ,
+		        </if>
+		        <if test="sjhm!=null">
+					sjhm = #{sjhm} ,
+		        </if>
+		        <if test="jtdz!=null">
+					jtdz = #{jtdz} ,
+		        </if>
+		        <if test="xzdz!=null">
+					xzdz = #{xzdz} ,
+		        </if>
+		        <if test="zcfs!=null">
+					zcfs = #{zcfs} ,
+		        </if>
+		        <if test="zcsj!=null">
+					zcsj = #{zcsj} ,
+		        </if>
+		        <if test="lastDlip!=null">
+					lastDlip = #{lastDlip} ,
+		        </if>
+		        <if test="lastDlsj!=null">
+					lastDlsj = #{lastDlsj} ,
+		        </if>
+		        <if test="openId!=null">
+					openId = #{openId} ,
+		        </if>
+		        <if test="cardId!=null">
+					cardId = #{cardId} ,
+		        </if>
+		        <if test="field1!=null">
+					field1 = #{field1} ,
+		        </if>
+		        <if test="field2!=null">
+					field2 = #{field2} ,
+		        </if>
+		        <if test="field3!=null">
+					field3 = #{field3} 
+		        </if>
+	        </set>
+        WHERE 
+	        xgh = #{xgh} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="UserInfoResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM user_info 
+	        WHERE 
+		        xgh = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="UserInfoResult">
+		SELECT <include refid="columns" />
+		FROM user_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="UserInfoResult">
+		SELECT <include refid="columns" />
+		FROM user_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM user_info
+		<include refid="where"/>
+    </select>
+    
+    <!-- 根据条件查询用户信息(过滤密码) -->
+    <select id="findUserInfoByItems" resultMap="UserInfoResult">
+    	SELECT <include refid="columnsFilter" /> 
+    	FROM user_info
+    	<where>
+    		<if test="openId!=null and openId!=''">
+				AND	openId = #{openId }
+    		</if>
+    		<if test="phone!=null and phone!=''">
+				AND sjhm = #{phone }
+    		</if>
+    	</where>
+    	limit 1
+    </select>
+    
+    <!-- 根据手机号码修改用户绑定信息 -->
+    <update id="updateOpenIdByPhone">
+    	UPDATE user_info SET openId = #{openId } WHERE sjhm = #{phone }
+    </update>
+	
+	<!-- 根据登录名或手机号查询用户信息 -->
+    <select id="findByIdOrPhone" resultMap="UserInfoResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM user_info 
+	        WHERE 
+		        xgh = #{id} OR sjhm = #{id}
+	    ]]>
+	</select>
+	
+</mapper>
+

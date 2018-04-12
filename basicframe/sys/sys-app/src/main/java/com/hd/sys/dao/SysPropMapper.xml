@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hd.sys.dao.SysPropMapper">
+	<resultMap id="RM_SysProperty" type="com.hd.sys.entity.SysProp">
+        <result property="key" column="key"/>
+        <result property="value" column="value"/>
+        <result property="type" column="type"/>
+        <result property="description" column="description"/>
+        <result property="state" column="state"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		`key`,value,type,description,state
+	    ]]>
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="key">
+    <![CDATA[
+        INSERT INTO sys_prop (
+        	`key` ,
+        	value ,
+        	type ,
+        	description,
+        	state 
+        ) VALUES (
+        	#{key} ,
+        	#{value} ,
+        	#{type} ,
+        	#{description} ,
+        	#{state} 
+        )
+    ]]>
+	</insert>
+    
+	<update id="updateByPK" >
+        UPDATE sys_prop
+			<set>
+		        <if test="value!=null">
+					value = #{value} ,
+		        </if>
+		        <if test="type!=null">
+					type = #{type} ,
+		        </if>
+		        <if test="description!=null">
+					description = #{description} ,
+		        </if>
+		        <if test="state!=null">
+					state = #{state} 
+		        </if>
+	        </set>
+        WHERE 
+	        `key` = #{key} 
+	</update>
+
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM sys_prop WHERE `key` = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="findByPK" resultMap="RM_SysProperty">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM sys_prop 
+	        WHERE 
+		        `key` = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="where">
+		<where>	      				
+	       <if test="model.key!=null and model.key!=''">
+				AND `key` = #{model.key}
+			</if>
+	       <if test="model.value!=null and model.value!=''">
+				AND value = #{model.value}
+			</if>
+	       <if test="model.type!=null and model.type!=''">
+				AND type = #{model.type}
+			</if>
+			<if test="model.state!=null">
+				AND state = #{model.state}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findByCondition" resultMap="RM_SysProperty">
+		SELECT <include refid="columns" />
+		FROM sys_prop
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<select id="findByPage" resultMap="RM_SysProperty">
+		SELECT <include refid="columns" />
+		FROM sys_prop
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+		
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM sys_prop
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

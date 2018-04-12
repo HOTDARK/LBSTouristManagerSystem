@@ -1,0 +1,681 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	background-attachment: fixed;
+	font-family: Arial, "微软雅黑", "宋体", Tahoma, Helvetica, sans-serif;
+	/**min-height: 1000px;**/
+	font-size: 12px;
+	background-color:#fff;
+}
+a
+{
+	cursor:pointer;
+}
+.header
+{
+}
+/*.siderbar {
+	display: block;
+	float: left;
+	position:absolute;
+	width: 190px;
+	z-index: 16;
+	border-right:1px solid #fcfcfc;
+}
+.siderbar::before
+{
+	content: "";
+	display: block;
+	width: 190px;
+	position: fixed;
+	bottom: 0;
+	top: 0;
+	z-index: -1;
+	background-color: #fafafa;
+	border: 1px solid #ccc;
+	border-width: 0 1px 0 0
+	
+}*/
+.toolbar
+{
+	padding:3px 10px;
+	position:relative;
+	background-color:#fafafa;
+	border:1px solid #ddd;
+	border-bottom:none;
+}
+.maincontent
+{
+	margin-left: 195px;
+	position:relative;
+	background-color:#fff;
+}
+.list-item .name {
+	font-size: 12px;
+	float: left;
+	height: 14px;
+	line-height: 14px;
+	overflow: hidden;
+	display: block;
+}
+.list-item .time {
+	font-size: 12px;
+	color: #999;
+	float: left;
+	height: 14px;
+	line-height: 14px;
+	display: block;
+	margin-left: 5px;
+}
+
+
+/* start set pages css */
+.set-list-style {
+	height: auto;
+	clear: both;
+	padding-bottom: 0px;
+	overflow:hidden;
+	
+}
+.set-list-style li {
+	line-height: 40px;
+	border-bottom-color: #eee;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	cursor: move;
+	float: left;
+	padding: 2px 0;
+	width: 100%;
+}
+.set-list-style li:hover {
+	background: #f2f2f2;
+}
+.set-list-style li span {
+	display: block;
+	float: left;
+	height: 100%;
+}
+.set-list-style li.grid-title {
+	cursor: text;
+	font-weight: bold;
+	width: 100%;
+}
+.set-list-style li.grid-title:hover {
+	background-color: #ffffff;
+}
+.set-list-style li.grid_title span {
+	font-weight: bold;
+}
+.set-list-style li span.status a {
+	margin-top: 10px;
+}
+.set-list-style li span.must {
+	width: 70px;
+}
+.set-list-style li span.common {
+	width: 70px;
+}
+.set-list-style li span.status {
+	width: 60px;
+}
+.set-list-style li span.text {
+	width: 100px;
+}
+.set-list-style li span.name {
+	width: 180px;
+	overflow: hidden;
+	padding-left: 12px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+}
+.set-list-style li span.form-style {
+	width: 250px;
+	padding-left: 12px;
+}
+.set-list-style li span.status {
+	width: 60px;
+}
+.set-list-style li span.operation {
+	width: 60px;
+}
+.set-list-style li span.form-style input.text {
+	margin: 9px 0px 0px;
+	width: 200px;
+	height: 24px;
+	line-height: 24px;
+	background-color: #f1f1f1;
+	border: 1px solid #eee;
+}
+.set-list-style li span.form-style select {
+	margin: 9px 0px 0px;
+	width: 205px;
+	height: 24px;
+	background-color: #f1f1f1;
+	border: 1px solid #eee;
+}
+.set-list-style li span.form-style textarea {
+	margin: 9px 0px 0px;
+	width: 200px;
+	height: 60px;
+	background-color: #f1f1f1;
+	border: 1px solid #eee;
+}
+.set-list-style li span.form-style span {
+	margin-right: 8px;
+}
+.set-list-style li span.form-style span input.checkbox {
+	margin: 0px 2px 0px 0px;
+}
+.set-list-style li span.form-style hr {
+	border-color: 1px solid #ddd;
+	width: 200px;
+	margin-top: 20px;
+	float: left;
+}
+.set-list-style li span.line {
+	font-weight: bold;
+}
+a.status-on {
+	background: url(../../images/icons/satuson.png) no-repeat center;
+	width: 24px;
+	height: 24px;
+	display: block;
+}
+a.status-off {
+	background: url(../../images/icons/satusoff.png) no-repeat center;
+	width: 24px;
+	height: 24px;
+	display: block;
+}
+a.grid-edit {
+	background: url(../../images/icons/gridedit.png) no-repeat center;
+	width: 16px;
+	height: 16px;
+	display: block;
+	margin-top: 15px;
+	float: left;
+}
+a.grid-editok {
+	background: url(../../images/icons/grideditok.png) no-repeat center;
+	width: 16px;
+	height: 16px;
+	display: block;
+	margin-top: 15px;
+	float: left;
+}
+a.grid-delect {
+	background: url(../../images/icons/griddel.png) no-repeat center;
+	width: 16px;
+	height: 16px;
+	display: block;
+	margin-top: 15px;
+	margin-left: 15px;
+	float: left;
+}
+/* end set pages css */
+
+/**start  dyna***/
+.public-dyn {
+	position: relative;
+	clear: both;
+	min-height: 40px;
+	border-bottom: 1px solid #eeeeee;
+	padding-bottom: 30px;
+}
+.public-dyn .pubbtn {
+	float: right;
+	width: 100px;
+	margin-bottom: 10px;
+}
+.public-dyn .public-area {
+	position: relative;
+	margin: 5px 0px;
+	padding-top: 5px;
+	clear: both;
+}
+.public-dyn .public-area .btn-success {
+	padding: 3px 15px;
+}
+.dyn-content {
+	position: relative;
+	padding: 0 5px;
+	height: 100%;
+	overflow: hidden;
+	/*min-height: 300px;*/
+}
+.dyn-content .list {
+	width: 50%;
+	float: left;
+	position: relative;
+	border-right: 1px solid #eeeeee;
+	height: 100%;
+}
+.dyn-content .detail {
+	width: 50%;
+	float: left;
+	padding-left: 20px;
+	height: 100%;
+	position: relative;
+	min-height: 400px;
+}
+.list_content {
+	margin-right: -1px;
+	padding: 8px 5px 4px;
+	line-height: 32px;
+	clear: both;
+	border-bottom-color: #dddddd;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	position: inherit;
+	cursor:pointer;
+}
+.list_content:hover {
+	background-color: #fafafa;
+}
+.list .active {
+	background: #eee url(../../images/main/left_arrow_w.png) no-repeat right center;
+}
+.list_content .name {
+}
+.list_content .info {
+	float: right;
+	margin-right: 15px;
+}
+.list_content .info span {
+	margin-right: 5px;
+}
+/**end  dyna***/
+/*********************************chart start ***********************************/
+/***
+blog Images(new in v1.2.2)
+***/
+.blog-images {
+	margin-bottom: 0;
+}
+.blog-images li {
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+.blog-images li a:hover {
+	text-decoration: none;
+}
+.blog-images li img {
+	border-radius: 2px;
+	width: 54px;
+	height: 54px;
+	opacity: 0.6;
+	margin: 0 2px 8px;
+}
+.blog-images li img:hover {
+	opacity: 1;
+	box-shadow: 0 0 0 2px #72c02c;
+	transition: all 0.4s ease-in-out 0s;
+	-moz-transition: all 0.4s ease-in-out 0s;
+	-webkit-transition: all 0.4s ease-in-out 0s;
+}
+
+/***
+end blog Images(new in v1.2.2)
+***/
+
+/** blog list **/
+.message-list {
+	position: relative;
+	overflow: visible;
+	/*border-right:1px solid #CCC;*/
+	border-top: dotted 1px #ccc;
+	margin-top:10px;
+}
+.message-list .active {
+	background-origin: padding-box;
+	background-clip: border-box;
+	background-color: #f4f4f4;
+	/*background:url(images/main/left_arrow_w.png) #f4f4f4 no-repeat right  center;*/
+	margin-right: -10px;
+	background-attachment: scroll;
+}
+.message-content {
+	width: 100%;
+	float: left;
+	border-bottom: dotted 1px #ccc;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+.message-content:hover {
+	background-color: #f7f7f7;
+}
+.message_time {
+	color: #999;
+	float: right;
+	margin-right: 15px;
+}
+.userpic {
+	float: left;
+	padding-right: 10px;
+}
+.userpic .group_face {
+	background: #eeeeee;
+	width: 48px;
+	height: 48px;
+	margin-top: 0;
+	border-radius: 4px;
+	border: 1px solid #ddd;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+		  
+}
+.group_face ul {
+	padding:0;
+	 margin:0;
+}
+.group_face ul li {
+	width: 22px;
+	height: 22px;
+	float: left;
+	list-style:none;
+	float:left;
+}
+.group_face ul li img {
+	border-radius: 4px;
+	border: 1px solid #fff;
+	width: 20px;
+	height: 20px;
+}
+.right_content {
+	padding-right: 2px;
+	padding-left:30px;
+	width: 100%;
+	position:relative;
+
+}
+.right_content ul li img
+{
+	max-width:80px;
+	max-height:80px;
+	border:1px solid #ddd;
+}
+.right_content ul li .attachment
+{
+	background:url(../../images/icons/attach.png) no-repeat;
+	padding-left:20px;
+}
+.rejuvenation
+{
+	padding-left:40px;
+}
+.rejuvenation .rejarea
+{
+	margin-bottom:5px;
+}
+/***
+Chats
+***/
+.chats {
+	margin: 0;
+	padding: 0;
+	margin-top: -15px;
+	margin-right: 10px;
+}
+.chats li {
+	list-style: none;
+	padding: 10px 0 10px 0;
+	margin: 10px auto;
+	font-size: 12px;
+	
+}
+.chats li.datetime {
+	color: #999;
+	font-size: 14px;
+	font-weight: 400;
+	border-bottom: 1px solid #f9f9f9;
+	padding: 7px;
+}
+.chats li.in img {
+	float: left;
+	margin-right: 10px;
+}
+.chats li.out img {
+	float: right;
+	margin-left: 10px;
+}
+.chats li.out .person-name {
+	float: right;
+	margin-left: 10px;
+}
+.chats li .message {
+	display: block;
+	padding: 2px;
+	position: relative;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	height:auto;
+	
+}
+ .attachment {
+	background:url(../../images/main/attach.png) no-repeat;
+	padding-left:20px;	
+}
+.chats li .message .img_message 
+{
+	position:relative;
+	height:80px;
+	
+		
+}
+.chats li .message .img_message img
+{
+	max-height:80px;
+	max-width:80px;
+	border:1px solid #ddd;
+		
+}
+.chats li.in .message {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	text-align: left;
+	border: 1px solid #a4d3f2;
+	margin-left: 65px;
+	background: #beddf2;
+}
+.chats li.in .message .arrow {
+	display: block;
+	position: absolute;
+	top: 5px;
+	left: -6px;
+	width: 0;
+	height: 0;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-right: 6px solid #a4d3f2;
+}
+.chats li.out .message .arrow {
+	display: block;
+	position: absolute;
+	top: 5px;
+	right: -6px;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid #ddd;
+}
+.chats li.out .message {
+	border: 1px solid #ddd;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	margin-right: 65px;
+	margin-top:18px;
+	text-align: right;
+	background-color:#f5f5f5;
+	
+	
+}
+.chats li.out .name, .chats li.out .datetime {
+	text-align: right;
+}
+.chats li .message .body {
+	display: block;
+	white-space:normal; 
+}
+.person-images
+{
+	border-radius: 2px;
+	width: 54px;
+	height: 54px;
+	opacity: 0.6;
+	margin: 0 2px 8px;
+}
+.img-message
+{
+	display:inline-block;
+}
+.img-message img
+{
+	width: 32px;
+	height: 32px;
+}
+.backtop
+{
+	width:37px;
+	height:37px;
+	position:fixed;
+	right:20px;
+	bottom:20px;
+	background:url(../../images/main/backtop.png)   no-repeat 0 0;
+	
+}
+.backtop:hover
+{
+	background:url(../../images/main/backtop.png)  no-repeat -37px 0;
+}
+.list-loading
+{
+	background:url(../../images/loading.gif) no-repeat;
+	padding-left:20px;
+	color:#666;
+}
+/*********************************chart end ***********************************/
+
+/*********************************task list start ***********************************/
+/**main task list ****/
+.indexwidget-content {
+	padding: 0;
+	position: relative;
+	/*border-bottom: 1px solid #e4e4e4;*/
+}
+.task-list {
+	cursor: pointer;
+}
+.task-item {
+	position: relative;
+	padding: 15px;
+	border-bottom: 1px solid #e4e4e4;
+	height: 40px;
+}
+.task-item:hover {
+	background-color: #f7f7f7;
+}
+.task-item .tick {
+	width: 20px;
+	height: 20px;
+	float: left;
+	display: block;
+	overflow: hidden;
+	margin-right: 5px;
+}
+.task-item .name {
+	font-size: 12px;
+	float: left;
+	height: 14px;
+	line-height: 14px;
+	overflow: hidden;
+	display: block;
+}
+.task-item .time {
+	font-size: 12px;
+	color: #999;
+	float: left;
+	height: 14px;
+	line-height: 14px;
+	display: block;
+	margin-left: 5px;
+}
+.task-complete .tick {
+	background:url(../../images/task-complete.png) no-repeat left center;
+}
+.task-complete .name {
+	font-style: oblique;
+	text-decoration: line-through;
+}
+.task-item .delect {
+	background: url(../../images/task_delete.png) no-repeat;
+	width: 16px;
+	height: 16px;
+	float: right;
+	display: none;
+}
+.widgettask-tool {
+	position: relative;
+	padding: 15px;
+   /*border-bottom: 1px solid #e4e4e4;*/
+	height: 40px;
+}
+.widgettask-tool a {
+	padding: 0 5px;
+	float: right;
+	color: #333;
+}
+.table-scrollable {
+	position: relative;
+}
+
+/*********************************task list end ***********************************/
+ .order-cell {
+	position: relative;
+	width: 100%;
+	margin-top: 5px;
+	overflow: auto;
+}
+.order-cell .time {
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 10px;
+	line-height: 28px;
+}
+.order-cell .order-list {
+	position: relative;
+	padding-left: 30px;
+}
+.order-cell .order-list .order-item {
+	padding: 8px;
+	font-size: 12px;
+	float: left;
+	border-bottom: 1px solid #e4e4e4;
+	width: 100%;
+	clear: both;
+}
+.order-cell .order-list .order-lastitem {
+	border-bottom: none;
+}
+.order-cell .order-list .order-item:hover {
+	background-color: #f7f7f7;
+}
+.order-item .customer-name {
+	float: left;
+	width: 70px;
+}
+.order-item .order-name {
+	float: left;
+}
+.order-item .order-price {
+	float: right;
+}
+/**main task list end****/
+
+
+
+
+
+

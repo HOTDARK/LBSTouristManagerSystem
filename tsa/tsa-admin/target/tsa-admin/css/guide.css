@@ -1,0 +1,297 @@
+.normal-input
+{
+	padding:6px 12px;
+	font-size: 14px;
+	color: #555;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	margin-right: 5px;
+	
+}
+.normal-input:focus {
+	border-color: #66afe9;
+	
+	
+}
+.search-box .btn-group
+{
+	float: left !important;
+	padding-right: 5px;
+}
+.bootstrap-select .btn
+{
+	/*border-radius: 0;
+	background-color: #ffffff;
+	outline: none;*/
+	
+}
+.bootstrap-select .btn:hover,.bootstrap-select .btn:focus,.bootstrap-select .btn:active
+{
+	/*background-color: #ffffff;
+	border-color: #66afe9;*/
+}
+.bootstrap-select .btn.active,.bootstrap-select .btn:active {
+	/*background-image: none;
+	outline: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;*/
+}
+.btn-group.open .dropdown-toggle
+{
+	box-shadow: none;
+}
+
+
+.btn-red,.btn-red:hover,.btn-red:focus
+{
+	padding:6px 20px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #fff;
+	background-color: #fa474a;
+	border-radius: 0;
+}
+.search-box
+{
+	padding: 10px;
+	border-bottom: 1px solid #fafafa;
+}
+.fixcontent
+{
+	position: relative;
+	margin-right: 310px;
+	
+}
+.wf-iframe
+{
+	float: left; 
+	width: 450px; 
+	height:500px;
+	/*border: 1px solid #eaeaea;*/
+	margin: 5px;
+}
+.in_title
+{
+	padding-top: 5px;
+	color: #ff6600;
+	line-height: 24px;
+	
+	
+}
+.flowicon
+{
+	display: inline-block;
+	float: left;
+	width: 24px;
+	height: 24px;
+	background: url(../images/guide/flow.png);
+}
+.fixright
+{
+	float: right; overflow: hidden;
+	width: 300px;
+	
+}
+.fixright .panel
+{
+	border: 1px solid #eee;
+	margin: 10px 5px;
+}
+.fixright .panel .panel-heading
+{
+	background-color: #fafafa;
+	border-bottom: 1px solid #EAEAEA;
+	color: #3497db;
+	font-size: 14px;
+}
+.fixright .panel .panel-heading span
+{
+	
+	border-left: 4px solid #3497db;
+	padding-left: 5px;
+}
+.fixright ul
+{
+	padding: 0;
+	margin: 0;
+}
+
+.fixright li
+{
+	list-style: none;
+	padding: 7px 0;
+	
+	
+}
+.fixright .title
+{
+	color: #666666;
+	
+}
+.fixright li span.info
+{
+	font-size: 14px;
+}
+.fixright li span
+{
+	color: #000;
+	padding-left: 5px;
+}
+.fixright h5
+{
+	font-size: 14px;
+	font-weight: normal;
+}
+.fixright .desc
+{
+	
+	
+	padding: 5px;
+}
+.fixright .desc span
+{
+	font-size: 14px;
+	padding-left: 20px;
+	background-color: #fafafa;
+	line-height: 30px;
+	background: url(../images/guide/desc.png) no-repeat;
+	
+}
+.guidecontent
+{
+	
+	position: relative;
+	
+}
+.guidecontent ul
+{
+	padding: 0;
+	margin: 0;
+}
+.guidecontent li
+{
+	list-style: none;
+	position: relative;
+        padding-left:460px;
+	
+	
+}
+.guidecontent .stitle
+{
+	position: relative;
+	
+	
+	
+}
+.guidecontent .time-line {
+	position: absolute;
+	top: 16px;
+	bottom: 0px;
+	left: 467px;
+	width: 1px;
+	border-left: #eee solid 2px;
+	z-index: 0;
+	
+}
+.guideselect  a{
+	padding:8px 10px;
+	cursor: pointer;
+}
+.guideselect  a:hover
+{
+	text-decoration: none;
+}
+.guideselect  a.select
+{
+	color: #ff6600;
+}
+.per-icon {
+	position: absolute;
+	top: 2px;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	border: 2px solid #eeeeee;
+	margin-right: 10px;
+	border-radius: 50%;
+	z-index: 100;
+	background-color: #fff;
+}
+.current
+{
+	border: 2px solid #ff6600;
+}
+/*************************/
+.guresule-type
+{
+	padding:2px  5px;
+}
+.guresule-type button
+{
+	line-height: 32px;
+	background: #FFFFFF;
+	border-radius: 0;
+	border: 1px solid #EAEAEA;
+}
+.guresule-type .active
+{
+	background-color: #EAEAEA;
+	box-shadow: none !important;
+}
+.guidetype-icon
+{
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	float: left;
+}
+.icon-691
+{
+	background: url(../images/guide/691.png);
+}
+.icon-678
+{
+	background: url(../images/guide/678.png);
+}
+.icon-offline
+{
+	background: url(../images/guide/offline.png);
+}
+.icon-slow
+{
+	background: url(../images/guide/slow.png);
+}
+.handle .control-btn
+{
+	border: 1px solid #f0edff;
+	color: #4d4d4d;
+	padding: 5px 15px;
+	background-color: #f9f9f9;
+	text-align: center;
+	word-break: keep-all;
+	white-space: nowrap;
+	
+}
+
+ .resnum
+{
+  padding:2px  6px !important;
+  text-align: center;
+  margin-right: 10px;
+  border-radius: 50%;
+  color: #ffffff !important;
+  background-color: #fa474a;
+}
+
+#guideBox .disable a {
+	text-decoration:none;
+	cursor: default;
+}
+.btn_pwd{
+	color:#f0a701; 
+	margin-right:20px;
+}
+.btn_pwd:hover{
+	text-decoration:underline;
+	color:#f0a701; 
+}

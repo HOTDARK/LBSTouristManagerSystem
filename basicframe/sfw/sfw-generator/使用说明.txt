@@ -1,0 +1,12 @@
+sfw-generator用于生成entity和dao层代码，生成是逆向从数据库表生成。
+
+修改 /src/main/resources/generator.xml 以下项：
+basepackage
+outRoot
+jdbc_username
+jdbc_password
+jdbc_url
+jdbc_driver
+
+
+运行com.hd.sfw.generator.App即可

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xie.tsa.dao.UserTrailMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.xie.tsa.entity.UserTrail" id="UserTrailParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="UserTrailResult" type="com.xie.tsa.entity.UserTrail">
+        <result property="trailId" column="trail_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userTrail" column="user_trail"/>
+        <result property="trailPointCount" column="trail_point_count"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="recordTime" column="record_time"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		trail_id,user_id,user_trail,trail_point_count,created_time,record_time
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+	       <if test="model.trailId!=null and model.trailId!=''">
+				AND trail_id = #{model.trailId}
+			</if>
+			<if test="model.userId!=null">
+				AND user_id = #{model.userId}
+			</if>
+	       <if test="model.userTrail!=null and model.userTrail!=''">
+				AND user_trail = #{model.userTrail}
+			</if>
+			<if test="model.trailPointCount!=null">
+				AND trail_point_count = #{model.trailPointCount}
+			</if>
+	       <if test="model.createdTimeBegin!=null">
+				AND created_time >= #{model.createdTimeBegin}
+		   </if>
+		   <if test="model.createdTimeEnd!=null">
+				AND created_time >= #{model.createdTimeEnd}
+		   </if>
+	       <if test="model.recordTimeBegin!=null">
+				AND record_time >= #{model.recordTimeBegin}
+		   </if>
+		   <if test="model.recordTimeEnd!=null">
+				AND record_time >= #{model.recordTimeEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="trailId" parameterMap="UserTrailParam">
+    <![CDATA[
+        INSERT INTO user_trail (
+        	trail_id ,
+        	user_id ,
+        	user_trail ,
+        	trail_point_count ,
+        	created_time ,
+        	record_time 
+        ) VALUES (
+        	#{trailId} ,
+        	#{userId} ,
+        	#{userTrail} ,
+        	#{trailPointCount} ,
+        	#{createdTime} ,
+        	#{recordTime} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM user_trail WHERE
+        trail_id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="UserTrailParam">
+        UPDATE user_trail
+			<set>
+		        <if test="userId!=null">
+					user_id = #{userId} ,
+		        </if>
+		        <if test="userTrail!=null">
+					user_trail = #{userTrail} ,
+		        </if>
+		        <if test="trailPointCount!=null">
+					trail_point_count = #{trailPointCount} ,
+		        </if>
+		        <if test="createdTime!=null">
+					created_time = #{createdTime} ,
+		        </if>
+		        <if test="recordTime!=null">
+					record_time = #{recordTime} 
+		        </if>
+	        </set>
+        WHERE 
+	        trail_id = #{trailId} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="UserTrailResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM user_trail 
+	        WHERE 
+		        trail_id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="UserTrailResult">
+		SELECT <include refid="columns" />
+		FROM user_trail
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="UserTrailResult">
+		SELECT <include refid="columns" />
+		FROM user_trail
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM user_trail
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

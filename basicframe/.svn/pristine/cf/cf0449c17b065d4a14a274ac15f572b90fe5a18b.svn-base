@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hd.sys.dao.SysOrgMapper">
+	<parameterMap type="com.hd.sys.entity.SysOrg" id="SysOrgParam"/>
+	<resultMap type="com.hd.sys.entity.SysOrg" id="SysOrgResult">
+	    <result column="org_id" property="orgId" javaType="Long" />
+	    <result column="org_name" property="orgName" javaType="String" />
+	    <result column="org_full_name" property="orgFullName" javaType="String" />
+	    <result column="parent_org_id" property="parentOrgId" javaType="Long" />
+	    <result column="org_type" property="orgType" javaType="Long" />
+	    <result column="state" property="state" javaType="Long" />
+	    <result column="org_leaf_node" property="orgLeafNode" javaType="Long" />
+	    <result column="deep" property="deep" javaType="Long" />
+	    <result column="org_code" property="orgCode" javaType="String" />
+	    <result column="create_time" property="createTime" javaType="Date" />
+	    <result column="area_name" property="areaName" javaType="String" />
+	    <result column="remark" property="remark" javaType="String" />
+	    <result column="mapping_code" property="mappingCode" javaType="String" />
+	</resultMap>
+	
+	<select id="getQuicklyFuncionByUserId" resultType="String" parameterType="String">
+	SELECT DISTINCT b.function_url FROM sys_user_role a,sys_func b,sys_role_func d WHERE a.role_id=d.role_id AND b.function_id=d.function_id
+    AND a.user_id=#{userId} AND b.parent_function_id=33
+	</select>
+	
+	<select id="getOrgbyUserId" resultMap="SysOrgResult" parameterType="String">
+	SELECT aa.org_id as orgId,aa.org_code as orgCode,aa.org_name as orgName FROM sys_org aa,(
+	select  DISTINCT a.org_id  from sys_role_org a, sys_user_role b   where a.role_id = b.role_id and b.user_id = #{userId}  
+	) bb WHERE aa.org_id=bb.org_id and aa.parent_org_id!='0'
+	</select>
+	
+	<!-- 主键查询  -->
+	<select id="findByPK" resultMap="SysOrgResult" parameterType="Long">
+		<![CDATA[
+		select * from sys_org where org_id = #{id}
+		]]>
+	</select>
+	
+	<select id="getSysOrgByUserId" resultMap="SysOrgResult">
+		SELECT
+			b.org_id orgId,
+			b.org_name orgName,
+			b.org_code orgCode,
+			b.state,
+			b.area_name areaName
+		FROM
+			sys_user a,
+			sys_org b
+		WHERE
+			a.org_id = b.org_id
+		AND a.user_id = #{userId}
+	</select>
+	
+	<select id="getSysOrgByCode" resultMap="SysOrgResult">
+		SELECT
+			b.org_id orgId,
+			b.org_name orgName,
+			b.org_code orgCode,
+			b.state,
+			b.area_name areaName,
+			b.org_type orgType
+		FROM
+			sys_org b
+		WHERE
+			b.org_code = #{orgCode}
+	</select>
+	
+	<!-- 查询组织机构是否重复  -->
+	<select id="doFindOrganizationName" resultMap="SysOrgResult" parameterMap="SysOrgParam">
+		<![CDATA[
+		select * from sys_org where org_name = #{orgName} and parent_org_id = #{parentOrgId}
+		]]>
+		<if test="orgId != null">
+			and org_id != #{orgId}
+		</if>
+	</select>
+	
+	<!-- 判断是否父节点为激活状态，如果不是，不能激活  -->
+	<select id="getParentOrgState" resultMap="SysOrgResult" parameterType="Long">
+		<![CDATA[
+		select k.* from sys_org t left join sys_org k on k.org_id = t.parent_org_id where t.org_id = #{orgId}
+		]]>
+	</select>
+	
+	<!-- 根据机构ID获取机构ID下的所有子机构  -->
+	<select id="getChildOrgIds" resultMap="SysOrgResult" parameterType="Long">
+		<![CDATA[
+			SELECT org_id orgId,parent_org_id parentOrgId FROM sys_org a WHERE a.parent_org_id = #{orgId} 
+		]]>
+	</select>
+	
+	<!-- 查询组织机构树 -->
+	<select id="findByCondition" parameterMap="SysOrgParam" resultMap="SysOrgResult">
+		select
+				o.org_id orgid,
+				o.org_name orgname,
+				o.org_full_name orgfullname,
+				o.parent_org_id parentorgid,
+				o.org_type orgtype,
+				(select type_dict_name from sys_dict where application_flag=o.org_type and parent_type_dict_code='002') typename,
+				o.state state,
+				o.org_leaf_node orgleafnode,
+				o.deep deep,
+				o.org_code orgcode,
+				o.create_time createtime,
+				o.area_name areaName,
+				o.remark remark	
+		from sys_org o
+   			where o.state=1
+   			<if test="model.parentOrgId!=null">
+   				and o.parent_org_id = #{model.parentOrgId}
+   			</if>
+   			<!-- 
+   			<if test="state">
+   				and o.state = #{state}
+   			</if> -->
+   			order by o.org_id
+	</select>
+	
+	<select id="getAllOrgTree" parameterMap="SysOrgParam" resultMap="SysOrgResult">
+		select
+				o.org_id orgid,
+				o.org_name orgname,
+				o.org_full_name orgfullname,
+				o.parent_org_id parentorgid,
+				o.org_type orgtype,
+				(select type_dict_name from sys_dict where application_flag=o.org_type and parent_type_dict_code='002') typename,
+				o.state state,
+				o.org_leaf_node orgleafnode,
+				o.deep deep,
+				o.org_code orgcode,
+				o.create_time createtime,
+				o.area_name areaName,
+				o.remark remark	
+		from sys_org o
+   			where 1=1
+   			<if test="parentOrgId!=null">
+   				and o.parent_org_id = #{parentOrgId}
+   			</if>
+   			<!-- 
+   			<if test="state">
+   				and o.state = #{state}
+   			</if> -->
+   			order by o.org_id
+	</select>
+	
+	<!-- 单条插入 -->
+	<insert id="insert" parameterMap="SysOrgParam"  useGeneratedKeys="true" keyProperty="orgId">
+		<![CDATA[
+			insert into sys_org(
+				org_id,
+				org_name,
+				org_full_name,
+				parent_org_id,
+				org_type,
+				state,
+				org_leaf_node,
+				deep,
+				org_code,
+				create_time,
+				area_name,
+				remark
+			)values(
+				#{orgId},
+				#{orgName},
+				#{orgFullName},
+				#{parentOrgId},
+				#{orgType},
+				#{state},
+				#{orgLeafNode},
+				#{deep},
+				#{orgCode},
+				#{createTime},
+				#{areaName},
+				#{remark}
+			)
+		]]>
+		<selectKey keyProperty="orgId" resultType="Long">
+			select last_insert_id() as orgid;
+		</selectKey>
+	</insert>
+	
+	<!-- 主键更新 -->
+	<update id="updateByPK" parameterMap="SysOrgParam">
+		update sys_org set
+			org_name=#{orgName},
+			org_full_name=#{orgFullName},
+			parent_org_id=#{parentOrgId},
+			org_type=#{orgType},
+			org_code=#{orgCode},
+			area_name=#{areaName},
+			remark=#{remark}
+		where org_id=#{orgId}
+	</update>
+	
+	<!-- 根据机构ID更新状态 -->
+	<update id="updateByOrgId" parameterMap="SysOrgParam">
+		update sys_org set
+			state = #{state}
+		where org_id = #{orgId}
+	</update>
+	
+	<!-- 主键删除 -->
+	<delete id="deleteByKey" parameterType="Long">
+		<![CDATA[
+			delete from sys_org where flow_id=#{flowId}
+		]]>
+	</delete>
+	
+	<!-- 查询父级部门信息 -->
+	<select id="getParentOrgByOrgId" resultMap="SysOrgResult" parameterType="Long">
+		select org_id orgid,parent_org_id parentorgid,org_name orgname from sys_org where org_id=#{parentOrgId}
+	</select>
+	
+	<!-- 查询组织机构(下拉时使用) -->
+	<select id="getOrgData" parameterMap="SysOrgParam" resultMap="SysOrgResult">
+		select
+				o.org_id ,
+				o.org_name ,
+				o.org_full_name ,
+				o.parent_org_id ,
+				o.org_type ,
+				o.state ,
+				o.deep ,
+				o.org_code 
+		from sys_org o
+   			where 1=1
+   			<if test="parentOrgId!=null">
+   				and o.parent_org_id = #{parentOrgId}
+   			</if>
+   			 <if test="orgCode!=null">
+   				and o.org_code = #{orgCode}
+   			</if>
+   			<if test="orgFullName!=null and orgFullName!=''">
+   			   and o.org_full_name=#{orgFullName}
+   			</if>
+   			<if test="state!=null">
+   				and o.state = #{state}
+   			</if>
+   			<if test="orgType!=null">
+   				<if test="orgType==1"><!-- 查询组织机构 -->
+   					and o.org_type=1
+   				</if>
+   				<if test="orgType==2"><!-- 查询总公司和子公司 -->
+   					and (o.org_type=2 or o.org_type=3)
+   				</if>
+   				<if test="orgType==4"><!-- 查询部门 -->
+   					and o.org_type=4
+   				</if>  				
+   			</if>
+   			<if test="orgIds!=null and orgIds!=''"><!-- 此条件用于拓扑图展现时查询组织机构数据 -->
+   				and (o.org_id in (${orgIds}) or o.parent_org_id in (${parentOrgIds}))
+   			</if>
+   			<if test="permissionOrgIds!=null and permissionOrgIds!=''">
+   			 	and o.org_id in (${permissionOrgIds})
+   			</if>
+   			order by o.org_id
+	</select>
+	
+	<!-- 根据组织机构名称查询组织机构信息 -->
+	<select id="getOrgByName" parameterMap="SysOrgParam" resultMap="SysOrgResult">
+		select
+				o.org_id orgid,
+				o.org_name orgname,
+				o.org_full_name orgfullname,
+				o.parent_org_id parentorgid,
+				o.org_type orgtype,
+				o.state state,
+				o.deep deep,
+				o.org_code orgcode
+		from sys_org o
+   			where o.org_name=#{orgName}
+	</select>
+	
+	<!-- 根据org_code查询部门ID -->
+	<select id="getOrgIdByCode" parameterMap="SysOrgParam" resultType="Long">
+		select org_id from sys_org where org_code=#{orgCode}
+		<if test="orgId != null">  
+			and org_id!=#{orgId}
+		</if>
+	</select>
+	
+	<select id="getSysOrgByMappingCode" resultMap="SysOrgResult">
+	select * from sys_org where mapping_code=#{code}
+	</select>
+	
+	<!-- 获取顶级机构信息 -->
+	<select id="findTopOrg" resultMap="SysOrgResult">
+		SELECT * FROM sys_org WHERE parent_org_id = 0 LIMIT 1
+	</select>
+	
+	<!-- 根据上级机构ID获取其下最大机构编码 -->
+	<select id="findMaxOrgCodeByPoi" resultType="String">
+		SELECT MAX(org_code) FROM sys_org a WHERE a.parent_org_id = #{parentOrgId}
+	</select>
+	
+</mapper>

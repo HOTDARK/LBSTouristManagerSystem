@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hd.api.client.dao.WebServiceLogMapper">
+
+	<resultMap id="RM_WebServiceLog" type="com.hd.api.client.entity.SysWebServiceLog">
+        <result property="id" column="id"/>
+        <result property="wid" column="wid"/>
+        <result property="wname" column="wname"/>
+        <result property="input" column="input"/>
+        <result property="output" column="output"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="username" column="username"/>
+        <result property="state" column="state"/>
+        <result property="wf_log_id" column="wfLogId"/>
+        <result property="account" column="account"/>
+        <result property="probeId" column="probe_id"/>
+        <result property="sessionKey" column="session_key"/>
+	</resultMap>
+ 
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,wid,wname,input,output,start_time,end_time,username,state,wf_log_id
+	    ]]>
+	</sql>
+
+	<insert id="insertWebServiceLog" parameterType="com.hd.sfw.webservice.model.WebServiceLog">
+	    <![CDATA[
+	        INSERT INTO web_service_log (
+	        	id ,
+	        	wid ,
+	        	wname ,
+	        	input ,
+	        	output ,
+	        	start_time ,
+	        	end_time ,
+	        	username ,
+	        	state ,
+	        	wf_log_id,
+	        	account,
+	        	probe_id,
+	        	session_key
+	        ) VALUES (
+	        	#{id} ,
+	        	#{wid} ,
+	        	#{wname} ,
+	        	#{input} ,
+	        	#{output} ,
+	        	#{startTime} ,
+	        	#{endTime} ,
+	        	#{username} ,
+	        	#{state} ,
+	        	#{wfLogId},
+	        	#{account},
+	        	#{probeId},
+	        	#{sessionKey}
+	        )
+	    ]]>
+	</insert>
+    
+    <select id="findByPK" resultMap="RM_WebServiceLog">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM web_service_log 
+	        WHERE 
+		        id = #{pkId} 
+	    ]]>
+	</select>
+	
+	<sql id="where">
+		<where>
+	       <if test="model.wid!=null and model.wid!=''">
+				AND wid = #{model.wid}
+			</if>
+	       <if test="model.wname!=null and model.wname!=''">
+				AND wname like '%${model.wname}%'
+			</if>
+	       <if test="model.input!=null and model.input!=''">
+				AND input like '%${model.input}%'
+			</if>
+	       <if test="model.output!=null and model.output!=''">
+				AND output like '%${model.output}%'
+			</if>
+	       <if test="model.username!=null and model.username!=''">
+				AND username like '%${model.username}%'
+			</if>
+			<if test="model.state!=null">
+				AND state = #{model.state}
+			</if>
+			<if test="model.startDate!=null">
+				AND start_time>=#{model.startDate}
+			</if>
+			<if test="model.endDate!=null">
+				 <![CDATA[
+				 AND start_time<=#{model.endDate}
+				 ]]>
+			</if>
+		</where>
+	</sql>
+	
+	
+	<select id="findByPage" resultMap="RM_WebServiceLog">
+		SELECT <include refid="columns" />
+		FROM web_service_log
+		<include refid="where"/>
+		order by id desc
+		limit #{start},#{limit}
+	</select>
+		
+    <select id="getTotalCount" resultType="int">
+        SELECT count(*) FROM web_service_log
+		<include refid="where"/>
+    </select>
+	
+	<select id="getSchemaTitles" resultType="String">
+		SELECT DISTINCT d.name FROM workflow_process d 
+	</select>
+	
+	<select id="getDiagnosisLogReport" parameterType="map" resultType="map" >
+	SELECT c.org_name AS area,a.process_name AS title,COUNT(*) AS sum FROM workflow_log a , sys_user b , sys_org c 
+	WHERE  a.uid=b.user_id AND b.org_id=c.org_id
+	<if test="startTime!=null and endTime!=null">
+	AND  DATE_FORMAT(a.start_time,'%Y-%m-%d') &gt;=#{startTime} AND DATE_FORMAT(a.start_time,'%Y-%m-%d') &lt;=#{endTime}
+	</if>
+	GROUP BY b.org_id,a.process_id
+	ORDER BY sum DESC
+	</select>
+	
+</mapper>
+

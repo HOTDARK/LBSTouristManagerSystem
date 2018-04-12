@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xie.tsa.dao.PlaceInfoMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.xie.tsa.entity.PlaceInfo" id="PlaceInfoParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="PlaceInfoResult" type="com.xie.tsa.entity.PlaceInfo">
+        <result property="id" column="id"/>
+        <result property="mapName" column="mapName"/>
+        <result property="imageUrl" column="imageUrl"/>
+        <result property="remark" column="remark"/>
+        <result property="createdBy" column="createdBy"/>
+        <result property="createdTime" column="createdTime"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,mapName,imageUrl,remark,createdBy,createdTime
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.mapName!=null and model.mapName!=''">
+				AND mapName = #{model.mapName}
+			</if>
+	       <if test="model.imageUrl!=null and model.imageUrl!=''">
+				AND imageUrl = #{model.imageUrl}
+			</if>
+	       <if test="model.remark!=null and model.remark!=''">
+				AND remark = #{model.remark}
+			</if>
+			<if test="model.createdBy!=null">
+				AND createdBy = #{model.createdBy}
+			</if>
+	       <if test="model.createdTimeBegin!=null">
+				AND createdTime >= #{model.createdTimeBegin}
+		   </if>
+		   <if test="model.createdTimeEnd!=null">
+				AND createdTime >= #{model.createdTimeEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="PlaceInfoParam">
+    <![CDATA[
+        INSERT INTO place_info (
+        	id ,
+        	mapName ,
+        	imageUrl ,
+        	remark ,
+        	createdBy ,
+        	createdTime 
+        ) VALUES (
+        	#{id} ,
+        	#{mapName} ,
+        	#{imageUrl} ,
+        	#{remark} ,
+        	#{createdBy} ,
+        	#{createdTime} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM place_info WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="PlaceInfoParam">
+        UPDATE place_info
+			<set>
+		        <if test="mapName!=null">
+					mapName = #{mapName} ,
+		        </if>
+		        <if test="imageUrl!=null">
+					imageUrl = #{imageUrl} ,
+		        </if>
+		        <if test="remark!=null">
+					remark = #{remark} ,
+		        </if>
+		        <if test="createdBy!=null">
+					createdBy = #{createdBy} ,
+		        </if>
+		        <if test="createdTime!=null">
+					createdTime = #{createdTime} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="PlaceInfoResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM place_info 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="PlaceInfoResult">
+		SELECT <include refid="columns" />
+		FROM place_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="PlaceInfoResult">
+		SELECT <include refid="columns" />
+		FROM place_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM place_info
+		<include refid="where"/>
+    </select>
+
+	<select id="findAll" resultMap="PlaceInfoResult">
+		select <include refid="columns"/>
+		FROM  place_info
+	</select>
+</mapper>
+

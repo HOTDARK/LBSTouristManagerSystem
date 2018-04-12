@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.tsa.dao.WxActivityDetailMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.tsa.entity.WxActivityDetail" id="WxActivityDetailParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="WxActivityDetailResult" type="com.hd.tsa.entity.WxActivityDetail">
+        <result property="id" column="id"/>
+        <result property="detailName" column="detailName"/>
+        <result property="detailSubName" column="detailSubName"/>
+        <result property="subCss" column="subCss"/>
+        <result property="detailPicture" column="detailPicture"/>
+        <result property="detailUrl" column="detailUrl"/>
+        <result property="detailDesc" column="detailDesc"/>
+        <result property="useFlag" column="useFlag"/>
+        <result property="deleteFlag" column="deleteFlag"/>
+        <result property="createUser" column="createUser"/>
+        <result property="createDate" column="createDate"/>
+        <result property="modifyUser" column="modifyUser"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="extend1" column="extend1"/>
+        <result property="extend2" column="extend2"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,detailName,detailSubName,subCss,detailPicture,detailUrl,detailDesc,useFlag,deleteFlag,createUser,createDate,modifyUser,modifyDate,extend1,extend2
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.detailName!=null and model.detailName!=''">
+				AND detailName = #{model.detailName}
+			</if>
+	       <if test="model.detailSubName!=null and model.detailSubName!=''">
+				AND detailSubName = #{model.detailSubName}
+			</if>
+	       <if test="model.subCss!=null and model.subCss!=''">
+				AND subCss = #{model.subCss}
+			</if>
+	       <if test="model.detailPicture!=null and model.detailPicture!=''">
+				AND detailPicture = #{model.detailPicture}
+			</if>
+	       <if test="model.detailUrl!=null and model.detailUrl!=''">
+				AND detailUrl = #{model.detailUrl}
+			</if>
+	       <if test="model.detailDesc!=null and model.detailDesc!=''">
+				AND detailDesc = #{model.detailDesc}
+			</if>
+			<if test="model.useFlag!=null">
+				AND useFlag = #{model.useFlag}
+			</if>
+			<if test="model.deleteFlag!=null">
+				AND deleteFlag = #{model.deleteFlag}
+			</if>
+	       <if test="model.createUser!=null and model.createUser!=''">
+				AND createUser = #{model.createUser}
+			</if>
+	       <if test="model.createDateBegin!=null">
+				AND createDate >= #{model.createDateBegin}
+		   </if>
+		   <if test="model.createDateEnd!=null">
+				AND createDate >= #{model.createDateEnd}
+		   </if>
+	       <if test="model.modifyUser!=null and model.modifyUser!=''">
+				AND modifyUser = #{model.modifyUser}
+			</if>
+	       <if test="model.modifyDateBegin!=null">
+				AND modifyDate >= #{model.modifyDateBegin}
+		   </if>
+		   <if test="model.modifyDateEnd!=null">
+				AND modifyDate >= #{model.modifyDateEnd}
+		   </if>
+	       <if test="model.extend1!=null and model.extend1!=''">
+				AND extend1 = #{model.extend1}
+			</if>
+	       <if test="model.extend2!=null and model.extend2!=''">
+				AND extend2 = #{model.extend2}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="WxActivityDetailParam">
+    <![CDATA[
+        INSERT INTO wx_activity_detail (
+        	id ,
+        	detailName ,
+        	detailSubName ,
+        	subCss ,
+        	detailPicture ,
+        	detailUrl ,
+        	detailDesc ,
+        	useFlag ,
+        	deleteFlag ,
+        	createUser ,
+        	createDate ,
+        	modifyUser ,
+        	modifyDate ,
+        	extend1 ,
+        	extend2 
+        ) VALUES (
+        	#{id} ,
+        	#{detailName} ,
+        	#{detailSubName} ,
+        	#{subCss} ,
+        	#{detailPicture} ,
+        	#{detailUrl} ,
+        	#{detailDesc} ,
+        	#{useFlag} ,
+        	#{deleteFlag} ,
+        	#{createUser} ,
+        	#{createDate} ,
+        	#{modifyUser} ,
+        	#{modifyDate} ,
+        	#{extend1} ,
+        	#{extend2} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM wx_activity_detail WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="WxActivityDetailParam">
+        UPDATE wx_activity_detail
+			<set>
+		        <if test="detailName!=null">
+					detailName = #{detailName} ,
+		        </if>
+		        <if test="detailSubName!=null">
+					detailSubName = #{detailSubName} ,
+		        </if>
+		        <if test="subCss!=null">
+					subCss = #{subCss} ,
+		        </if>
+		        <if test="detailPicture!=null">
+					detailPicture = #{detailPicture} ,
+		        </if>
+		        <if test="detailUrl!=null">
+					detailUrl = #{detailUrl} ,
+		        </if>
+		        <if test="detailDesc!=null">
+					detailDesc = #{detailDesc} ,
+		        </if>
+		        <if test="useFlag!=null">
+					useFlag = #{useFlag} ,
+		        </if>
+		        <if test="deleteFlag!=null">
+					deleteFlag = #{deleteFlag} ,
+		        </if>
+		        <if test="createUser!=null">
+					createUser = #{createUser} ,
+		        </if>
+		        <if test="createDate!=null">
+					createDate = #{createDate} ,
+		        </if>
+		        <if test="modifyUser!=null">
+					modifyUser = #{modifyUser} ,
+		        </if>
+		        <if test="modifyDate!=null">
+					modifyDate = #{modifyDate} ,
+		        </if>
+		        <if test="extend1!=null">
+					extend1 = #{extend1} ,
+		        </if>
+		        <if test="extend2!=null">
+					extend2 = #{extend2} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="WxActivityDetailResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM wx_activity_detail 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="WxActivityDetailResult">
+		SELECT <include refid="columns" />
+		FROM wx_activity_detail
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="WxActivityDetailResult">
+		SELECT <include refid="columns" />
+		FROM wx_activity_detail
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM wx_activity_detail
+		<include refid="where"/>
+    </select>
+	<!-- 查询活动 -->
+    <select id="findLayout" resultType="com.hd.tsa.entity.WxActivityDetail">
+        SELECT d.detailName detailName,d.detailPicture detailPicture,d.detailUrl detailUrl,r.layoutId layoutId from wx_activity_info i 
+		INNER JOIN wx_activity_layout l on l.infoId=i.id
+		INNER JOIN wx_activity_rel r on r.layoutId=l.id
+		inner JOIN wx_activity_detail d on d.id=r.detailId
+		where i.useFlag=1 and i.deleteFlag=0
+		ORDER BY r.layoutId,r.seqNum
+    </select>
+</mapper>
+

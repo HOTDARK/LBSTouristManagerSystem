@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.tsa.dao.WebNewsMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.tsa.entity.WebNews" id="WebNewsParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="WebNewsResult" type="com.hd.tsa.entity.WebNews">
+        <result property="id" column="id"/>
+        <result property="newsType" column="newsType"/>
+        <result property="newsTitle" column="newsTitle"/>
+        <result property="keyWord" column="keyWord"/>
+        <result property="picturePath" column="picturePath"/>
+        <result property="pictureFlag" column="pictureFlag"/>
+        <result property="newsContent" column="newsContent"/>
+        <result property="createUser" column="createUser"/>
+        <result property="createTime" column="createTime"/>
+        <result property="publishUser" column="publishUser"/>
+        <result property="publishTime" column="publishTime"/>
+        <result property="publishFlag" column="publishFlag"/>
+        <result property="deleteFlag" column="deleteFlag"/>
+        <result property="extend1" column="extend1"/>
+        <result property="extend2" column="extend2"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		t1.id,t1.newsType,t1.newsTitle,t1.keyWord,t1.picturePath,t1.pictureFlag,t1.newsContent,t1.createUser,t1.createTime,t1.publishUser,t1.publishTime,t1.publishFlag,t1.deleteFlag,t1.extend1,t1.extend2
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND t1.id = #{model.id}
+			</if>
+	       <if test="model.newsType!=null and model.newsType!=''">
+				AND t1.newsType = #{model.newsType}
+			</if>
+	       <if test="model.newsTitle!=null and model.newsTitle!=''">
+				AND t1.newsTitle like concat('%',#{model.newsTitle},'%')
+			</if>
+	       <if test="model.keyWord!=null and model.keyWord!=''">
+				AND t1.keyWord like concat('%',#{model.keyWord},'%')
+			</if>
+	       <if test="model.picturePath!=null and model.picturePath!=''">
+				AND t1.picturePath = #{model.picturePath}
+			</if>
+			<if test="model.pictureFlag!=null">
+				AND t1.pictureFlag = #{model.pictureFlag}
+			</if>
+	       <if test="model.newsContent!=null and model.newsContent!=''">
+				AND t1.newsContent = #{model.newsContent}
+			</if>
+	       <if test="model.createUser!=null and model.createUser!=''">
+				AND t1.createUser = #{model.createUser}
+			</if>
+	       <if test="model.createTimeBegin!=null">
+				AND t1.createTime >= #{model.createTimeBegin}
+		   </if>
+		   <if test="model.createTimeEnd!=null">
+				AND t1.createTime >= #{model.createTimeEnd}
+		   </if>
+	       <if test="model.publishUser!=null and model.publishUser!=''">
+				AND t1.publishUser = #{model.publishUser}
+			</if>
+	       <if test="model.publishTimeBegin!=null">
+				AND t1.publishTime >= #{model.publishTimeBegin}
+		   </if>
+		   <if test="model.publishTimeEnd!=null">
+				AND t1.publishTime >= #{model.publishTimeEnd}
+		   </if>
+			<if test="model.publishFlag!=null">
+				AND t1.publishFlag = #{model.publishFlag}
+			</if>
+			<if test="model.deleteFlag!=null">
+				AND t1.deleteFlag = #{model.deleteFlag}
+			</if>
+	       <if test="model.extend1!=null and model.extend1!=''">
+				AND t1.extend1 = #{model.extend1}
+			</if>
+	       <if test="model.extend2!=null and model.extend2!=''">
+				AND t1.extend2 = #{model.extend2}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="WebNewsParam">
+    <![CDATA[
+        INSERT INTO web_news (
+        	id ,
+        	newsType ,
+        	newsTitle ,
+        	keyWord ,
+        	picturePath ,
+        	pictureFlag ,
+        	newsContent ,
+        	createUser ,
+        	createTime ,
+        	publishUser ,
+        	publishTime ,
+        	publishFlag ,
+        	deleteFlag ,
+        	extend1 ,
+        	extend2 
+        ) VALUES (
+        	#{id} ,
+        	#{newsType} ,
+        	#{newsTitle} ,
+        	#{keyWord} ,
+        	#{picturePath} ,
+        	#{pictureFlag} ,
+        	#{newsContent} ,
+        	#{createUser} ,
+        	#{createTime} ,
+        	#{publishUser} ,
+        	#{publishTime} ,
+        	#{publishFlag} ,
+        	#{deleteFlag} ,
+        	#{extend1} ,
+        	#{extend2} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM web_news WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="WebNewsParam">
+        UPDATE web_news
+			<set>
+		        <if test="newsType!=null">
+					newsType = #{newsType} ,
+		        </if>
+		        <if test="newsTitle!=null">
+					newsTitle = #{newsTitle} ,
+		        </if>
+		        <if test="keyWord!=null">
+					keyWord = #{keyWord} ,
+		        </if>
+		        <if test="picturePath!=null">
+					picturePath = #{picturePath} ,
+		        </if>
+		        <if test="pictureFlag!=null">
+					pictureFlag = #{pictureFlag} ,
+		        </if>
+		        <if test="newsContent!=null">
+					newsContent = #{newsContent} ,
+		        </if>
+		        <if test="createUser!=null">
+					createUser = #{createUser} ,
+		        </if>
+		        <if test="createTime!=null">
+					createTime = #{createTime} ,
+		        </if>
+		        <if test="publishUser!=null">
+					publishUser = #{publishUser} ,
+		        </if>
+					publishTime = #{publishTime} ,
+		        <if test="publishFlag!=null">
+					publishFlag = #{publishFlag} ,
+		        </if>
+		        <if test="deleteFlag!=null">
+					deleteFlag = #{deleteFlag} ,
+		        </if>
+		        <if test="extend1!=null">
+					extend1 = #{extend1} ,
+		        </if>
+		        <if test="extend2!=null">
+					extend2 = #{extend2} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="WebNewsResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM web_news t1
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="WebNewsResult">
+		SELECT <include refid="columns" />
+		FROM web_news t1
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="WebNewsResult">
+		SELECT <include refid="columns" />
+		, t2.user_name createUserName, t3.user_name publishUserName
+		FROM web_news t1
+		left join sys_user t2 on t1.createUser = t2.user_account
+		left join sys_user t3 on t1.publishUser = t3.user_account
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM web_news t1
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

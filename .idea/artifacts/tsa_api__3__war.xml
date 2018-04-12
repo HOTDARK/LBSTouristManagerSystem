@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="tsa-api (3):war">
+    <output-path>$PROJECT_DIR$/tsa/tsa-api/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-api/target</output-path>
+    <root id="archive" name="tsa-api.war">
+      <element id="artifact" artifact-name="tsa-api (3):war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,83 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?-jffucj');
+	src:url('fonts/icomoon.eot?#iefix-jffucj') format('embedded-opentype'),
+		url('fonts/icomoon.woff?-jffucj') format('woff'),
+		url('fonts/icomoon.ttf?-jffucj') format('truetype'),
+		url('fonts/icomoon.svg?-jffucj#icomoon') format('svg');
+	
+	font-weight: normal;
+	font-style: normal;
+}
+
+.fi {
+  display: inline-block;
+  font-family: icomoon;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-right:2px;
+  
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-flow:before {
+	
+	content: "\e606";
+}
+
+.icon-add:before {
+	content: "\e600";
+}
+
+.icon-date:before {
+	content: "\e614";
+}
+
+.icon-delect:before {
+	content: "\e615";
+}
+
+.icon-doulble-arrow-right:before {
+	content: "\e601";
+}
+
+.icon-edit:before {
+	content: "\e602";
+}
+
+.icon-search:before {
+	content: "\e603";
+}
+
+.icon-svg:before {
+	content: "\e604";
+}
+
+.icon-svg2:before {
+	content: "\e605";
+}
+
+.icon--5:before {
+	content: "\e616";
+}
+
+.icon--52:before {
+	content: "\e617";
+}
+

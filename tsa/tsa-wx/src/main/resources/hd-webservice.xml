@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	
+	<!-- 根据base-package指定的路径，扫描其下所有包含注解的Bean，并自动注入 -->
+	<context:component-scan base-package="com.hd.api" />
+	
+	<!-- webservice客户端管理器 -->
+	<bean class="com.hd.sfw.webservice.WebServiceManagerImpl" init-method="load">
+		<property name="clients">
+			<map key-type="com.hd.sfw.webservice.model.enums.WebServiceType">
+				<entry key="AXIS2">
+					<bean class="com.hd.sfw.webservice.client.Axis2Client"/>
+				</entry>
+				<entry key="HTTP">
+					<bean class="com.hd.sfw.webservice.client.HttpClient"/>
+				</entry>
+				<entry key="AXIOM">
+					<bean class="com.hd.sfw.webservice.client.AXIOMClient"/>
+				</entry>
+				<entry key="SOCKET">
+					<bean class="com.hd.sfw.webservice.client.SocketClient"/>
+				</entry>
+				<entry key="CXF">
+					<bean class="com.hd.sfw.webservice.client.CXFClient"/>
+				</entry>
+			</map>
+		</property>
+		<property name="configureLoader" ref="simpleWebServiceConfigureLoader"/>
+	</bean>
+	
+</beans>

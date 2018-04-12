@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/basicframe/api/api.iml" filepath="$PROJECT_DIR$/basicframe/api/api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/api/api-app/api-app.iml" filepath="$PROJECT_DIR$/basicframe/api/api-app/api-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/api/api-sample/api-sample (1).iml" filepath="$PROJECT_DIR$/basicframe/api/api-sample/api-sample (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/api/api-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.api/api-sample/api-sample (2).iml" filepath="$PROJECT_DIR$/basicframe/api/api-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.api/api-sample/api-sample (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/api/api-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.api/api-sample/api-sample (3).iml" filepath="$PROJECT_DIR$/basicframe/api/api-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.api/api-sample/api-sample (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/api/api-app/target/maven-archiver/maven-archiver (1).iml" filepath="$PROJECT_DIR$/basicframe/api/api-app/target/maven-archiver/maven-archiver (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-engine/target/maven-archiver/maven-archiver (10).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-engine/target/maven-archiver/maven-archiver (10).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-sample/target/maven-archiver/maven-archiver (11).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-sample/target/maven-archiver/maven-archiver (11).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-api/target/maven-archiver/maven-archiver (12).iml" filepath="$PROJECT_DIR$/tsa/tsa-api/target/maven-archiver/maven-archiver (12).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/api/api-sample/target/maven-archiver/maven-archiver (2).iml" filepath="$PROJECT_DIR$/basicframe/api/api-sample/target/maven-archiver/maven-archiver (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-all/target/maven-archiver/maven-archiver (3).iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-all/target/maven-archiver/maven-archiver (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-core/target/maven-archiver/maven-archiver (4).iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-core/target/maven-archiver/maven-archiver (4).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-dao/target/maven-archiver/maven-archiver (5).iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-dao/target/maven-archiver/maven-archiver (5).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-log/target/maven-archiver/maven-archiver (6).iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-log/target/maven-archiver/maven-archiver (6).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-webservice/target/maven-archiver/maven-archiver (7).iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-webservice/target/maven-archiver/maven-archiver (7).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sys/sys-web/target/maven-archiver/maven-archiver (8).iml" filepath="$PROJECT_DIR$/basicframe/sys/sys-web/target/maven-archiver/maven-archiver (8).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-app/target/maven-archiver/maven-archiver (9).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-app/target/maven-archiver/maven-archiver (9).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw.iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-all/sfw-all.iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-all/sfw-all.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-core/sfw-core.iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-core/sfw-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-dao/sfw-dao.iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-dao/sfw-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-generator/sfw-generator.iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-generator/sfw-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-log/sfw-log.iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-log/sfw-log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sfw/sfw-webservice/sfw-webservice.iml" filepath="$PROJECT_DIR$/basicframe/sfw/sfw-webservice/sfw-webservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sys/sys.iml" filepath="$PROJECT_DIR$/basicframe/sys/sys.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sys/sys-app/sys-app.iml" filepath="$PROJECT_DIR$/basicframe/sys/sys-app/sys-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sys/sys-web/sys-web (1).iml" filepath="$PROJECT_DIR$/basicframe/sys/sys-web/sys-web (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sys/sys-web/target/m2e-wtp/web-resources/META-INF/maven/com.hd.sys/sys-web/sys-web (2).iml" filepath="$PROJECT_DIR$/basicframe/sys/sys-web/target/m2e-wtp/web-resources/META-INF/maven/com.hd.sys/sys-web/sys-web (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/sys/sys-web/target/m2e-wtp/web-resources/META-INF/maven/com.hd.sys/sys-web/sys-web (3).iml" filepath="$PROJECT_DIR$/basicframe/sys/sys-web/target/m2e-wtp/web-resources/META-INF/maven/com.hd.sys/sys-web/sys-web (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa.iml" filepath="$PROJECT_DIR$/tsa/tsa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-admin/tsa-admin (1).iml" filepath="$PROJECT_DIR$/tsa/tsa-admin/tsa-admin (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-admin/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-admin/tsa-admin (2).iml" filepath="$PROJECT_DIR$/tsa/tsa-admin/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-admin/tsa-admin (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-admin/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-admin/tsa-admin (3).iml" filepath="$PROJECT_DIR$/tsa/tsa-admin/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-admin/tsa-admin (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-api/tsa-api (1).iml" filepath="$PROJECT_DIR$/tsa/tsa-api/tsa-api (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-api/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-api/tsa-api (2).iml" filepath="$PROJECT_DIR$/tsa/tsa-api/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-api/tsa-api (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-api/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-api/tsa-api (3).iml" filepath="$PROJECT_DIR$/tsa/tsa-api/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-api/tsa-api (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-wx/tsa-wx (1).iml" filepath="$PROJECT_DIR$/tsa/tsa-wx/tsa-wx (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-wx/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-wx/tsa-wx (2).iml" filepath="$PROJECT_DIR$/tsa/tsa-wx/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-wx/tsa-wx (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/tsa/tsa-wx/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-wx/tsa-wx (3).iml" filepath="$PROJECT_DIR$/tsa/tsa-wx/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-wx/tsa-wx (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow.iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-app/workflow-app (1).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-app/workflow-app (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-app/target/classes/META-INF/maven/com.hd.workflow/workflow-app/workflow-app (2).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-app/target/classes/META-INF/maven/com.hd.workflow/workflow-app/workflow-app (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-app/target/classes/META-INF/maven/com.hd.workflow/workflow-app/workflow-app (3).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-app/target/classes/META-INF/maven/com.hd.workflow/workflow-app/workflow-app (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-engine/workflow-engine (1).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-engine/workflow-engine (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-engine/target/classes/META-INF/maven/com.hd.workflow/workflow-engine/workflow-engine (2).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-engine/target/classes/META-INF/maven/com.hd.workflow/workflow-engine/workflow-engine (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-engine/target/classes/META-INF/maven/com.hd.workflow/workflow-engine/workflow-engine (3).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-engine/target/classes/META-INF/maven/com.hd.workflow/workflow-engine/workflow-engine (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-sample/workflow-sample (1).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-sample/workflow-sample (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-sample/workflow-sample (2).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-sample/workflow-sample (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-sample/workflow-sample (3).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-sample/workflow-sample (3).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-webapp/workflow-webapp (1).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-webapp/workflow-webapp (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-webapp/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-webapp/workflow-webapp (2).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-webapp/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-webapp/workflow-webapp (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicframe/workflow/workflow-webapp/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-webapp/workflow-webapp (3).iml" filepath="$PROJECT_DIR$/basicframe/workflow/workflow-webapp/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-webapp/workflow-webapp (3).iml" />
+    </modules>
+  </component>
+</project>

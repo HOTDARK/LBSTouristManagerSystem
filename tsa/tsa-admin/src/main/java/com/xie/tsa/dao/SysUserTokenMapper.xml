@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xie.tsa.dao.SysUserTokenMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.xie.tsa.entity.SysUserToken" id="SysUserTokenParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="SysUserTokenResult" type="com.xie.tsa.entity.SysUserToken">
+        <result property="userTelphone" column="user_telphone"/>
+        <result property="token" column="token"/>
+        <result property="createdTime" column="created_time"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		user_telphone,token,created_time
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>
+	       <if test="model.userTelphone!=null and model.userTelphone!=''">
+				AND user_telphone = #{model.userTelphone}
+			</if>
+	       <if test="model.token!=null and model.token!=''">
+				AND token = #{model.token}
+			</if>
+	       <if test="model.createdTimeBegin!=null">
+				AND created_time >= #{model.createdTimeBegin}
+		   </if>
+		   <if test="model.createdTimeEnd!=null">
+				AND created_time >= #{model.createdTimeEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterMap="SysUserTokenParam">
+    <![CDATA[
+        INSERT INTO sys_user_token (
+        	user_telphone ,
+        	token ,
+        	created_time 
+        ) VALUES (
+        	#{userTelphone} ,
+        	#{token} ,
+        	#{createdTime} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM sys_user_token WHERE
+        user_telphone = #{userTelphone}
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="SysUserTokenParam">
+        UPDATE sys_user_token
+			<set>
+		        <if test="token!=null">
+					token = #{token} ,
+		        </if>
+		        <if test="createdTime!=null">
+					created_time = #{createdTime} 
+		        </if>
+	        </set>
+        WHERE
+		user_telphone = #{userTelphone}
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="SysUserTokenResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM sys_user_token 
+	        WHERE 
+		       user_telphone = #{userTelphone}
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="SysUserTokenResult">
+		SELECT <include refid="columns" />
+		FROM sys_user_token
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="SysUserTokenResult">
+		SELECT <include refid="columns" />
+		FROM sys_user_token
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM sys_user_token
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

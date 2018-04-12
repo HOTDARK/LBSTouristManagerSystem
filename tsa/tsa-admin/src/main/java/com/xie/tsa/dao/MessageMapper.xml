@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xie.tsa.dao.MessageMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.xie.tsa.entity.Message" id="MessageParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="MessageResult" type="com.xie.tsa.entity.Message">
+        <result property="messageId" column="message_id"/>
+        <result property="fromUserId" column="from_user_id"/>
+        <result property="toUserId" column="to_user_id"/>
+        <result property="remark" column="remark"/>
+        <result property="multimedia" column="multimedia"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="receivedTime" column="received_time"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		message_id,from_user_id,to_user_id,remark,multimedia,created_time,received_time
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+	       <if test="model.messageId!=null and model.messageId!=''">
+				AND message_id = #{model.messageId}
+			</if>
+			<if test="model.fromUserId!=null">
+				AND from_user_id = #{model.fromUserId}
+			</if>
+			<if test="model.toUserId!=null">
+				AND to_user_id = #{model.toUserId}
+			</if>
+	       <if test="model.remark!=null and model.remark!=''">
+				AND remark = #{model.remark}
+			</if>
+	       <if test="model.multimedia!=null and model.multimedia!=''">
+				AND multimedia = #{model.multimedia}
+			</if>
+	       <if test="model.createdTimeBegin!=null">
+				AND created_time >= #{model.createdTimeBegin}
+		   </if>
+		   <if test="model.createdTimeEnd!=null">
+				AND created_time >= #{model.createdTimeEnd}
+		   </if>
+	       <if test="model.receivedTimeBegin!=null">
+				AND received_time >= #{model.receivedTimeBegin}
+		   </if>
+		   <if test="model.receivedTimeEnd!=null">
+				AND received_time >= #{model.receivedTimeEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="messageId" parameterMap="MessageParam">
+    <![CDATA[
+        INSERT INTO message (
+        	message_id ,
+        	from_user_id ,
+        	to_user_id ,
+        	remark ,
+        	multimedia ,
+        	created_time ,
+        	received_time 
+        ) VALUES (
+        	#{messageId} ,
+        	#{fromUserId} ,
+        	#{toUserId} ,
+        	#{remark} ,
+        	#{multimedia} ,
+        	#{createdTime} ,
+        	#{receivedTime} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM message WHERE
+        message_id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="MessageParam">
+        UPDATE message
+			<set>
+		        <if test="fromUserId!=null">
+					from_user_id = #{fromUserId} ,
+		        </if>
+		        <if test="toUserId!=null">
+					to_user_id = #{toUserId} ,
+		        </if>
+		        <if test="remark!=null">
+					remark = #{remark} ,
+		        </if>
+		        <if test="multimedia!=null">
+					multimedia = #{multimedia} ,
+		        </if>
+		        <if test="createdTime!=null">
+					created_time = #{createdTime} ,
+		        </if>
+		        <if test="receivedTime!=null">
+					received_time = #{receivedTime} 
+		        </if>
+	        </set>
+        WHERE 
+	        message_id = #{messageId} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="MessageResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM message 
+	        WHERE 
+		        message_id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="MessageResult">
+		SELECT <include refid="columns" />
+		FROM message
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="MessageResult">
+		SELECT <include refid="columns" />
+		FROM message
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM message
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	<!-- 引用外部Context,因注解扫描、日志保存。以下引用顺序不能改变 -->
+	<import resource="classpath:hd-sfw.xml"/>
+	<import resource="classpath:hd-sys.xml"/>
+	<import resource="classpath:hd-webservice.xml"/>
+	<!-- 通过aspectj方式 管理日志 交由cglib代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
+	<!-- 根据base-package指定的路径，扫描其下所有包含注解的Bean，并自动注入 -->
+	<context:component-scan base-package="com.hd.tsa">
+		<context:exclude-filter type="regex" expression="com\.hd\.tsa\..*?action\..*?"/>
+	</context:component-scan>
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${hd.jdbc.url}" />
+		<property name="username" value="${hd.jdbc.user}" />
+		<property name="password" value="${hd.jdbc.password}" />
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="20" />
+		<property name="maxWait" value="60000" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+		<property name="filters" value="stat" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	    <property name="configLocation">
+			<value>classpath:mybatis-config.xml</value>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动匹配Mapper映射文件 framework，hd-framework-include-datasource.xml里已通过MapperScannerConfigurer方式扫描 -->
+	</bean>
+	
+	<!-- ******国际化支持配置 开始****** -->
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	<!-- session方式 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+	<!-- 配置国际化资源文件 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<!-- 其中basename用来指定properties文件的通用名 如实例中的messages_en.properties,messages_ja.properties通用名都是messages -->
+		<property name="basenames">
+			<list>
+				<value>globalMessages</value>
+				<value>temp</value>
+			</list>
+		</property>
+		<property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+	<!-- ******国际化支持配置 结束****** -->
+	
+    <!-- 生成验证码 -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">no</prop>
+						<prop key="kaptcha.border.color">105,179,90</prop>
+						<prop key="kaptcha.textproducer.font.color">3,144,69</prop>
+						<prop key="kaptcha.image.width">117</prop>
+						<prop key="kaptcha.image.height">43</prop>
+						<prop key="kaptcha.textproducer.font.size">34</prop>
+						<prop key="kaptcha.textproducer.char.space">6</prop>
+						<prop key="kaptcha.background.clear.from">white</prop>
+						<prop key="kaptcha.background.clear.to">white</prop>
+						<prop key="kaptcha.noise.impl">com.hd.sys.core.utils.NoiseRenderer</prop>
+						<prop key="kaptcha.session.key">code</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">华文宋体</prop>
+						<prop key="kaptcha.word.impl">com.hd.sys.core.utils.ThinWordRenderer</prop>
+						<prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 业务日志持久化 -->
+	<bean class="com.hd.sfw.log.trace.LogPersisterExecutorFactoryBean" >
+		<property name="logIdApplier" ref="defaultLogIdApplier"/>
+		<property name="persisters">
+			<list>
+				<ref bean="sysLogOperPersister"/>
+				<ref bean="webServiceLogPersister"/>
+			</list>
+		</property>
+	</bean>
+	
+   <!-- 定时器初始化-->
+	<bean class="com.hd.tsa.timer.TimerManager" init-method="timerStart" />
+</beans>

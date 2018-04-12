@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xie.tsa.dao.WorkerHlepRecordMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.xie.tsa.entity.WorkerHlepRecord" id="WorkerHlepRecordParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="WorkerHlepRecordResult" type="com.xie.tsa.entity.WorkerHlepRecord">
+        <result property="recordId" column="record_id"/>
+        <result property="helpInfoId" column="help_info_id"/>
+        <result property="touristId" column="tourist_id"/>
+        <result property="workerId" column="worker_id"/>
+        <result property="touristRemark" column="tourist_remark"/>
+        <result property="level" column="level"/>
+        <result property="totalTime" column="total_time"/>
+        <result property="releaseTime" column="release_time"/>
+        <result property="finishedTime" column="finished_time"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		record_id,help_info_id,tourist_id,worker_id,tourist_remark,level,total_time,release_time,finished_time
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+	       <if test="model.recordId!=null and model.recordId!=''">
+				AND record_id = #{model.recordId}
+			</if>
+	       <if test="model.helpInfoId!=null and model.helpInfoId!=''">
+				AND help_info_id = #{model.helpInfoId}
+			</if>
+			<if test="model.touristId!=null">
+				AND tourist_id = #{model.touristId}
+			</if>
+			<if test="model.workerId!=null">
+				AND worker_id = #{model.workerId}
+			</if>
+	       <if test="model.touristRemark!=null and model.touristRemark!=''">
+				AND tourist_remark = #{model.touristRemark}
+			</if>
+			<if test="model.level!=null">
+				AND level = #{model.level}
+			</if>
+	       <if test="model.totalTime!=null and model.totalTime!=''">
+				AND total_time = #{model.totalTime}
+			</if>
+	       <if test="model.releaseTimeBegin!=null">
+				AND release_time >= #{model.releaseTimeBegin}
+		   </if>
+		   <if test="model.releaseTimeEnd!=null">
+				AND release_time >= #{model.releaseTimeEnd}
+		   </if>
+	       <if test="model.finishedTimeBegin!=null">
+				AND finished_time >= #{model.finishedTimeBegin}
+		   </if>
+		   <if test="model.finishedTimeEnd!=null">
+				AND finished_time >= #{model.finishedTimeEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="recordId" parameterMap="WorkerHlepRecordParam">
+    <![CDATA[
+        INSERT INTO worker_hlep_record (
+        	record_id ,
+        	help_info_id ,
+        	tourist_id ,
+        	worker_id ,
+        	tourist_remark ,
+        	level ,
+        	total_time ,
+        	release_time ,
+        	finished_time 
+        ) VALUES (
+        	#{recordId} ,
+        	#{helpInfoId} ,
+        	#{touristId} ,
+        	#{workerId} ,
+        	#{touristRemark} ,
+        	#{level} ,
+        	#{totalTime} ,
+        	#{releaseTime} ,
+        	#{finishedTime} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM worker_hlep_record WHERE
+        record_id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="WorkerHlepRecordParam">
+        UPDATE worker_hlep_record
+			<set>
+		        <if test="helpInfoId!=null">
+					help_info_id = #{helpInfoId} ,
+		        </if>
+		        <if test="touristId!=null">
+					tourist_id = #{touristId} ,
+		        </if>
+		        <if test="workerId!=null">
+					worker_id = #{workerId} ,
+		        </if>
+		        <if test="touristRemark!=null">
+					tourist_remark = #{touristRemark} ,
+		        </if>
+		        <if test="level!=null">
+					level = #{level} ,
+		        </if>
+		        <if test="totalTime!=null">
+					total_time = #{totalTime} ,
+		        </if>
+		        <if test="releaseTime!=null">
+					release_time = #{releaseTime} ,
+		        </if>
+		        <if test="finishedTime!=null">
+					finished_time = #{finishedTime} 
+		        </if>
+	        </set>
+        WHERE 
+	        record_id = #{recordId} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="WorkerHlepRecordResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM worker_hlep_record 
+	        WHERE 
+		        record_id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="WorkerHlepRecordResult">
+		SELECT <include refid="columns" />
+		FROM worker_hlep_record
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="WorkerHlepRecordResult">
+		SELECT <include refid="columns" />
+		FROM worker_hlep_record
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM worker_hlep_record
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

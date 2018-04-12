@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/basicframe/api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/api/api-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/api/api-sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/api/api-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.api/api-sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sfw" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sfw/sfw-all" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sfw/sfw-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sfw/sfw-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sfw/sfw-generator" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sfw/sfw-log" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sfw/sfw-webservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sys" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sys/sys-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sys/sys-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/sys/sys-web/target/m2e-wtp/web-resources/META-INF/maven/com.hd.sys/sys-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow/workflow-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow/workflow-app/target/classes/META-INF/maven/com.hd.workflow/workflow-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow/workflow-engine" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow/workflow-engine/target/classes/META-INF/maven/com.hd.workflow/workflow-engine" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow/workflow-sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow/workflow-sample/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow/workflow-webapp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basicframe/workflow/workflow-webapp/target/m2e-wtp/web-resources/META-INF/maven/com.hd.workflow/workflow-webapp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tsa" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tsa/tsa-admin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tsa/tsa-admin/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-admin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tsa/tsa-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tsa/tsa-api/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tsa/tsa-wx" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tsa/tsa-wx/target/m2e-wtp/web-resources/META-INF/maven/com.hd.tsa/tsa-wx" charset="UTF-8" />
+  </component>
+</project>

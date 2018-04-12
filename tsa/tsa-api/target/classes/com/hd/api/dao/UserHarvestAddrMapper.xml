@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.api.dao.UserHarvestAddrMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.api.entity.UserHarvestAddr" id="UserHarvestAddrParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="UserHarvestAddrResult" type="com.hd.api.entity.UserHarvestAddr">
+        <result property="id" column="id"/>
+        <result property="xgh" column="xgh"/>
+        <result property="addrConsignee" column="addrConsignee"/>
+        <result property="addrContact" column="addrContact"/>
+        <result property="addrArea" column="addrArea"/>
+        <result property="addrDetail" column="addrDetail"/>
+        <result property="addrLabel" column="addrLabel"/>
+        <result property="addrDefault" column="addrDefault"/>
+        <result property="remarks" column="remarks"/>
+        <result property="field1" column="field1"/>
+        <result property="field2" column="field2"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,xgh,addrConsignee,addrContact,addrArea,addrDetail,addrLabel,addrDefault,remarks,field1,field2
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.xgh!=null and model.xgh!=''">
+				AND xgh = #{model.xgh}
+			</if>
+	       <if test="model.addrConsignee!=null and model.addrConsignee!=''">
+				AND addrConsignee = #{model.addrConsignee}
+			</if>
+	       <if test="model.addrContact!=null and model.addrContact!=''">
+				AND addrContact = #{model.addrContact}
+			</if>
+	       <if test="model.addrArea!=null and model.addrArea!=''">
+				AND addrArea = #{model.addrArea}
+			</if>
+	       <if test="model.addrDetail!=null and model.addrDetail!=''">
+				AND addrDetail = #{model.addrDetail}
+			</if>
+	       <if test="model.addrLabel!=null and model.addrLabel!=''">
+				AND addrLabel = #{model.addrLabel}
+			</if>
+			<if test="model.addrDefault!=null">
+				AND addrDefault = #{model.addrDefault}
+			</if>
+	       <if test="model.remarks!=null and model.remarks!=''">
+				AND remarks = #{model.remarks}
+			</if>
+	       <if test="model.field1!=null and model.field1!=''">
+				AND field1 = #{model.field1}
+			</if>
+			<if test="model.field2!=null">
+				AND field2 = #{model.field2}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="UserHarvestAddrParam">
+    <![CDATA[
+        INSERT INTO user_harvest_addr (
+        	id ,
+        	xgh ,
+        	addrConsignee ,
+        	addrContact ,
+        	addrArea ,
+        	addrDetail ,
+        	addrLabel ,
+        	addrDefault ,
+        	remarks ,
+        	field1 ,
+        	field2 
+        ) VALUES (
+        	#{id} ,
+        	#{xgh} ,
+        	#{addrConsignee} ,
+        	#{addrContact} ,
+        	#{addrArea} ,
+        	#{addrDetail} ,
+        	#{addrLabel} ,
+        	#{addrDefault} ,
+        	#{remarks} ,
+        	#{field1} ,
+        	#{field2} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM user_harvest_addr WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="UserHarvestAddrParam">
+        UPDATE user_harvest_addr
+			<set>
+		        <if test="xgh!=null">
+					xgh = #{xgh} ,
+		        </if>
+		        <if test="addrConsignee!=null">
+					addrConsignee = #{addrConsignee} ,
+		        </if>
+		        <if test="addrContact!=null">
+					addrContact = #{addrContact} ,
+		        </if>
+		        <if test="addrArea!=null">
+					addrArea = #{addrArea} ,
+		        </if>
+		        <if test="addrDetail!=null">
+					addrDetail = #{addrDetail} ,
+		        </if>
+		        <if test="addrLabel!=null">
+					addrLabel = #{addrLabel} ,
+		        </if>
+		        <if test="addrDefault!=null">
+					addrDefault = #{addrDefault} ,
+		        </if>
+		        <if test="remarks!=null">
+					remarks = #{remarks} ,
+		        </if>
+		        <if test="field1!=null">
+					field1 = #{field1} ,
+		        </if>
+		        <if test="field2!=null">
+					field2 = #{field2} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="UserHarvestAddrResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM user_harvest_addr 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="UserHarvestAddrResult">
+		SELECT <include refid="columns" />
+		FROM user_harvest_addr
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="UserHarvestAddrResult">
+		SELECT <include refid="columns" />
+		FROM user_harvest_addr
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM user_harvest_addr
+		<include refid="where"/>
+    </select>
+    
+    <!-- 按学工号修改收货地址 -->
+    <update id="updateByXgh">
+        UPDATE user_harvest_addr SET addrDefault = 0 WHERE xgh = #{xgh}
+	</update>
+	
+</mapper>
+

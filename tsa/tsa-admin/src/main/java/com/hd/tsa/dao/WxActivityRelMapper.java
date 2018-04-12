@@ -1,0 +1,23 @@
+/*
+ * Copyright © 2017, hd (ChongQing) Tech Co.,Ltd. 
+ * All right reserved.
+ */
+package com.hd.tsa.dao;
+import com.hd.sfw.dao.mybatis.BaseMapper;
+import com.hd.tsa.entity.WxActivityRel;
+
+/**
+ * TODO 类描述
+ * @version	0.0.1
+ * @author	generator
+ * @date	2017-11-13
+ */
+public interface WxActivityRelMapper extends BaseMapper<WxActivityRel,java.lang.Long>{
+
+	/**
+	 * 根据layoutId删除
+	 * @param layoutId
+	 * @throws Exception
+	 */
+	public void deleteByLayoutId(Long layoutId)throws Exception;
+}

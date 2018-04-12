@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hd.tsa.dao.WxActivityRelMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.hd.tsa.entity.WxActivityRel" id="WxActivityRelParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="WxActivityRelResult" type="com.hd.tsa.entity.WxActivityRel">
+        <result property="id" column="id"/>
+        <result property="layoutId" column="layoutId"/>
+        <result property="detailId" column="detailId"/>
+        <result property="seqNum" column="seqNum"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,layoutId,detailId,seqNum
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+			<if test="model.layoutId!=null">
+				AND layoutId = #{model.layoutId}
+			</if>
+			<if test="model.detailId!=null">
+				AND detailId = #{model.detailId}
+			</if>
+			<if test="model.seqNum!=null">
+				AND seqNum = #{model.seqNum}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="WxActivityRelParam">
+    <![CDATA[
+        INSERT INTO wx_activity_rel (
+        	id ,
+        	layoutId ,
+        	detailId ,
+        	seqNum 
+        ) VALUES (
+        	#{id} ,
+        	#{layoutId} ,
+        	#{detailId} ,
+        	#{seqNum} 
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM wx_activity_rel WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="WxActivityRelParam">
+        UPDATE wx_activity_rel
+			<set>
+		        <if test="layoutId!=null">
+					layoutId = #{layoutId} ,
+		        </if>
+		        <if test="detailId!=null">
+					detailId = #{detailId} ,
+		        </if>
+		        <if test="seqNum!=null">
+					seqNum = #{seqNum} 
+		        </if>
+	        </set>
+        WHERE 
+	        id = #{id} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="WxActivityRelResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM wx_activity_rel 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="WxActivityRelResult">
+		SELECT <include refid="columns" />
+		FROM wx_activity_rel
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="WxActivityRelResult">
+		SELECT <include refid="columns" />
+		FROM wx_activity_rel
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM wx_activity_rel
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

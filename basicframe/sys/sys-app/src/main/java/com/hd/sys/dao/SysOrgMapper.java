@@ -1,0 +1,138 @@
+package com.hd.sys.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.hd.sfw.dao.mybatis.BaseMapper;
+import com.hd.sys.entity.SysOrg;
+
+/**
+ * 
+ * @author somnuscy
+ *
+ */
+public interface SysOrgMapper extends BaseMapper<SysOrg, Long> {
+	/**
+	 * <p>描述：判断组织机构是否重复 </p>
+	 * <p>日期：2014-12-9 下午4:58:44 </p>
+	 * @param org 机构对象
+	 * @return 机构对象
+	 */
+	public SysOrg doFindOrganizationName(SysOrg org) throws Exception;
+	/**
+	 * <p>描述：根据机构ID更新状态 </p>
+	 * <p>日期：2014-12-9 下午4:59:55 </p>
+	 * @param org 要激活机构ID
+	 */
+	public void updateByOrgId(SysOrg org) throws Exception;
+	/**
+	 * 
+	 * <p>描述：根据父级部门id查询父级部门详细信息 </p>
+	 * <p>日期：2014-12-11 下午03:44:28 </p>
+	 * @param parentOrgId 父级部门id
+	 * @return 返回父级部门详细信息,如果返回null则表示无父级部门
+	 * @throws Exception
+	 */
+	public SysOrg getParentOrgByOrgId(Long parentOrgId) throws Exception;
+	/**
+	 * <p>说明: 判断是否父节点为激活状态，如果不是，不能激活</p>
+	 * <p>日期：2014-12-12 下午11:41:57 </p>
+	 * @param orgId 机构ID
+	 * @return true：是，false：否
+	 */
+	public List<SysOrg> getParentOrgState(Long orgId) throws Exception;
+	/**
+	 * <p>描述：根据机构ID获取机构ID下的所有子机构 </p>
+	 * <p>日期：2014-12-20 上午1:21:01 </p>
+	 * @param orgId 机构ID
+	 * @return 根据机构ID获取机构ID下的所有子机构
+	 */
+	public List<SysOrg> getChildOrgIds(Long orgId) throws Exception;
+	/**
+	 * 查询组织机构信息,用作下拉选择
+	 * @param sysOrg 组织机构
+	 * @return 返回符合条件的组织机构集合
+	 * @throws Exception
+	 */
+	public List<SysOrg> getOrgData(SysOrg sysOrg) throws Exception;
+	/**
+	 * 通过组织机构名称查询组织机构信息
+	 * @param sysOrg 组织机构
+	 * @return 返回组织机构信息
+	 * @throws Exception
+	 */
+	public SysOrg getOrgByName(SysOrg sysOrg) throws Exception;
+	/**
+	 * 根据组织机构实体参数查询对应的组织机构ID
+	 * @param sysOrg 组织机构实体
+	 * @return 返回对应的机构ID,如果没有则返回null
+	 * @throws Exception
+	 */
+	public Long getOrgIdByCode(SysOrg sysOrg) throws Exception;
+	
+	public SysOrg getSysOrgByUserId(Long userId) throws Exception;
+
+	public SysOrg getSysOrgByCode(String orgCode);
+
+	public List<SysOrg> getOrgbyUserId(String userId);
+
+	public List<SysOrg> getAllOrgTree(SysOrg org);
+
+	public List<String> getQuicklyFuncionByUserId(String userId);
+
+	public SysOrg getSysOrgByMappingCode(String code);
+	/**
+	 * 获取顶级机构信息
+	 * @param code
+	 * @return
+	 */
+	public SysOrg findTopOrg();
+	/**
+	 * 根据上级机构ID获取其下最大机构编码
+	 * @param parentOrgId
+	 * @return
+	 */
+	public String findMaxOrgCodeByPoi(Long parentOrgId);
+//	/**
+//	 * <p>描述：查询组织机构数据 </p>
+//	 * <p>日期：2014-12-9 上午09:49:17 </p>
+//	 * @param org 组织机构实体类,如果查询某一个组织机构的下属机构则设置parentOrgId,如果查询所有部门,则传入参数null
+//	 * @param flag 表示是否需要添加一个跟节点,为true表示添加,false表示不添加
+//	 * @return 返回组织机构集合
+//	 * @throws Exception
+//	 */
+//	public List<SysOrg> getOrgTree(SysOrg org, boolean flag) throws Exception;
+//
+//	/**
+//	 * <p>描述：获取用户当前所在机构 </p>
+//	 * <p>日期：2014-12-9 下午4:57:26 </p>
+//	 * @param ogrId 机构ID
+//	 * @return 获取用户当前所在机构
+//	 */
+//	public List<SysOrg> findOrgByUserId(Long ogrId) throws Exception;
+//
+//	/**
+//	 * <p>描述：保存或修改组织机构 </p>
+//	 * <p>日期：2014-12-9 下午1:51:07 </p>
+//	 * @param org 组织机构对象
+//	 * @return 
+//	 */
+//	public SysOrg addOrUpdateOrg(SysOrg org) throws Exception;
+//
+//	/**
+//	 * <p>描述：保存机构 </p>
+//	 * <p>日期：2014-12-19 上午11:18:20 </p>
+//	 * @param org 机构对象
+//	 * @return 保存成功后的机构ID
+//	 */
+//	public Long saveOrg(SysOrg org) throws Exception;
+	/**
+	 * 条件查询机构信息
+	 * @author wh
+	 * @date 2017年8月15日
+	 * @param entity
+	 * @return
+	 */
+	public List<SysOrg> findSysOrgByCondition(@Param("model")SysOrg entity);
+}

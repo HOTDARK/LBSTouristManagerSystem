@@ -1,0 +1,73 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="workflow-webapp (1):war exploded">
+    <output-path>$PROJECT_DIR$/basicframe/workflow/workflow-webapp/target/workflow-webapp-0.0.1-SNAPSHOT</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="workflow-webapp (1)" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: joda-time:joda-time:2.5" />
+          <element id="archive" name="workflow-app-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="workflow-app (3)" />
+          </element>
+          <element id="archive" name="sfw-all-1.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="sfw-all" />
+          </element>
+          <element id="archive" name="sfw-core-1.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="sfw-core" />
+          </element>
+          <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.1" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.6" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.3" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aspects:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.7.4" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.7.4" />
+          <element id="library" level="project" name="Maven: cglib:cglib-nodep:2.1_3" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
+          <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache-core:2.6.5" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.6" />
+          <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.19" />
+          <element id="archive" name="sfw-dao-1.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="sfw-dao" />
+          </element>
+          <element id="library" level="project" name="Maven: org.springframework:spring-orm:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.1.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.2.7" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.2.2" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-ehcache:1.0.0" />
+          <element id="archive" name="workflow-engine-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="workflow-engine (3)" />
+          </element>
+          <element id="library" level="project" name="Maven: dom4j:dom4j:1.6.1" />
+          <element id="library" level="project" name="Maven: xml-apis:xml-apis:1.0.b2" />
+          <element id="library" level="project" name="Maven: de.odysseus.juel:juel-impl:2.2.7" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.6" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.7" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.32" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.1.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.1.3" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/basicframe/workflow/workflow-webapp/target/workflow-webapp-0.0.1-SNAPSHOT/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="workflow-webapp (1)/web/Web" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,89 @@
+.c-point
+	{
+		position: absolute;
+		display: inline-block;
+		width: 8px;
+		height: 8px;
+		border: 1px solid #02a7e3;
+		border-radius: 50%;
+		background-color: #ffffff;	
+		cursor: pointer;
+		z-index: 100;	
+	}
+	.c-point span
+	{   position: absolute;
+	    display: inline-block;
+	    width: 95px;
+	    text-align: center;
+		font-size: 0.8em;
+		text-align: center;
+		color: #fff;
+		background-color:#02a7e3 ;
+		border-radius: 3px;
+		padding: 2px;
+		top: -25px;
+		left: -45px;
+	}
+	.orange-point
+	{  
+		border: 1px solid #ffbc00;
+		
+	}
+	.orange-point span
+	{  
+		background-color: #ffbc00;
+		
+	}
+	.orange-point span:hover
+	{  
+		background-color: #ff9804 !important;
+		
+	}
+	.orange-point:hover
+	{
+		
+		background-color: #ffbc00 !important;		
+	}
+	.c-point span:hover
+	{
+		background-color:#0292c7 ;
+	}
+	.c-point:hover
+	{
+		width: 8px;
+		height: 8px;
+		background-color: #02a7e3;		
+	}
+	.c-tip
+	{
+		 position: absolute;
+		 min-width: 120px;
+		 display: none;
+		 border: 1px solid #eee;
+		 background-color: #fff;
+		 border-radius: 5px;
+		 font-size: 12px;
+		 z-index: 1000;
+	}	
+	.c-tip ul
+	{
+		padding: 5px 15px;
+		margin: 0;
+	}
+	.c-tip ul li	
+	{
+		list-style: none;
+		padding: 0;
+	}	
+	.y-ser
+	{
+		display: block;
+		clear: both;
+		width: 60px;
+		margin-bottom: 32px;
+		padding-top: 0;
+		
+		font-size: 12px;
+		text-align: right;
+		
+	}

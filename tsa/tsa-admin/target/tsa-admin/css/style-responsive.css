@@ -1,0 +1,617 @@
+/***
+Responsive Theme. 
+Based on http://getbootstrap.com/css/#responsive-utilities-classes
+***/
+
+/***
+Form Medium Devices Up To Large Devices
+***/
+
+@media (min-width: 992px) and (max-width: 1200px) {  
+
+	.page-boxed .header .dropdown .username {
+		display: none;
+	}	
+
+}
+.page-sidebar {
+		position: absolute;
+ 		width: 225px;
+		z-index:50;
+  	}
+/***
+From Medium Devices Up To Larger Devices
+***/
+
+@media (min-width: 768px) { 
+
+ 	/***
+ 	Page sidebar
+ 	***/
+ 	
+
+  	.page-sidebar.navbar-collapse {
+  		max-height: none !important;
+  	}
+
+	.page-sidebar-fixed .page-sidebar {
+	  	position: fixed !important;
+	 	top: 51px;
+	}
+
+	.page-sidebar-fixed ul.page-sidebar-menu > li.last {
+		margin-bottom: 15px !important;
+	}
+
+	.page-sidebar-fixed.page-sidebar-hover-on .page-sidebar {
+		z-index: 10000;		
+		width: 35px;		
+	}
+
+	.page-sidebar-fixed.page-sidebar-hover-on .page-sidebar .selected {
+		display: none;
+	}
+
+	.page-sidebar-fixed.page-sidebar-hover-on .page-content {
+		margin-left: 35px;
+	}
+	.page-sidebar-fixed.page-sidebar-hover-on .footer {
+		margin-left: 35px;
+	}
+
+	.page-sidebar-fixed .page-sidebar-closed .page-sidebar .sidebar-search .submit,
+	.page-sidebar-fixed .page-sidebar .sidebar-toggler {
+		-webkit-transition: all  0.3s ease;
+	     -moz-transition: all  0.3s ease;
+	       -o-transition: all  0.3s ease;
+	          transition: all  0.3s ease;
+	}
+
+	.page-sidebar-hovering {
+		overflow: hidden !important;
+	}
+
+	.page-sidebar-hovering .sub-menu,
+	.page-sidebar-hovering span.title,
+	.page-sidebar-hovering span.arrow {		  
+		display: none !important;
+	}
+
+	.page-sidebar-hovering .submit {
+		opacity: 0;
+		width: 0 !important;
+		height: 0 !important;
+	}
+
+  	/***
+  	Page content
+  	***/
+  	.page-content { 
+  		margin-left: 225px; 
+		margin-top: 0px;
+		min-height: 840px; 
+		padding: 5px 20px 20px 20px;
+	}
+.page-breadcrumb,.page-desc
+{
+	margin-left:225px;
+}
+	.page-sidebar-fixed .page-content {
+		min-height: 600px; 
+	}
+
+	.page-content.no-min-height {
+		min-height: auto;
+	}
+
+	/***
+	Footer
+	***/
+
+	/* fixed sidebar */
+	.page-footer-fixed .footer {
+	  position: fixed;
+	  left: 0;
+	  right: 0;
+	  z-index: 10000;
+	  bottom: 0;
+	}
+
+	.page-footer-fixed .page-container {
+	  margin-bottom: 32px;
+	}
+
+	.page-footer-fixed.page-sidebar-fixed .footer {
+	  margin-left: 0 !important;
+	}
+	/* end: fixed footer */
+
+	.page-boxed .footer {
+  		padding: 8px 0 5px 0; 
+	}
+
+	.page-sidebar-fixed .footer {
+	  margin-left: 225px;
+	  background-color: #fff;
+	  padding: 8px 20px 5px 20px;
+	}
+
+	.page-sidebar-fixed .footer .footer-inner {
+	  color: #333;
+	}
+
+	.page-sidebar-fixed.page-sidebar-closed .footer {
+	  margin-left: 35px;
+	}
+
+	.page-sidebar-fixed .footer .footer-tools .go-top { 
+	  background-color: #666;
+	}
+
+	.page-sidebar-fixed .footer .footer-tools .go-top i {
+	  color: #ddd;
+	}
+
+	/* boxed layout */
+	.page-boxed	.header .navbar-brand {
+  		margin-left: 0px !important;
+  		width: 226px;
+	}
+
+	.page-boxed .header .navbar-brand img {
+		margin-left: 10px;
+	}
+
+	.page-boxed .header .navbar-nav {
+	  margin-right: 0px;
+	}
+}
+/***
+Up To Medium Devices
+***/
+
+
+@media (min-width: 768px)  { 
+
+	/***
+	Body
+	***/
+	body {
+	 	padding-top: 0px;
+	}
+	
+	/***
+	Page sidebar
+	***/
+	.page-sidebar .btn-navbar.collapsed .arrow { 
+		display: none;
+	}	
+	.page-sidebar .btn-navbar .arrow {
+	  position: absolute;
+	  right: 25px;
+	  width: 0; 
+	  height: 0;
+	  top:50px;
+	  border-bottom: 15px solid #5f646b;
+	  border-left: 15px solid transparent; 
+	  border-right: 15px solid transparent; 
+	}
+	
+
+} 
+ 
+/***
+Extra Small Devices Only
+***/
+
+@media (max-width: 767px) { 
+	
+	/***
+	Page header
+	***/
+	.page-sidebar {
+		
+	}
+	.page-breadcrumb,.page-desc
+{
+	margin-left:0px;
+}
+	.header {
+ 		padding: 0 10px 0 10px;
+ 	}
+.page-sidebar.navbar-collapse.in {	 	
+	 	overflow: hidden !important;
+	 	overflow-y: auto !important;
+	 }
+	.header .top-nav .nav{  
+	 	margin-top: 0px;
+	 	margin-right: 5px;
+	}
+
+	.header .nav > li > .dropdown-menu.notification:after, 
+	.header .nav > li > .dropdown-menu.notification:before {
+		margin-right: 180px;
+	}
+
+	.header .nav > li > .dropdown-menu.notification {
+  		margin-right: -180px;
+	}
+
+	.header .nav > li > .dropdown-menu.inbox:after, 
+	.header .nav > li > .dropdown-menu.inbox:before {
+		margin-right: 140px;
+	}
+
+	.header .nav > li > .dropdown-menu.inbox {
+  		margin-right: -140px;
+	}
+
+	.header .nav > li > .dropdown-menu.tasks:after, 
+	.header .nav > li > .dropdown-menu.tasks:before {
+		margin-right: 90px;
+	}
+
+	.header .nav > li > .dropdown-menu.tasks {
+  		margin-right: -90px;
+	}
+
+  	/* Header logo */
+	.header .navbar-brand {
+  		margin-left: 0px !important;
+  		width: 110px;
+	}
+	
+	/***
+	Page content
+	***/
+	.page-content {
+		padding: 20px 10px 10px 10px !important;
+		overflow: hidden;
+	}
+
+	/***
+	Page title
+	***/
+	.page-title {
+		margin-bottom: 20px;
+		font-size: 18px;
+	}
+
+	.page-title small {
+		font-size: 13px;
+		padding-top: 3px;
+	}
+	
+	/***
+	Styler pagel
+	***/
+	.styler-panel {
+		top:58px;
+		right:12px;
+	}	
+
+	/***
+	Page breadcrumb
+	***/
+	.breadcrumb {
+		padding-left: 10px;
+  		padding-right: 10px;
+	}
+
+	/***
+	Portlet form action
+	***/
+	.portlet-body.form .form-actions{
+	  padding-left: 15px;	
+	} 
+
+
+	/***
+	Form input validation states
+	***/
+	.input-icon .input-error, 
+	.input-icon .input-warning, 
+	.input-icon .input-success { 
+		top:-27px;
+		float: right;
+		right:10px !important;
+	}	
+
+	/***
+	Advance tables
+	***/
+	.table-advance tr td.highlight:first-child a {
+		margin-left: 8px;
+	}
+
+	/***
+	Footer	
+	***/	
+	.footer {
+		padding-left: 10px;
+		padding-right: 10px;		
+	}	
+	
+	.footer .go-top {  
+		float: right;
+		display: block;
+		margin-right: 0px;
+	}
+
+	/***
+	Vertical inline menu
+	***/
+	.ver-inline-menu li.active:after {
+		display: none;
+	}
+
+	/***
+	Form controls
+	***/
+	.form-horizontal .form-actions {
+  		padding-left: 180px; 	
+  	}
+
+  	.portlet .form-horizontal .form-actions {
+  		padding-left: 190px; 	
+  	}
+}
+
+/***
+The Most Extra Small Devices Landscape Mode Only
+***/
+
+@media (max-width: 480px) {
+
+	/***
+	Header navbar
+	***/
+
+	.header .navbar-nav {
+		display: block !important;
+		margin-top: 0px !important;
+	}
+
+	.header .navbar-nav > li.dropdown .dropdown-toggle {
+  		margin-top:-1px;
+  		padding-left: 8px;
+	  	padding-right: 8px;
+	}
+
+	.header .navbar-nav > li.dropdown.user .dropdown-toggle,
+	.header .navbar-nav > li.dropdown.language .dropdown-toggle {
+		padding-right: 6px;
+		padding-left: 6px;
+	}
+
+  	.header .navbar-nav li.dropdown .dropdown-toggle .badge {
+  		top: 8px;
+  	}
+
+  	/***
+	Page sidebar
+	***/
+	.page-sidebar,
+	.page-sidebar.in {
+		margin: 0 10px 10px 10px;
+	}
+
+	/***
+	Page title
+	***/
+	.page-title small {
+		display: block;
+		clear: both;
+	}
+
+	/***
+	Forms
+	***/
+  	.portlet .form-horizontal .form-actions {
+  		padding-left: 10px; 	
+  	}
+
+	/***
+	Dashboard date range panel
+	***/
+	.page-content .breadcrumb .dashboard-date-range  {
+		padding-bottom: 8px;
+	} 
+
+	.page-content .breadcrumb .dashboard-date-range span {
+		display: none;
+	}	
+
+  	.page-content .breadcrumb > .btn-group span {
+  		display: none;
+  	}
+
+  	.page-content .breadcrumb > .btn-group > .btn {
+  		padding-left: 7px;
+  		padding-right: 7px;
+  	}
+
+	/***
+	Hidden phone
+	***/
+	.hidden-480 {
+		display: none !important;
+	}
+}
+/***
+The Most Extra Small Devices Portrait Mode Only
+***/
+
+@media (max-width: 320px) {
+
+	/***
+	Hidden phone
+	***/
+	.hidden-320 {
+		display: none;
+	}
+
+	.header .navbar-brand {
+		width: 100px;
+	}	
+}
+
+
+@media (max-width: 768px)  and (min-width: 320px){
+  .col-mini-1, .col-mini-2, .col-mini-3, .col-mini-4, .col-mini-5, .col-mini-6, .col-mini-7, .col-mini-8, .col-mini-9, .col-mini-10, .col-mini-11, .col-mini-12 {
+    float: left;
+  }
+  .col-mini-12 {
+    width: 100%;
+  }
+  .col-mini-11 {
+    width: 91.66666667%;
+  }
+  .col-mini-10 {
+    width: 83.33333333%;
+  }
+  .col-mini-9 {
+    width: 75%;
+  }
+  .col-mini-8 {
+    width: 66.66666667%;
+  }
+  .col-mini-7 {
+    width: 58.33333333%;
+  }
+  .col-mini-6 {
+    width: 50%;
+  }
+  .col-mini-5 {
+    width: 41.66666667%;
+  }
+  .col-mini-4 {
+    width: 33.33333333%;
+  }
+  .col-mini-3 {
+    width: 25%;
+  }
+  .col-mini-2 {
+    width: 16.66666667%;
+  }
+  .col-mini-1 {
+    width: 8.33333333%;
+  }
+  .col-mini-pull-12 {
+    right: 100%;
+  }
+  .col-mini-pull-11 {
+    right: 91.66666667%;
+  }
+  .col-mini-pull-10 {
+    right: 83.33333333%;
+  }
+  .col-mini-pull-9 {
+    right: 75%;
+  }
+  .col-mini-pull-8 {
+    right: 66.66666667%;
+  }
+  .col-mini-pull-7 {
+    right: 58.33333333%;
+  }
+  .col-mini-pull-6 {
+    right: 50%;
+  }
+  .col-mini-pull-5 {
+    right: 41.66666667%;
+  }
+  .col-mini-pull-4 {
+    right: 33.33333333%;
+  }
+  .col-mini-pull-3 {
+    right: 25%;
+  }
+  .col-mini-pull-2 {
+    right: 16.66666667%;
+  }
+  .col-mini-pull-1 {
+    right: 8.33333333%;
+  }
+  .col-mini-pull-0 {
+    right: auto;
+  }
+  .col-mini-push-12 {
+    left: 100%;
+  }
+  .col-mini-push-11 {
+    left: 91.66666667%;
+  }
+  .col-mini-push-10 {
+    left: 83.33333333%;
+  }
+  .col-mini-push-9 {
+    left: 75%;
+  }
+  .col-mini-push-8 {
+    left: 66.66666667%;
+  }
+  .col-mini-push-7 {
+    left: 58.33333333%;
+  }
+  .col-mini-push-6 {
+    left: 50%;
+  }
+  .col-mini-push-5 {
+    left: 41.66666667%;
+  }
+  .col-mini-push-4 {
+    left: 33.33333333%;
+  }
+  .col-mini-push-3 {
+    left: 25%;
+  }
+  .col-mini-push-2 {
+    left: 16.66666667%;
+  }
+  .col-mini-push-1 {
+    left: 8.33333333%;
+  }
+  .col-mini-push-0 {
+    left: auto;
+  }
+  .col-mini-offset-12 {
+    margin-left: 100%;
+  }
+  .col-mini-offset-11 {
+    margin-left: 91.66666667%;
+  }
+  .col-mini-offset-10 {
+    margin-left: 83.33333333%;
+  }
+  .col-mini-offset-9 {
+    margin-left: 75%;
+  }
+  .col-mini-offset-8 {
+    margin-left: 66.66666667%;
+  }
+  .col-mini-offset-7 {
+    margin-left: 58.33333333%;
+  }
+  .col-mini-offset-6 {
+    margin-left: 50%;
+  }
+  .col-mini-offset-5 {
+    margin-left: 41.66666667%;
+  }
+  .col-mini-offset-4 {
+    margin-left: 33.33333333%;
+  }
+  .col-mini-offset-3 {
+    margin-left: 25%;
+  }
+  .col-mini-offset-2 {
+    margin-left: 16.66666667%;
+  }
+  .col-mini-offset-1 {
+    margin-left: 8.33333333%;
+  }
+  .col-mini-offset-0 {
+    margin-left: 0;
+  }
+}	

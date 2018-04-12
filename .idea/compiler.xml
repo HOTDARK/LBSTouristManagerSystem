@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="api-app" />
+        <module name="api-sample (1)" />
+        <module name="api-sample (2)" />
+        <module name="api-sample (3)" />
+        <module name="maven-archiver (1)" />
+        <module name="maven-archiver (10)" />
+        <module name="maven-archiver (11)" />
+        <module name="maven-archiver (12)" />
+        <module name="maven-archiver (2)" />
+        <module name="maven-archiver (3)" />
+        <module name="maven-archiver (4)" />
+        <module name="maven-archiver (5)" />
+        <module name="maven-archiver (6)" />
+        <module name="maven-archiver (7)" />
+        <module name="maven-archiver (8)" />
+        <module name="maven-archiver (9)" />
+        <module name="sfw-all" />
+        <module name="sfw-core" />
+        <module name="sfw-dao" />
+        <module name="sfw-generator" />
+        <module name="sfw-log" />
+        <module name="sfw-webservice" />
+        <module name="sys-app" />
+        <module name="sys-web (1)" />
+        <module name="sys-web (2)" />
+        <module name="sys-web (3)" />
+        <module name="tsa-admin (1)" />
+        <module name="tsa-admin (2)" />
+        <module name="tsa-admin (3)" />
+        <module name="tsa-api (1)" />
+        <module name="tsa-api (2)" />
+        <module name="tsa-api (3)" />
+        <module name="tsa-wx (1)" />
+        <module name="tsa-wx (2)" />
+        <module name="tsa-wx (3)" />
+        <module name="workflow-app (1)" />
+        <module name="workflow-app (2)" />
+        <module name="workflow-app (3)" />
+        <module name="workflow-engine (1)" />
+        <module name="workflow-engine (2)" />
+        <module name="workflow-engine (3)" />
+        <module name="workflow-sample (1)" />
+        <module name="workflow-sample (2)" />
+        <module name="workflow-sample (3)" />
+        <module name="workflow-webapp (1)" />
+        <module name="workflow-webapp (2)" />
+        <module name="workflow-webapp (3)" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api" target="1.8" />
+      <module name="api-app" target="1.8" />
+      <module name="api-sample (1)" target="1.8" />
+      <module name="api-sample (2)" target="1.5" />
+      <module name="api-sample (3)" target="1.8" />
+      <module name="maven-archiver (1)" target="1.5" />
+      <module name="maven-archiver (10)" target="1.5" />
+      <module name="maven-archiver (11)" target="1.5" />
+      <module name="maven-archiver (12)" target="1.5" />
+      <module name="maven-archiver (2)" target="1.5" />
+      <module name="maven-archiver (3)" target="1.5" />
+      <module name="maven-archiver (4)" target="1.5" />
+      <module name="maven-archiver (5)" target="1.5" />
+      <module name="maven-archiver (6)" target="1.5" />
+      <module name="maven-archiver (7)" target="1.5" />
+      <module name="maven-archiver (8)" target="1.5" />
+      <module name="maven-archiver (9)" target="1.5" />
+      <module name="sfw" target="1.8" />
+      <module name="sfw-all" target="1.8" />
+      <module name="sfw-core" target="1.8" />
+      <module name="sfw-dao" target="1.8" />
+      <module name="sfw-generator" target="1.8" />
+      <module name="sfw-log" target="1.8" />
+      <module name="sfw-webservice" target="1.8" />
+      <module name="sys" target="1.8" />
+      <module name="sys-app" target="1.8" />
+      <module name="sys-web (1)" target="1.8" />
+      <module name="sys-web (2)" target="1.5" />
+      <module name="sys-web (3)" target="1.8" />
+      <module name="tsa" target="1.8" />
+      <module name="tsa-admin (1)" target="1.8" />
+      <module name="tsa-admin (2)" target="1.5" />
+      <module name="tsa-admin (3)" target="1.8" />
+      <module name="tsa-api (1)" target="1.8" />
+      <module name="tsa-api (2)" target="1.5" />
+      <module name="tsa-api (3)" target="1.8" />
+      <module name="tsa-wx (1)" target="1.8" />
+      <module name="tsa-wx (2)" target="1.5" />
+      <module name="tsa-wx (3)" target="1.8" />
+      <module name="workflow" target="1.8" />
+      <module name="workflow-app (1)" target="1.8" />
+      <module name="workflow-app (2)" target="1.5" />
+      <module name="workflow-app (3)" target="1.8" />
+      <module name="workflow-engine (1)" target="1.8" />
+      <module name="workflow-engine (2)" target="1.5" />
+      <module name="workflow-engine (3)" target="1.8" />
+      <module name="workflow-sample (1)" target="1.8" />
+      <module name="workflow-sample (2)" target="1.5" />
+      <module name="workflow-sample (3)" target="1.8" />
+      <module name="workflow-webapp (1)" target="1.8" />
+      <module name="workflow-webapp (2)" target="1.5" />
+      <module name="workflow-webapp (3)" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

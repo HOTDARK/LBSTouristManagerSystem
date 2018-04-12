@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hd.api.server.dao.WebServiceNorthMapper">
+
+	<insert id="addWebServiceLog" parameterType="com.hd.api.server.entity.WebServiceNorth">
+		insert into web_service_north(wname,input,output,start_time,end_time)
+		values (#{wname,jdbcType=VARCHAR},#{input,jdbcType=VARCHAR},#{output,jdbcType=VARCHAR},#{startTime},#{endTime})
+	</insert>
+	
+</mapper>

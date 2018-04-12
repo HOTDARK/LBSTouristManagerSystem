@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link  rel="stylesheet"  type="text/css"   href="../bootstrap/css/bootstrap.css"/>
+        <link  rel="stylesheet" type="text/css"  href="../css/flow.css"/>
+        <link  rel="stylesheet" type="text/css"   href="../plugins/font-awesome/css/font-awesome.css"/>
+        <link rel="stylesheet" href="../plugins/fonticons/fonticons.css" />
+        <script    src="../plugins/jquery.min.js"></script>
+        <script src="../bootstrap/js/bootstrap.js"></script>       
+        <link rel="stylesheet"  href="../plugins/treegridbt/jquery.treegrid.css">
+        <script type="text/javascript" src="../plugins/treegridbt/jquery.treegrid.js"></script>
+        <script type="text/javascript" src="../plugins/treegridbt/jquery.treegrid.bootstrap3.js"></script>
+        <script >
+            $(document).ready(function() {
+                $('.tree').treegrid(
+                	
+                	{
+                		  'initialState': 'collapsed',
+                	}
+                );
+                $('.tree-2').treegrid({
+                    expanderExpandedClass: '"fa fa-angle-right',
+                    expanderCollapsedClass: 'fa fa-angle-down'
+                });
+
+            });
+        </script>
+        </head>
+        <body style="padding: 20px;">
+        		<div class="row">
+		<div  class="col-lg-12">
+		<h5 class="flow-title"><i class="fi icon-flow"></i>流程名称</h5>
+		  <ul class="detail-list"><li>日志ID:<span>23894</span></li>
+			<li>流程ID:<span>3894</span></li>
+			<li>流程开始时间:<span>2015-01-20 09:30</span></li>
+			<li>流程结束时间:<span>2015-01-20 09:31</span></li>
+			<li>执行人:<span>张三</span></li>
+		   </ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12"><div class="para"> 初始参数：<span></span></div></div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<h5 class="result-title"><i class="fa fa-angle-right"></i>结论:</h5>
+			<ul class="result-list">
+				<li>编码：<span>12334</span></li>
+				<li>状态：<span>正常</span></li>
+				<li style="width: 100%;">结论：<span>显示正常</span></li>		
+				<li style="width: 100%;">建议：<span>显示正常，无需处理。</span></li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<h5 class="result-title"><i class="fa fa-angle-right"></i>执行轨迹:</h5>
+			<div class="flow-step"> 流程显示</div>
+		
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<h5 class="result-title"><i class="fa fa-angle-right"></i>测试过程:</h5>
+              <table class="table tree table-bordered table-hover">
+          <tr class="treegrid-1">
+            <td>节点名称</td>
+            <td>结论</td>
+            <td>编码</td>
+            <td>状态</td>
+            <td>出参</td>
+          </tr>
+          <tr class="treegrid-2 treegrid-parent-1">
+            <td>节点名称</td>
+            <td>正常显示</td>
+            <td>343434</td>
+            <td><span class='label  label-info'>正常</span></td>
+            <td><a class="btn btn-default btn-xs"><i class='fa fa-angle-double-right'></i>查看</a></td>
+          </tr>
+          <tr class="treegrid-3 treegrid-parent-1">
+            <td>节点名称</td>
+            <td>正常显示</td>
+            <td>343434</td>
+            <td><span class='label  label-info'>正常</span></td>
+            <td><a class="btn btn-default btn-xs"><i class='fa fa-angle-double-right'></i>查看</a></td>
+          </tr>
+          <tr class="treegrid-4 treegrid-parent-3">
+            <td>节点名称</td>
+            <td>正常显示</td>
+            <td>343434</td>
+            <td><span class='label  label-info'>正常</span></td>
+            <td><a class="btn btn-default btn-xs"><i class='fa fa-angle-double-right'></i>查看</a></td>
+          </tr>
+          <tr class="treegrid-5">
+            <td>节点名称</td>
+            <td>正常显示</td>
+            <td>343434</td>
+            <td><span class='label  label-info'>正常</span></td>
+            <td><a class="btn btn-default btn-xs"><i class='fa fa-angle-double-right'></i>查看</a></td>
+          </tr>
+          <tr class="treegrid-6 treegrid-parent-5">
+            <td>节点名称</td>
+            <td>错误</td>
+            <td>343434</td>
+            <td><span class='label  label-danger'>异常</span></td>
+            <td><a class="btn btn-default btn-xs"><i class='fa fa-angle-double-right'></i>查看</a></td>
+          </tr>
+        </table>     
+		</div>
+	</div>
+             
+</body>
+</html>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xie.tsa.dao.HelpInfoMapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="com.xie.tsa.entity.HelpInfo" id="HelpInfoParam"/>
+	<!-- 统一出参 -->
+	<resultMap id="HelpInfoResult" type="com.xie.tsa.entity.HelpInfo">
+        <result property="helpInfoId" column="help_info_id"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="releasePlace" column="release_place"/>
+        <result property="remark" column="remark"/>
+        <result property="multimedia" column="multimedia"/>
+        <result property="releaseTime" column="release_time"/>
+        <result property="userName" column="user_name"/>
+        <result property="state" column="state"/>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		help_info_id,created_by,release_place,remark,multimedia,release_time,user_name,state
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+	       <if test="model.helpInfoId!=null and model.helpInfoId!=''">
+				AND help_info_id = #{model.helpInfoId}
+			</if>
+			<if test="model.createdBy!=null">
+				AND created_by = #{model.createdBy}
+			</if>
+	       <if test="model.releasePlace!=null and model.releasePlace!=''">
+				AND release_place = #{model.releasePlace}
+			</if>
+	       <if test="model.remark!=null and model.remark!=''">
+				AND remark = #{model.remark}
+			</if>
+			<if test="model.state!=null and model.state!=''">
+				AND state = #{model.state}
+			</if>
+	       <if test="model.multimedia!=null and model.multimedia!=''">
+				AND multimedia = #{model.multimedia}
+			</if>
+	       <if test="model.releaseTimeBegin!=null">
+				AND release_time >= #{model.releaseTimeBegin}
+		   </if>
+		   <if test="model.releaseTimeEnd!=null">
+				AND release_time >= #{model.releaseTimeEnd}
+		   </if>
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="helpInfoId" parameterMap="HelpInfoParam">
+    <![CDATA[
+        INSERT INTO help_info (
+        	help_info_id ,
+        	created_by ,
+        	release_place ,
+        	remark ,
+        	multimedia ,
+        	release_time,
+        	user_name,
+        	state
+        ) VALUES (
+        	#{helpInfoId} ,
+        	#{createdBy} ,
+        	#{releasePlace} ,
+        	#{remark} ,
+        	#{multimedia} ,
+        	#{releaseTime},
+        	#{userName},
+        	#{state}
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM help_info WHERE
+        help_info_id = #{id} 
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="HelpInfoParam">
+        UPDATE help_info
+			<set>
+		        <if test="createdBy!=null">
+					created_by = #{createdBy} ,
+		        </if>
+		        <if test="releasePlace!=null">
+					release_place = #{releasePlace} ,
+		        </if>
+		        <if test="remark!=null">
+					remark = #{remark} ,
+		        </if>
+		        <if test="multimedia!=null">
+					multimedia = #{multimedia} ,
+		        </if>
+		        <if test="releaseTime!=null">
+					release_time = #{releaseTime},
+		        </if>
+				<if test="state!=null">
+					state = #{state}
+				</if>
+	        </set>
+        WHERE 
+	        help_info_id = #{helpInfoId} 
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="HelpInfoResult">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM help_info 
+	        WHERE 
+		        help_info_id = #{id} 
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="HelpInfoResult">
+		SELECT <include refid="columns" />
+		FROM help_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="HelpInfoResult">
+		SELECT <include refid="columns" />
+		FROM help_info
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM help_info
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+

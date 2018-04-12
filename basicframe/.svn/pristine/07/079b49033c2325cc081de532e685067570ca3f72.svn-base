@@ -1,0 +1,6 @@
+
+#是否对登陆用户显示所有信息
+workflow.app.showAll=true
+
+#对某特定几个用户显示所有信息，如果是多个用户使用逗号分隔uid
+workflow.app.except.uid=0

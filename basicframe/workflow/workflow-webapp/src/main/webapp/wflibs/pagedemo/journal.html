@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>日志管理</title>
+<link  rel="stylesheet"  type="text/css"   href="../bootstrap/css/bootstrap.css"/>
+<link  rel="stylesheet" type="text/css"  href="../css/flow.css"/>
+<link  rel="stylesheet" type="text/css"   href="../plugins/font-awesome/css/font-awesome.css"/>
+<script    src="../plugins/jquery.min.js"></script>
+<script src="../bootstrap/js/bootstrap.js"></script>
+
+<link rel="stylesheet"   href="../plugins/datatables/css/jquery.dataTables.css"/>
+<script type="text/javascript"  src="../plugins/datatables/js/jquery.dataTables.js"></script> 
+<link    href="../plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"s rel="stylesheet">
+<script src="../plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="../plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script> 
+</head>
+<body>
+<!-- begin search -->
+  <div class="row search-bar">
+    <div class="col-md-12">
+      <form class="form-inline pull-right search-bar" role="form">    
+        <div class="form-group">
+            <label class="sr-only" for="time">时间</label>    
+               <div id="reportrange"   class="daterange">
+                  <i class="glyphicon glyphicon-calendar icon-calendar icon-large"></i>
+                  <span></span> <b class="caret"></b>
+               </div>
+          </div>
+        <input class="form-control" placeholder="流程名">  
+        <input class="form-control" placeholder="结论">  
+        <a id="search"  class="btn btn-primary"><i class="fa fa-search"></i>搜索</a>
+      </form>
+    </div>
+  </div>
+  <!-- end search --> 
+  <!--表格-->
+   <table id="table" class="table table-striped table-hover table-bordered">
+          <thead>
+            <tr>
+              <th>日志ID</th>
+              <th>流程名</th>              
+              <th>流程ID</th>
+              <th>开始时间</th>
+              <th>结束时间</th>
+              <th>执行人</th>
+              <th>结论</th> 
+              <th>操作</th>
+            </tr>
+          </thead>
+  </table>
+</body>
+<script>
+	 $(function(){ 
+	 	//
+	 	$('#reportrange').daterangepicker(
+                     {
+                        startDate: moment().subtract('days', 6),
+                        endDate: moment(),
+                       // minDate: '2012-01-01',
+                       // maxDate: '2014-12-31',
+                      //  dateLimit: { days: 60 },
+                        showDropdowns: false,
+                        showWeekNumbers: true,
+                        timePicker: false,
+                        timePickerIncrement: 1,
+                        timePicker12Hour: true,
+                        ranges: {
+                           '今天': [moment(), moment()],
+                           '昨天': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                           '最近7天': [moment().subtract('days', 6), moment()],
+                           '最近30天': [moment().subtract('days', 29), moment()],
+                           '当月': [moment().startOf('month'), moment().endOf('month')],
+                           '上月': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+                        },
+                        opens: 'left',
+                        buttonClasses: ['btn '],
+                        applyClass: 'btn-small btn-primary',
+                        cancelClass: 'btn-small',
+                        format: 'YYYY-MM-DD',
+                        separator: ' to ',
+                        locale: {
+                            applyLabel: '确定',
+							cancelLabel: '取消',
+                            fromLabel: '从',
+                            toLabel: '至',
+                            customRangeLabel: '自定义时间段',
+                            daysOfWeek: ['日', '一', '二', '三', '四', '五','六'],
+                            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                            firstDay: 1
+                        }
+                     },
+                     function(start, end) {
+                      console.log("Callback has been called!");
+                      $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+                     }
+                  );
+				 
+                  //Set the initial state of the picker label
+                  $('#reportrange span').html(moment().subtract('days', 6).format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
+	 	//表格
+	 $('#table').dataTable( {
+			
+		//改变表单位置
+		"sDom": '<"top">rt<"bottom"flpi><"clear">',
+		//禁用自带的搜索
+		"bSearchable": false,	
+		/*"sScrollX": "100%",
+        "sScrollXInner": "110%",
+         "bScrollCollapse": true,*/
+		"ajax": {
+			"url": "../assets/data/journal.txt",
+			"dataSrc": ""
+		},
+		"oLanguage" : {
+              "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "抱歉， 没有找到",
+                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                "sInfoEmpty": "没有数据",
+                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                "sZeroRecords": "没有检索到数据",
+                "sSearch": "搜索:",
+                "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "前一页",
+                "sNext": "后一页",
+                "sLast": "尾页"
+				}
+              
+		},
+		"columns": [	
+			{ "data": "jid" },
+		    { "data": "id" },
+			{ "data": "name" },
+			{ "data": "starttime" },
+			{ "data": "endtime" },
+			{ "data": "person" },
+			{ "data": "result" },
+			{ "bSortable":false,
+			"mRender": function(data, type, full) {
+			return "<button  class='btn btn-default btn-xs'><i class='fa fa-angle-double-right'></i>查看详情</button>";
+			}},	
+		]
+	} );   
+})
+</script>
+</html>

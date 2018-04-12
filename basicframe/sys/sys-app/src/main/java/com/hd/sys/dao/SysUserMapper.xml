@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hd.sys.dao.SysUserMapper">
+	<parameterMap type="com.hd.sys.entity.SysUser" id="SysUserParam" />
+	<resultMap type="com.hd.sys.entity.SysUser" id="SysUserResult">
+		<result column="user_id" property="userId" javaType="Long" />
+		<result column="org_id" property="orgId" javaType="Long" />
+		<result column="user_name" property="userName" javaType="String" />
+		<result column="user_account" property="userAccount" javaType="String" />
+		<result column="user_pwd" property="userPwd" javaType="String" />
+		<result column="pwd_state" property="pwdState" javaType="Long" />
+		<result column="email" property="email" javaType="String" />
+		<result column="telephone" property="telephone" javaType="String" />
+		<result column="post" property="post" javaType="String" />
+		<result column="state" property="state" javaType="Long" />
+		<result column="create_time" property="createTime" javaType="Date" />
+		<result column="seq_num" property="seqNum" javaType="Long" />
+		<result column="address" property="address" javaType="String" />
+		<result column="user_photo" property="userPhoto" javaType="String" />
+		<result column="sex" property="sex" javaType="Long" />
+	</resultMap>
+
+	<sql id="findPageByEntityCondition">
+		<if test="model.orgId!=null">
+			and u.org_id = #{model.orgId}
+		</if>
+		<if test="model.userAccount!=null">
+			and u.user_account = #{model.userAccount}
+		</if>
+		<if test="model.userId!=null">
+			and u.user_id = #{model.userId}
+		</if>
+		<if test="model.userName!=null and model.userName!=''">
+			and u.user_name like concat('%',#{model.userName},'%')
+		</if>
+		<if test="model.telephone!=null and model.telephone!=''">
+			and u.telephone like concat('%',#{model.telephone},'%')
+		</if>
+		<if test="model.state!=null">
+			and u.state = #{model.state}
+		</if>
+	</sql>
+	<!-- 获取App最新的版本 
+	<select id="getNewAppInfo" resultType="com.hd.sys.entity.AppVersion">
+	SELECT * FROM app_version WHERE id=(SELECT MAX(id) FROM app_version WHERE appType=2)
+	</select>
+	-->
+	
+	<!-- 
+	<select id="getAllTimeSetting" resultType="com.hd.sys.entity.OverTimeSetting">
+	select * from overtimesetting
+	</select>
+	 -->
+
+	<!-- 可以通过传入的条件查询分页数据 -->
+	<select id="findByPage" parameterMap="SysUserParam" resultMap="SysUserResult">
+		select
+		u.user_id userid,
+		u.org_id orgid,
+		u.user_name username,
+		u.user_account useraccount,
+		u.user_pwd userpwd,
+		u.pwd_state pwdstate,
+		u.email email,
+		u.telephone telephone,
+		u.post post,
+		u.state state,
+		(case
+		when u.state=1 then '有效' else '无效' end) statename,
+		(case when u.sex=1
+		then '男' else '女' end) sexname,
+		u.create_time createtime,
+		u.seq_num
+		seqnum,
+		u.address address,
+		u.user_photo userphoto,
+		u.sex
+		from sys_user u
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<include refid="findPageByEntityCondition" />
+		</trim>
+		order by seq_num
+		limit #{start},#{limit}
+	</select>
+
+	<!-- 查询用户记录条数 -->
+	<select id="findNumByCondition" parameterMap="SysUserParam"
+		resultType="Integer">
+		select
+		count(1) itotalrecords
+		from sys_user u
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<include refid="findPageByEntityCondition" />
+		</trim>
+	</select>
+
+	<!-- 主键查询 -->
+	<select id="findByPK" resultMap="SysUserResult" parameterType="Long">
+		<![CDATA[
+		select 
+			u.user_id userid,
+			u.org_id orgid,
+			o.org_name orgname,
+			u.user_name username,
+			u.user_account useraccount,
+			u.user_pwd userpwd,
+			u.pwd_state pwdstate,
+			u.email email,
+			u.telephone telephone,
+			u.post post,
+			u.state state,
+			(case when u.state=1 then '有效' else '无效' end) statename,
+			(case when u.sex=1 then '男' else '女' end) sexname,
+			u.create_time createtime,
+			u.seq_num seqnum,
+			u.address address,
+			u.user_photo userphoto,
+			u.sex
+		 from sys_user u left join sys_org o on u.org_id=o.org_id where u.user_id=#{id}
+		]]>
+	</select>
+	<!-- 根据用户名查找用户 
+	<select id="getUserByName" resultMap="SysUserResult">
+	<![CDATA[
+		select 
+			u.user_id userid,
+			u.org_id orgid,
+			o.org_name orgname,
+			u.user_name username,
+			u.user_account useraccount,
+			u.user_pwd userpwd,
+			u.pwd_state pwdstate,
+			u.email email,
+			u.telephone telephone,
+			u.post post,
+			u.state state,
+			(case when u.state=1 then '有效' else '无效' end) statename,
+			(case when u.sex=1 then '男' else '女' end) sexname,
+			u.create_time createtime,
+			u.seq_num seqnum,
+			u.address address,
+			u.user_photo userphoto,
+			u.sex
+		 from sys_user u left join sys_org o on u.org_id=o.org_id where u.user_name=#{userName}
+		]]>
+	</select>
+	-->
+	<!-- 单条插入 -->
+	<insert id="insert" parameterMap="SysUserParam" useGeneratedKeys="true"
+		keyProperty="user_id">
+		<![CDATA[
+			insert into sys_user(
+				org_id,
+				user_name,
+				user_account,
+				user_pwd,
+				pwd_state,
+				email,
+				telephone,
+				post,
+				state,
+				create_time,
+				seq_num,
+				address,
+				user_photo,
+				sex
+			)values(
+				#{orgId},
+				#{userName},
+				#{userAccount},
+				#{userPwd},
+				#{pwdState},
+				#{email},
+				#{telephone},
+				#{post},
+				#{state},
+				#{createTime},
+				#{seqNum},
+				#{address},
+				#{userPhoto},
+				#{sex}
+			)
+		]]>
+	</insert>
+
+	<!-- 主键更新 -->
+	<update id="updateByPK" parameterMap="SysUserParam">
+		update sys_user set
+		user_id=#{userId}
+		<if test="orgId != null">
+			,org_id=#{orgId}
+		</if>
+		<if test="userName != null">
+			,user_name=#{userName}
+		</if>
+		<if test="userAccount != null">
+			,user_account=#{userAccount}
+		</if>
+		<if test="userPwd != null">
+			,user_pwd=#{userPwd}
+		</if>
+		<if test="pwdState != null">
+			,pwd_state=#{pwdState}
+		</if>
+		<if test="email != null">
+			,email=#{email}
+		</if>
+		<if test="telephone != null">
+			,telephone=#{telephone}
+		</if>
+		<if test="post != null">
+			,post=#{post}
+		</if>
+		<if test="createTime != null">
+			,create_time=#{createTime}
+		</if>
+		<if test="seqNum != null">
+			,seq_num=#{seqNum}
+		</if>
+		<if test="address != null">
+			,address=#{address}
+		</if>
+		<if test="userPhoto != null">
+			,user_photo=#{userPhoto}
+		</if>
+		<if test="state != null">
+			,state=#{state}
+		</if>
+		<if test="sex != null">
+			,sex=#{sex}
+		</if>
+		where user_id=#{userId}
+	</update>
+
+	<!-- 修改状态 -->
+	<update id="updateStateById" parameterMap="SysUserParam">
+		update sys_user set
+		state=#{state}
+		where user_id in (${userIds})
+	</update>
+
+	<!-- 主键删除 -->
+	<delete id="deleteByKey" parameterType="Long">
+		<![CDATA[
+			delete from sys_user where flow_id=#{flowId}
+		]]>
+	</delete>
+
+	<!-- 根据用户id查询角色以及机构名称 -->
+	<select id="getRolesByUserId" parameterType="Long" resultMap="SysUserResult">
+		<![CDATA[
+			select sr.role_id roleid,sr.role_name rolename,so.org_name orgname,su.user_account,su.user_name 
+			from sys_user su
+			left join sys_user_role sur on su.user_id=sur.user_id
+			left join sys_role sr on sur.role_id = sr.role_id 
+			left join sys_org so on sr.org_id = so.org_id
+			where sur.user_id = #{userId} and sr.state=1
+		]]>
+	</select>
+
+	<!-- 根据机构id查询角色 -->
+	<select id="getRolesByOrgId" parameterType="Long" resultMap="SysUserResult">
+		<![CDATA[
+		select sr.role_id roleid,so.org_name orgname,sr.role_name rolename from sys_org so 
+		left join sys_role sr on so.org_id=sr.org_id where so.org_id=#{orgId} and sr.state=1
+		]]>
+	</select>
+
+	<!-- 批量插入角色 -->
+	<insert id="batchInsertRoles" useGeneratedKeys="true"
+		parameterType="java.util.List">
+		insert into sys_user_role (user_id,role_id,state,create_time) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.userId},#{item.roleId},#{item.state},#{item.createTime})
+		</foreach>
+	</insert>
+
+	<!-- 根据userId删除所有用户角色 -->
+	<delete id="deleteRolesByUserId" parameterType="Long">
+		<![CDATA[
+			delete from sys_user_role where user_id=#{userId}
+		]]>
+	</delete>
+
+	<!-- 根据userId和角色id删除用户部分角色 -->
+	<delete id="deleteRolesByUserIdAndRoles" parameterMap="SysUserParam">
+		<![CDATA[
+			delete from sys_user_role where user_id=#{userId}
+			and role_id in (${roleIds})
+		]]>
+	</delete>
+
+	<!-- 根据userId和orgId删除所有用户在某个部门下的所有角色 -->
+	<delete id="deleteRolesByUserIdAndOrgId" parameterMap="SysUserParam">
+		<![CDATA[
+			delete sur from sys_user_role sur left join sys_role sr on sur.role_id = sr.role_id 
+			where sur.user_id=#{userId} and sr.org_id=#{orgId}
+		]]>
+	</delete>
+
+
+	<!-- 根据机构ID更新用户状态 -->
+	<update id="updateByOrgId" parameterMap="SysUserParam">
+		update sys_user set state = #{state} where org_id = #{orgId}
+	</update>
+
+	<!-- 根据角色IDS更新用户状态 -->
+	<update id="updateByRoleIds" parameterMap="SysUserParam">
+		update sys_user set
+		state = #{state} where user_id in (select ur.user_id from
+		sys_user_role ur where ur.role_id in (${roleIds}))
+	</update>
+
+	<!-- 根据机构ID或角色ID查询用户集合 -->
+	<select id="findUserListByOrgIdOrRoleId" resultMap="SysUserResult"
+		parameterMap="SysUserParam">
+		select
+		u.user_id userid,
+		u.org_id orgid,
+		u.user_name username,
+		u.user_account useraccount,
+		u.user_pwd userpwd,
+		u.pwd_state pwdstate,
+		u.email email,
+		u.telephone telephone,
+		u.post post,
+		u.state state,
+		(case
+		when state=1 then '有效' else '无效' end) statename,
+		(case when u.sex=1
+		then '男' else '女' end) sexname,
+		u.create_time createtime,
+		u.seq_num
+		seqnum,
+		u.address address,
+		u.user_photo userphoto,
+		u.sex
+		from sys_user u
+		where 1=1
+		<if test="orgId != null">
+			and u.org_id = #{orgId}
+		</if>
+		<if test="roleId != null">
+			and u.user_id in (select ur.user_id from sys_user_role ur,
+			sys_role r
+			where ur.role_id = r.role_id and r.role_id = #{roleId})
+		</if>
+		and u.state = 1
+		order by seq_num
+	</select>
+
+	<!-- 用户登录验证 -->
+	<select id="findUserByNameAndPwd" resultMap="SysUserResult"
+		parameterMap="SysUserParam">
+		select * from sys_user u where u.user_account =
+		#{userAccount} and u.user_pwd = #{userPwd}
+	</select>
+	
+	<select id="getSysUser" resultMap="SysUserResult">
+	select * from sys_user u where u.user_account =#{userAccount}
+	</select>
+
+	<select id="findByUserAccounts" resultMap="SysUserResult">
+		select * from sys_user u where u.user_account in (${userAccounts})
+	</select>
+	
+	<select id="queryOutByCondition" resultMap="SysUserResult">
+		select * from sys_user u where u.user_account not in (${userAccounts}) and org_id = #{orgId}
+	</select>
+	
+	<select id = "findByOrgCode"  resultMap="SysUserResult">
+		select u.* from sys_user u
+		left join sys_org o on u.org_id = o.org_id
+		where o.org_code = #{orgCode}
+	</select>
+	
+	<select id="findSysUserName" resultType="String" >
+		select user_name from sys_user where user_account = #{userAccount}
+	</select>
+	
+	<select id = "findByCompanyCode"  resultMap="SysUserResult">
+		select u.* from sys_user u
+		left join sys_org o on u.org_id = o.org_id
+		where u.state = 1 and o.org_code like concat(#{companyCode},'%' )
+	</select>
+
+	<delete id="deleteByPK" parameterType="Long">
+		<![CDATA[
+			delete from sys_user where user_id=#{userid}
+		]]>
+	</delete>
+
+	<select id = "findByTelphone"  resultMap="SysUserResult" parameterType="String">
+		select u.* from sys_user u
+		where u.state = 1 and telephone like #{telphone}
+	</select>
+</mapper>

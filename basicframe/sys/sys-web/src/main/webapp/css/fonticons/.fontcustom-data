@@ -1,0 +1,42 @@
+{
+  "fonts": [
+    "iconvault_b063b90d511bbeba557e2f6448dc015c.ttf",
+    "iconvault_b063b90d511bbeba557e2f6448dc015c.woff",
+    "iconvault_b063b90d511bbeba557e2f6448dc015c.eot",
+    "iconvault_b063b90d511bbeba557e2f6448dc015c.svg"
+  ],
+  "templates": [
+    "iconvault-preview.html",
+    "iconvault-preview.css"
+  ],
+  "file_name": "iconvault_b063b90d511bbeba557e2f6448dc015c",
+  "glyphs": [
+    "similar",
+    "home",
+    "my",
+    "favor",
+    "friendadd",
+    "comment",
+    "sort",
+    "search",
+    "list",
+    "vipcard",
+    "roundadd",
+    "right",
+    "bianji",
+    "roundright",
+    "delete",
+    "notification",
+    "qrcode",
+    "question",
+    "form",
+    "close",
+    "cameraadd",
+    "phone",
+    "add",
+    "creative",
+    "check",
+    "card",
+    "edit"
+  ]
+}

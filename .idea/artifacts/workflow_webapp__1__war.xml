@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="workflow-webapp (1):war">
+    <output-path>$PROJECT_DIR$/basicframe/workflow/workflow-webapp/target</output-path>
+    <root id="archive" name="workflow-webapp-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="workflow-webapp (1):war exploded" />
+    </root>
+  </artifact>
+</component>

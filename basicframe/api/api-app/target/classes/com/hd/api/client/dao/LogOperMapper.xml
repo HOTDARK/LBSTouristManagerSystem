@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hd.api.client.dao.LogOperMapper">
+	<parameterMap type="com.hd.sfw.log.trace.model.SysLogOper" id="LogInfoParam" />
+	<resultMap id="RM_LogInfo" type="com.hd.sfw.log.trace.model.SysLogOper">
+        <result property="id" column="id"/>
+        <result property="logId" column="log_id"/>
+        <result property="logPid" column="log_pid"/>
+        <result property="source" column="source"/>
+        <result property="type" column="type"/>
+        <result property="message" column="message"/>
+        <result property="level" column="level"/>
+        <result property="username" column="username"/>
+        <result property="from" column="from"/>
+        <result property="logDate" column="log_date"/>
+        <result property="ord" column="ord"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,log_id,log_pid,source,type,message,level,username,`from`,log_date,ord
+	    ]]>
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterMap="LogInfoParam">
+	    
+	    <![CDATA[
+	        INSERT INTO sys_log_oper (
+	        	log_id ,
+	        	log_pid ,
+	        	source ,
+	        	type ,
+	        	message ,
+	        	level ,
+	        	username ,
+	        	`from` ,
+	        	log_date ,
+	        	ord 
+	        ) VALUES (
+	        	#{logId} ,
+	        	#{logPid} ,
+	        	#{source} ,
+	        	#{type} ,
+	        	#{message} ,
+	        	#{level} ,
+	        	#{username} ,
+	        	#{from} ,
+	        	#{logDate} ,
+	        	#{ord} 
+	        )
+	    ]]>
+	</insert>
+    
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM sys_log_oper WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="findByPK" resultMap="RM_LogInfo">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM sys_log_oper 
+	        WHERE 
+		        id = #{id} 
+	    ]]>
+	</select>
+	
+	<sql id="where">
+		<where>	      				
+			<if test="model.id!=null">
+				AND id = #{model.id}
+			</if>
+	       <if test="model.logId!=null and model.logId!=''">
+				AND log_id = #{model.logId}
+			</if>
+	       <if test="model.logPid!=null and model.logPid!=''">
+				AND log_pid = #{model.logPid}
+			</if>
+	       <if test="model.source!=null and model.source!=''">
+				AND source = #{model.source}
+			</if>
+	       <if test="model.type!=null and model.type!=''">
+				AND type = #{model.type}
+			</if>
+	       <if test="model.level!=null and model.level!=''">
+				AND level = #{model.level}
+			</if>
+	       <if test="model.username!=null and model.username!=''">
+				AND username = #{model.username}
+			</if>
+			
+			<if test="model.startDate!=null">
+				AND log_date>=#{model.startDate}
+			</if>
+			<if test="model.endDate!=null">
+				 <![CDATA[
+				 AND log_date<=#{model.endDate}
+				 ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findByCondition" resultMap="RM_LogInfo">
+		SELECT <include refid="columns" />
+		FROM sys_log_oper
+		<include refid="where"/>
+	</select>
+	
+	<select id="findByPage" resultMap="RM_LogInfo">
+		SELECT <include refid="columns" />
+		FROM sys_log_oper
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY ${model.sortColumns}
+		</if>
+		limit #{start},#{limit}
+	</select>
+		
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM sys_log_oper
+		<include refid="where"/>
+    </select>
+		
+</mapper>

@@ -1,0 +1,25 @@
+<div class="modal" ng-controller="WorkflowSubprocessReferencePopupCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">&times;</button>
+			    <h2>子流程调用  </h2>
+			</div>
+			<div class="modal-body">
+			    <div class="detail-group clearfix">
+                    <div class="col-xs-12">
+                    	<div class="form-group">
+						    <label for="subprocessField">请选择需要调用的子流程，注意避免循环调用</label>
+	                    	<select id="subprocessField" class="form-control" ng-model="subprocess" ng-options="m.processId as m.name for m in processList">
+	                    		<option value="">--请选择--</option>
+	                    	</select>
+	                    </div>
+			        </div>
+			    </div>
+			</div>
+			<div class="modal-footer">
+			    <button ng-disabled="state.subprocessError" ng-click="save()" class="btn btn-primary" translate>ACTION.SAVE</button>
+			</div>
+		</div>
+	</div>
+</div>

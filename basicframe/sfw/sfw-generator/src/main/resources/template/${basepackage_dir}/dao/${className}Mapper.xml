@@ -1,0 +1,133 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameFirstLower = table.classNameFirstLower>   
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<#macro mapperEl value>${r"#{"}${value}}</#macro>
+<#macro namespace>${className}.</#macro>
+
+<mapper namespace="${basepackage}.dao.${className}Mapper">
+
+	<!-- 统一入参 -->
+	<parameterMap type="${basepackage}.entity.${className}" id="${className}Param"/>
+	<!-- 统一出参 -->
+	<resultMap id="${className}Result" type="${basepackage}.entity.${className}">
+        <#list table.columns as column>
+        <result property="${column.columnNameLower}" column="${column.sqlName}"/>
+		</#list>
+	</resultMap>
+	
+	<!-- 用于查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if></#list>
+	    ]]>
+	</sql>
+	
+	<!-- 用于查询条件筛选 -->
+	<sql id="where">
+		<where>	      				
+	       <#list table.columns as column>
+	       <#if column.isDateTimeColumn>
+	       <if test="model.${column.columnNameFirstLower}Begin!=null">
+				AND ${column.sqlName} >= <@mapperEl "model."+column.columnNameFirstLower+"Begin"/>
+		   </if>
+		   <if test="model.${column.columnNameFirstLower}End!=null">
+				AND ${column.sqlName} >= <@mapperEl "model."+column.columnNameFirstLower+"End"/>
+		   </if>
+	       <#elseif column.isStringColumn>
+	       <if test="model.${column.columnNameFirstLower}!=null and model.${column.columnNameFirstLower}!=''">
+				AND ${column.sqlName} = <@mapperEl "model."+column.columnNameFirstLower/>
+			</if>
+		   <#else>
+			<if test="model.${column.columnNameFirstLower}!=null">
+				AND ${column.sqlName} = <@mapperEl "model."+column.columnNameFirstLower/>
+			</if>
+	       </#if>
+	       </#list>			
+		</where>
+	</sql>
+
+	<!-- 单条添加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="${table.idColumn.columnNameFirstLower}" parameterMap="${className}Param">
+    <![CDATA[
+        INSERT INTO ${table.sqlName} (
+        <#list table.columns as column>
+        	${column.sqlName} <#if column_has_next>,</#if>
+        </#list>
+        ) VALUES (
+        <#list table.columns as column>
+        	<@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+        </#list>        
+        )
+    ]]>
+	</insert>
+	
+	<!-- 按主键ID删除 -->
+    <delete id="deleteByPK">
+    <![CDATA[
+        DELETE FROM ${table.sqlName} WHERE
+        <#list table.compositeIdColumns as column>
+        ${column.sqlName} = <@mapperEl 'id'/> <#if column_has_next>,</#if>
+		</#list>
+    ]]>
+    </delete>
+    
+    <!-- 按过主键ID更新 -->
+	<update id="updateByPK" parameterMap="${className}Param">
+        UPDATE ${table.sqlName}
+			<set>
+	        <#list table.notPkColumns as column>
+		        <if test="${column.columnNameFirstLower}!=null">
+					${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+		        </if>
+	        </#list>
+	        </set>
+        WHERE 
+        	<#list table.compositeIdColumns as column>
+	        ${column.sqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next>,</#if>
+	        </#list>	        
+	</update>
+
+	<!-- 按主键ID查询 -->
+    <select id="findByPK" resultMap="${className}Result">
+		SELECT <include refid="columns" />
+	    <![CDATA[
+		    FROM ${table.sqlName} 
+	        WHERE 
+				<#list table.compositeIdColumns as column>
+		        ${column.sqlName} = <@mapperEl 'id'/> <#if column_has_next>,</#if>
+		        </#list>    
+	    ]]>
+	</select>
+	
+	<!-- 按对象条件查询实体 -->
+	<select id="findByCondition" resultMap="${className}Result">
+		SELECT <include refid="columns" />
+		FROM ${table.sqlName}
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY <@jspEl 'model.sortColumns'/>
+		</if>
+	</select>
+	
+	<!-- 按条件查询实体并分页 -->
+	<select id="findByPage" resultMap="${className}Result">
+		SELECT <include refid="columns" />
+		FROM ${table.sqlName}
+		<include refid="where"/>
+		<if test="model.sortColumns!=null and model.sortColumns!=''">
+			ORDER BY <@jspEl 'model.sortColumns'/>
+		</if>
+		limit <@mapperEl 'start'/>,<@mapperEl 'limit'/>
+	</select>
+	
+	<!-- 按条件查询总记录数 -->
+    <select id="findNumByCondition" resultType="int">
+        SELECT count(*) FROM ${table.sqlName}
+		<include refid="where"/>
+    </select>
+	
+</mapper>
+
